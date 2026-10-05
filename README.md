@@ -4,6 +4,8 @@ Analysis for the online validation study of a first-person heights film as an in
 a reproducible affective time course. Participants (Prolific) watched the muted 13.5-minute film while rating
 valence and arousal continuously on a 2D affect grid, and filled in the STICSA somatic scale before and after.
 
+- **Archive:** [doi:10.5281/zenodo.23151387](https://doi.org/10.5281/zenodo.23151387) (Zenodo; this DOI always
+  points to the latest version; v1.0.0, the submission version, is 10.5281/zenodo.23151388).
 - **Preregistration:** [osf.io/s2yvb](https://osf.io/s2yvb), registered 2026-10-04 (public).
   Text in [docs/preregistration.md](docs/preregistration.md); decisions and deviations in
   [docs/prereg_log.md](docs/prereg_log.md).
