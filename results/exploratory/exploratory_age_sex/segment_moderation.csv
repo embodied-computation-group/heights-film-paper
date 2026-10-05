@@ -1,0 +1,13 @@
+rating,effect,method,n,chi2,df,p,F,df_denom,estimate,ci_low,ci_high
+arousal,sex_x_segment,"mixed model, LR test (main)",21,5.607327106266666,3.0,0.13235834896981147,,,,,
+arousal,sex_x_segment,"clustered OLS, Wald F (check)",21,,3.0,0.11483218718161,2.2411581916051904,20.0,,,
+arousal,age_x_segment,"mixed model, LR test (main)",21,6.810012659059566,3.0,0.07820627467570009,,,,,
+arousal,age_x_segment,"clustered OLS, Wald F (check)",21,,3.0,0.011850319844610826,4.731311389540575,20.0,,,
+arousal,main: female_minus_male,clustered OLS,21,,,0.7778359963534067,,,-0.9861341620553015,-7.836584125243271,5.864315801132668
+arousal,main: per_10_years,clustered OLS,21,,,0.1622850248339307,,,2.1119165374260236,-0.8501548840406885,5.073987958892736
+valence,sex_x_segment,"mixed model, LR test (main)",21,2.5845603093910086,3.0,0.46020275575527103,,,,,
+valence,sex_x_segment,"clustered OLS, Wald F (check)",21,,3.0,0.6212290505415241,0.6020260620276446,20.0,,,
+valence,age_x_segment,"mixed model, LR test (main)",21,1.966903823873281,3.0,0.5793042775653707,,,,,
+valence,age_x_segment,"clustered OLS, Wald F (check)",21,,3.0,0.6832365021652511,0.5049678216174607,20.0,,,
+valence,main: female_minus_male,clustered OLS,21,,,0.020266892167686013,,,-9.591129249546805,-17.68904954817618,-1.4932089509174293
+valence,main: per_10_years,clustered OLS,21,,,0.12524123741210996,,,-2.038167687316623,-4.64375747291591,0.5674220982826643

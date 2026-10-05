@@ -1,0 +1,4 @@
+analysis_sample,n,age_mean,age_sd,age_min,age_max,age_missing,sex_female,sex_male,device_Mouse,device_Trackpad / touchpad
+primary,21,35.0,12.633289357883005,19.0,60.0,0,13,8,15,6
+stricter_engagement,18,34.27777777777778,12.493789306764784,19.0,60.0,0,11,7,14,4
+without_rejected,21,35.0,12.633289357883005,19.0,60.0,0,13,8,15,6

@@ -1,0 +1,31 @@
+\begin{table}[tbp]
+\caption{Exploratory Analyses of Age and Sex}
+\label{tab:agesex}
+\begin{threeparttable}
+\footnotesize\linespread{1}\selectfont\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}llllll@{}}
+\toprule
+ & & \multicolumn{2}{l}{Main analysis} & \multicolumn{2}{l}{Clustered regression (check)} \\
+\cmidrule(lr){3-4}\cmidrule(l){5-6}
+Outcome & Effect & Test or estimate & $p$ & Test or estimate & $p$ \\
+\midrule
+STICSA change & Female $-$ male (points) & 0.66 [$-$1.77, 3.08] & .593 & -- & -- \\
+ & Per 10 years of age (points) & 0.24 [$-$0.78, 1.25] & .645 & -- & -- \\
+\addlinespace
+Arousal & Segment $\times$ sex & $\chi^2$(3) = 0.28 & .964 & $F$(3, 120) = 0.08 & .969 \\
+ & Segment $\times$ age & $\chi^2$(3) = 4.92 & .178 & $F$(3, 120) = 2.13 & .100 \\
+ & Female $-$ male (film mean) & -- & -- & $-$0.50 [$-$4.47, 3.47] & .806 \\
+ & Per 10 years (film mean) & -- & -- & $-$1.26 [$-$2.88, 0.37] & .129 \\
+\addlinespace
+Valence & Segment $\times$ sex & $\chi^2$(3) = 0.72 & .869 & $F$(3, 120) = 0.43 & .734 \\
+ & Segment $\times$ age & $\chi^2$(3) = 1.84 & .607 & $F$(3, 120) = 0.50 & .682 \\
+ & Female $-$ male (film mean) & -- & -- & $-$4.46 [$-$9.91, 0.99] & .108 \\
+ & Per 10 years (film mean) & -- & -- & $-$0.74 [$-$2.96, 1.47] & .511 \\
+\bottomrule
+\end{tabular}
+\vspace{4pt}
+\begin{tablenotes}[para,flushleft]
+{\small\textit{Note.} Exploratory analyses, not preregistered tests; $p$ values are uncorrected. $n$ = 121 participants of the primary sample with age and sex available. STICSA change: linear regression on sex and age. Segment means: random-intercept mixed model with segment (sum-coded) $\times$ (sex + age), interactions tested with likelihood-ratio tests (main analysis); the same model fitted by least squares with standard errors clustered by participant, interactions tested with Wald $F$ tests, is shown as a check, together with the main effects of sex and age averaged over the film. Age effects are per 10 years; sex effects are female minus male, in scale points.}
+\end{tablenotes}
+\end{threeparttable}
+\end{table}

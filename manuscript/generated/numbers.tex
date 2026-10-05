@@ -1,0 +1,207 @@
+% Written by analysis/05_report_numbers.py - do not edit by hand.
+\newcommand{\val}[1]{\ifcsname val:#1\endcsname\csname val:#1\endcsname\else\errmessage{Unknown value #1}\fi}
+\expandafter\def\csname val:n_completed\endcsname{130}
+\expandafter\def\csname val:n_excluded\endcsname{6}
+\expandafter\def\csname val:n_primary\endcsname{124}
+\expandafter\def\csname val:n_excl_disrupted\endcsname{3}
+\expandafter\def\csname val:n_excl_freetext\endcsname{2}
+\expandafter\def\csname val:n_excl_erratic\endcsname{1}
+\expandafter\def\csname val:n_cohort_two\endcsname{19}
+\expandafter\def\csname val:n_cohort_three\endcsname{20}
+\expandafter\def\csname val:n_cohort_four\endcsname{85}
+\expandafter\def\csname val:n_age\endcsname{121}
+\expandafter\def\csname val:age_mean\endcsname{34.2}
+\expandafter\def\csname val:age_sd\endcsname{12.0}
+\expandafter\def\csname val:age_min\endcsname{18}
+\expandafter\def\csname val:age_max\endcsname{76}
+\expandafter\def\csname val:n_female\endcsname{59}
+\expandafter\def\csname val:n_male\endcsname{62}
+\expandafter\def\csname val:n_sex_missing\endcsname{3}
+\expandafter\def\csname val:n_mouse\endcsname{80}
+\expandafter\def\csname val:n_trackpad\endcsname{43}
+\expandafter\def\csname val:n_stricter\endcsname{96}
+\expandafter\def\csname val:n_sparse\endcsname{24}
+\expandafter\def\csname val:n_one_check\endcsname{5}
+\expandafter\def\csname val:n_not_attentive\endcsname{3}
+\expandafter\def\csname val:n_without_rejected\endcsname{120}
+\expandafter\def\csname val:n_rejection_set\endcsname{4}
+\expandafter\def\csname val:n_exploratory_completed\endcsname{23}
+\expandafter\def\csname val:n_exploratory\endcsname{21}
+\expandafter\def\csname val:height_fear_mean\endcsname{3.77}
+\expandafter\def\csname val:height_fear_sd\endcsname{1.73}
+\expandafter\def\csname val:height_fear_median\endcsname{4}
+\expandafter\def\csname val:sticsa_pre_mean\endcsname{13.76}
+\expandafter\def\csname val:sticsa_pre_sd\endcsname{3.56}
+\expandafter\def\csname val:sticsa_pre_median\endcsname{13}
+\expandafter\def\csname val:sticsa_post_mean\endcsname{20.55}
+\expandafter\def\csname val:sticsa_post_sd\endcsname{7.29}
+\expandafter\def\csname val:sticsa_post_median\endcsname{18}
+\expandafter\def\csname val:sticsa_change_mean\endcsname{6.79}
+\expandafter\def\csname val:sticsa_change_sd\endcsname{6.60}
+\expandafter\def\csname val:sticsa_change_median\endcsname{5}
+\expandafter\def\csname val:anxiety_overall_mean\endcsname{5.18}
+\expandafter\def\csname val:anxiety_overall_sd\endcsname{1.33}
+\expandafter\def\csname val:anxiety_overall_median\endcsname{5}
+\expandafter\def\csname val:concern_safety_mean\endcsname{6.13}
+\expandafter\def\csname val:concern_safety_sd\endcsname{1.30}
+\expandafter\def\csname val:concern_safety_median\endcsname{7}
+\expandafter\def\csname val:body_intensity_mean\endcsname{4.64}
+\expandafter\def\csname val:body_intensity_sd\endcsname{1.60}
+\expandafter\def\csname val:body_intensity_median\endcsname{5}
+\expandafter\def\csname val:arousal_baseline_mean\endcsname{43.13}
+\expandafter\def\csname val:arousal_baseline_sd\endcsname{15.80}
+\expandafter\def\csname val:arousal_baseline_median\endcsname{43.8}
+\expandafter\def\csname val:arousal_rise_mean\endcsname{67.14}
+\expandafter\def\csname val:arousal_rise_sd\endcsname{14.79}
+\expandafter\def\csname val:arousal_rise_median\endcsname{68.9}
+\expandafter\def\csname val:arousal_plateau_mean\endcsname{80.91}
+\expandafter\def\csname val:arousal_plateau_sd\endcsname{15.01}
+\expandafter\def\csname val:arousal_plateau_median\endcsname{83.1}
+\expandafter\def\csname val:arousal_return_mean\endcsname{53.89}
+\expandafter\def\csname val:arousal_return_sd\endcsname{19.42}
+\expandafter\def\csname val:arousal_return_median\endcsname{54.8}
+\expandafter\def\csname val:arousal_whole_film_mean\endcsname{61.23}
+\expandafter\def\csname val:arousal_whole_film_sd\endcsname{10.99}
+\expandafter\def\csname val:arousal_whole_film_median\endcsname{60.6}
+\expandafter\def\csname val:valence_baseline_mean\endcsname{50.58}
+\expandafter\def\csname val:valence_baseline_sd\endcsname{14.55}
+\expandafter\def\csname val:valence_baseline_median\endcsname{52.0}
+\expandafter\def\csname val:valence_rise_mean\endcsname{39.58}
+\expandafter\def\csname val:valence_rise_sd\endcsname{19.06}
+\expandafter\def\csname val:valence_rise_median\endcsname{38.5}
+\expandafter\def\csname val:valence_plateau_mean\endcsname{29.13}
+\expandafter\def\csname val:valence_plateau_sd\endcsname{23.10}
+\expandafter\def\csname val:valence_plateau_median\endcsname{23.9}
+\expandafter\def\csname val:valence_return_mean\endcsname{50.84}
+\expandafter\def\csname val:valence_return_sd\endcsname{20.44}
+\expandafter\def\csname val:valence_return_median\endcsname{51.7}
+\expandafter\def\csname val:valence_whole_film_mean\endcsname{41.89}
+\expandafter\def\csname val:valence_whole_film_sd\endcsname{14.67}
+\expandafter\def\csname val:valence_whole_film_median\endcsname{41.9}
+\expandafter\def\csname val:H1:report\endcsname{$t$(123) = 11.46, $p$ < .001, $d_z$ = 1.03, 95\% CI [0.81, 1.25]}
+\expandafter\def\csname val:H1:effect\endcsname{$d_z$ = 1.03 [0.81, 1.25]}
+\expandafter\def\csname val:H1:est\endcsname{1.03}
+\expandafter\def\csname val:H1:diff\endcsname{6.79}
+\expandafter\def\csname val:H1:diffabs\endcsname{6.79}
+\expandafter\def\csname val:H2a:report\endcsname{$t$(123) = 14.67, $p_\mathrm{Holm}$ < .001, $d_z$ = 1.32, 95\% CI [1.07, 1.56]}
+\expandafter\def\csname val:H2a:effect\endcsname{$d_z$ = 1.32 [1.07, 1.56]}
+\expandafter\def\csname val:H2a:est\endcsname{1.32}
+\expandafter\def\csname val:H2a:diff\endcsname{24.01}
+\expandafter\def\csname val:H2a:diffabs\endcsname{24.01}
+\expandafter\def\csname val:H2b:report\endcsname{$t$(123) = 19.77, $p_\mathrm{Holm}$ < .001, $d_z$ = 1.78, 95\% CI [1.49, 2.06]}
+\expandafter\def\csname val:H2b:effect\endcsname{$d_z$ = 1.78 [1.49, 2.06]}
+\expandafter\def\csname val:H2b:est\endcsname{1.78}
+\expandafter\def\csname val:H2b:diff\endcsname{37.78}
+\expandafter\def\csname val:H2b:diffabs\endcsname{37.78}
+\expandafter\def\csname val:H2c:report\endcsname{$t$(123) = $-$14.70, $p_\mathrm{Holm}$ < .001, $d_z$ = $-$1.32, 95\% CI [$-$1.56, $-$1.08]}
+\expandafter\def\csname val:H2c:effect\endcsname{$d_z$ = $-$1.32 [$-$1.56, $-$1.08]}
+\expandafter\def\csname val:H2c:est\endcsname{$-$1.32}
+\expandafter\def\csname val:H2c:diff\endcsname{$-$27.02}
+\expandafter\def\csname val:H2c:diffabs\endcsname{27.02}
+\expandafter\def\csname val:H2d:report\endcsname{$t$(123) = $-$9.85, $p_\mathrm{Holm}$ < .001, $d_z$ = $-$0.88, 95\% CI [$-$1.09, $-$0.68]}
+\expandafter\def\csname val:H2d:effect\endcsname{$d_z$ = $-$0.88 [$-$1.09, $-$0.68]}
+\expandafter\def\csname val:H2d:est\endcsname{$-$0.88}
+\expandafter\def\csname val:H2d:diff\endcsname{$-$21.44}
+\expandafter\def\csname val:H2d:diffabs\endcsname{21.44}
+\expandafter\def\csname val:H3arousal:report\endcsname{$r$ = .993, 95\% CI [.990, .996]}
+\expandafter\def\csname val:H3arousal:effect\endcsname{$r$ = .993 [.990, .996]}
+\expandafter\def\csname val:H3arousal:est\endcsname{.99}
+\expandafter\def\csname val:H3valence:report\endcsname{$r$ = .937, 95\% CI [.893, .966]}
+\expandafter\def\csname val:H3valence:effect\endcsname{$r$ = .937 [.893, .966]}
+\expandafter\def\csname val:H3valence:est\endcsname{.94}
+\expandafter\def\csname val:H4a:report\endcsname{$\rho$ = .08, 95\% CI [$-$.09, .26], $p$ = .355, $p_\mathrm{Holm}$ = .355}
+\expandafter\def\csname val:H4a:effect\endcsname{$\rho$ = .08 [$-$.09, .26]}
+\expandafter\def\csname val:H4a:est\endcsname{.08}
+\expandafter\def\csname val:H4b:report\endcsname{$\rho$ = $-$.32, 95\% CI [$-$.46, $-$.16], $p$ < .001, $p_\mathrm{Holm}$ = .001}
+\expandafter\def\csname val:H4b:effect\endcsname{$\rho$ = $-$.32 [$-$.46, $-$.16]}
+\expandafter\def\csname val:H4b:est\endcsname{$-$.32}
+\expandafter\def\csname val:H4c:report\endcsname{$\rho$ = .18, 95\% CI [.00, .35], $p$ = .049, $p_\mathrm{Holm}$ = .098}
+\expandafter\def\csname val:H4c:effect\endcsname{$\rho$ = .18 [.00, .35]}
+\expandafter\def\csname val:H4c:est\endcsname{.18}
+\expandafter\def\csname val:H5a:report\endcsname{$\rho$ = .24, 95\% CI [.05, .41], $p$ = .008, $p_\mathrm{Holm}$ = .008}
+\expandafter\def\csname val:H5a:effect\endcsname{$\rho$ = .24 [.05, .41]}
+\expandafter\def\csname val:H5a:est\endcsname{.24}
+\expandafter\def\csname val:H5b:report\endcsname{$\rho$ = $-$.38, 95\% CI [$-$.51, $-$.23], $p$ < .001, $p_\mathrm{Holm}$ < .001}
+\expandafter\def\csname val:H5b:effect\endcsname{$\rho$ = $-$.38 [$-$.51, $-$.23]}
+\expandafter\def\csname val:H5b:est\endcsname{$-$.38}
+\expandafter\def\csname val:H6a:report\endcsname{$\rho$ = .56, 95\% CI [.44, .67], $p$ < .001, $p_\mathrm{Holm}$ < .001}
+\expandafter\def\csname val:H6a:effect\endcsname{$\rho$ = .56 [.44, .67]}
+\expandafter\def\csname val:H6a:est\endcsname{.56}
+\expandafter\def\csname val:H6b:report\endcsname{$\rho$ = .34, 95\% CI [.15, .50], $p$ < .001, $p_\mathrm{Holm}$ < .001}
+\expandafter\def\csname val:H6b:effect\endcsname{$\rho$ = .34 [.15, .50]}
+\expandafter\def\csname val:H6b:est\endcsname{.34}
+\expandafter\def\csname val:H2:absrange\endcsname{0.88--1.78}
+\expandafter\def\csname val:H1:wilcoxon\endcsname{$T$ = 197, $p$ < .001}
+\expandafter\def\csname val:n_floor_pre\endcsname{45}
+\expandafter\def\csname val:pct_floor_pre\endcsname{36}
+\expandafter\def\csname val:n_increase\endcsname{109}
+\expandafter\def\csname val:n_nochange\endcsname{7}
+\expandafter\def\csname val:n_decrease\endcsname{8}
+\expandafter\def\csname val:n_fear_top\endcsname{20}
+\expandafter\def\csname val:n_fear_seven\endcsname{2}
+\expandafter\def\csname val:rel:arousal\endcsname{.992}
+\expandafter\def\csname val:rel:valence\endcsname{.979}
+\expandafter\def\csname val:edge1:est\endcsname{262}
+\expandafter\def\csname val:edge1:reg\endcsname{262}
+\expandafter\def\csname val:edge1:ci\endcsname{[133, 271]}
+\expandafter\def\csname val:edge2:est\endcsname{467}
+\expandafter\def\csname val:edge2:reg\endcsname{470}
+\expandafter\def\csname val:edge2:ci\endcsname{[317, 475]}
+\expandafter\def\csname val:edge3:est\endcsname{660}
+\expandafter\def\csname val:edge3:reg\endcsname{692}
+\expandafter\def\csname val:edge3:ci\endcsname{[631, 690]}
+\expandafter\def\csname val:confirmatory_commit\endcsname{63d042d}
+\expandafter\def\csname val:seed\endcsname{20261004}
+\expandafter\def\csname val:python_version\endcsname{3.13.7}
+\expandafter\def\csname val:version:numpy\endcsname{2.5.3}
+\expandafter\def\csname val:version:pandas\endcsname{3.0.6}
+\expandafter\def\csname val:version:scipy\endcsname{1.18.1}
+\expandafter\def\csname val:version:matplotlib\endcsname{3.11.2}
+\expandafter\def\csname val:version:statsmodels\endcsname{0.15.0}
+\expandafter\def\csname val:n_demo\endcsname{121}
+\expandafter\def\csname val:n_demo_female\endcsname{59}
+\expandafter\def\csname val:n_demo_male\endcsname{62}
+\expandafter\def\csname val:change_female_mean\endcsname{7.17}
+\expandafter\def\csname val:change_male_mean\endcsname{6.44}
+\expandafter\def\csname val:agesex:change_sex\endcsname{0.66 [$-$1.77, 3.08], $p$ = .593}
+\expandafter\def\csname val:agesex:change_age\endcsname{0.24 [$-$0.78, 1.25], $p$ = .645}
+\expandafter\def\csname val:agesex:arousal:sex_x_segment\endcsname{$\chi^2$(3) = 0.28, $p$ = .964}
+\expandafter\def\csname val:agesex:arousal:sex_x_segment:check\endcsname{$F$(3, 120) = 0.08, $p$ = .969}
+\expandafter\def\csname val:agesex:arousal:age_x_segment\endcsname{$\chi^2$(3) = 4.92, $p$ = .178}
+\expandafter\def\csname val:agesex:arousal:age_x_segment:check\endcsname{$F$(3, 120) = 2.13, $p$ = .100}
+\expandafter\def\csname val:agesex:arousal:female_minus_male\endcsname{$-$0.50 [$-$4.47, 3.47], $p$ = .806}
+\expandafter\def\csname val:agesex:arousal:per_10_years\endcsname{$-$1.26 [$-$2.88, 0.37], $p$ = .129}
+\expandafter\def\csname val:agesex:valence:sex_x_segment\endcsname{$\chi^2$(3) = 0.72, $p$ = .869}
+\expandafter\def\csname val:agesex:valence:sex_x_segment:check\endcsname{$F$(3, 120) = 0.43, $p$ = .734}
+\expandafter\def\csname val:agesex:valence:age_x_segment\endcsname{$\chi^2$(3) = 1.84, $p$ = .607}
+\expandafter\def\csname val:agesex:valence:age_x_segment:check\endcsname{$F$(3, 120) = 0.50, $p$ = .682}
+\expandafter\def\csname val:agesex:valence:female_minus_male\endcsname{$-$4.46 [$-$9.91, 0.99], $p$ = .108}
+\expandafter\def\csname val:agesex:valence:per_10_years\endcsname{$-$0.74 [$-$2.96, 1.47], $p$ = .511}
+\expandafter\def\csname val:agesex:valence_rise_diff\endcsname{$-$6.43 points [$-$13.19, 0.34], $p$ = .062}
+\expandafter\def\csname val:items:dz_min\endcsname{0.52}
+\expandafter\def\csname val:items:dz_max\endcsname{1.17}
+\expandafter\def\csname val:items:pholm_max\endcsname{< .001}
+\expandafter\def\csname val:items:rank1:label\endcsname{heart beats fast}
+\expandafter\def\csname val:items:rank1:dz\endcsname{1.17}
+\expandafter\def\csname val:items:rank2:label\endcsname{trembly, shaky}
+\expandafter\def\csname val:items:rank2:dz\endcsname{0.80}
+\expandafter\def\csname val:items:rank3:label\endcsname{breathing fast, shallow}
+\expandafter\def\csname val:items:rank3:dz\endcsname{0.77}
+\expandafter\def\csname val:items:rank4:label\endcsname{muscles tense}
+\expandafter\def\csname val:items:rank4:dz\endcsname{0.72}
+\expandafter\def\csname val:items:rank5:label\endcsname{dizzy}
+\expandafter\def\csname val:items:rank5:dz\endcsname{0.71}
+\expandafter\def\csname val:items:rank6:label\endcsname{face hot}
+\expandafter\def\csname val:items:rank6:dz\endcsname{0.66}
+\expandafter\def\csname val:items:rank7:label\endcsname{butterflies in stomach}
+\expandafter\def\csname val:items:rank7:dz\endcsname{0.64}
+\expandafter\def\csname val:items:rank8:label\endcsname{palms clammy}
+\expandafter\def\csname val:items:rank8:dz\endcsname{0.60}
+\expandafter\def\csname val:items:rank9:label\endcsname{throat dry}
+\expandafter\def\csname val:items:rank9:dz\endcsname{0.54}
+\expandafter\def\csname val:items:rank10:label\endcsname{muscles weak}
+\expandafter\def\csname val:items:rank10:dz\endcsname{0.52}
+\expandafter\def\csname val:items:rank11:label\endcsname{arms and legs stiff}
+\expandafter\def\csname val:items:rank11:dz\endcsname{0.52}
+\expandafter\def\csname val:task:valence\endcsname{20}
+\expandafter\def\csname val:task:arousal\endcsname{88}

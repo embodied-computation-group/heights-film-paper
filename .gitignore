@@ -1,0 +1,51 @@
+# Data: only the de-identified export in data/processed/ is committed (see CLAUDE.md, Data).
+data/raw/
+data/interim/
+*participant_key*
+*pseudonym_key*
+*identifiable*
+
+# Scratch and caches
+scratch/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Secrets
+.env
+secrets.env
+
+# Claude Code local state (CLAUDE.md is committed)
+.claude/settings.local.json
+
+# LaTeX build files (manuscript/results.pdf is committed)
+manuscript/*.aux
+manuscript/*.log
+manuscript/*.fls
+manuscript/*.fdb_latexmk
+manuscript/*.out
+manuscript/*.bbl
+manuscript/*.blg
+manuscript/*.synctex.gz
+
+# Working context (literature review etc.), not part of the repository
+context/
+manuscript/*.bcf
+manuscript/*SAVE-ERROR
+manuscript/*.fff
+manuscript/*.ttt
+manuscript/*.run.xml
+manuscript/*.lof
+manuscript/*.lot
+manuscript/*.toc
+
+# Built submission package (rebuild with analysis/09_package_submission.py)
+submission/

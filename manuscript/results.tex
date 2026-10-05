@@ -1,0 +1,411 @@
+% Results report: heights film validation study (confirmatory sample).
+% Every number comes from manuscript/generated/ (written by analysis/05_report_numbers.py); none is typed by hand.
+% Build:  cd manuscript && latexmk -pdf results.tex
+\documentclass[man,floatsintext,12pt,donotrepeattitle]{apa7}
+
+\usepackage[american]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext,newtxmath} % Times-style; heavier strokes than Latin Modern, easier to read on screens
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{csquotes}
+\graphicspath{{../results/confirmatory/figures/}}
+
+\input{generated/numbers.tex}
+
+\title{Moment-to-Moment Affect During Film-Induced Somatic Anxiety}
+\shorttitle{Moment-to-Moment Affect}
+\author{Micah Allen}
+\affiliation{Center of Functionally Integrative Neuroscience, Aarhus University}
+\authornote{Draft Methods and Results for internal review. Preregistration: \url{https://osf.io/s2yvb}. The
+confirmatory tests were run on the confirmatory sample from commit \texttt{\val{confirmatory_commit}} (random seed
+\val{seed}); every number in this document is generated directly from those outputs.}
+
+\begin{document}
+\maketitle
+
+\section{Method}
+
+The study was preregistered on the Open Science Framework before any hypothesis test was run
+(\url{https://osf.io/s2yvb}). Hypotheses, segment edges, exclusion rules, tests, correction families and inference
+criteria are reported here as registered, and anything not in the registration is labelled exploratory. Decisions
+taken after registration are recorded, with dates, in the project's preregistration log and summarized at the end of
+the Results.
+
+\subsection{Participants}
+
+Participants were recruited on Prolific. Eligibility filters were fluent English, normal or corrected-to-normal
+vision, an approval rate of at least 95\%, at least 20 previous submissions and a desktop computer; the study listing
+and information sheet also required a physical mouse or trackpad. Recruitment ran in cohorts. Each cohort was a
+separate Prolific study with a 50/50 quota on Prolific's sex screener, and participants from earlier cohorts were
+blocked from later ones. Cohort 4 was a single study whose places were increased in steps of 20 about 25 minutes
+apart, which limited the number of simultaneous video downloads. Participants were paid \pounds 4.80 for an estimated
+30 minutes. The information sheet advised people with a strong fear of heights not to take part, and consent included
+the statement \enquote{I do not expect this to be seriously distressing for me.} The study was conducted under the
+Aarhus University standard waiver for non-interventional online studies.
+
+The pilot and cohort 1 form the exploratory sample, which was used to set the segment edges, the exclusion rules and
+the sample size. Cohorts 2--4 form the confirmatory sample, and all confirmatory tests use only these participants.
+The registered target was 120 usable confirmatory participants, with recruitment stopping at the end of the first
+cohort after which this number was reached. This sample size gives 80\% power to detect correlations of about .25
+(two-sided $\alpha$~=~.05); the within-participant effects in the exploratory data were far larger.
+
+\subsection{Stimulus}
+
+The film shows people climbing a skyscraper from a first-person view. It lasts 13 min 28 s and was presented without
+sound (H.264, 1280~$\times$~720 pixels, 25 frames per second). The whole file was downloaded before playback began;
+if the download did not finish within 5 minutes, the session ended and the participant was asked to return the
+study.
+
+\subsection{Procedure}
+
+The task ran in the browser (jsPsych 8 on JATOS). After giving consent, participants passed a device check (desktop
+computer, browser window of at least 1000~$\times$~600 pixels), rated their everyday fear of heights and completed
+the first attention check. The study then switched to full screen. Participants read the instructions and practised
+the rating task: they tracked a moving target on the two-dimensional grid for 40~s (repeated once if the tracking
+error exceeded 20 units) and then placed six example emotional states on the grid.
+
+Participants then completed the STICSA somatic scale, watched the film while rating continuously, and completed the
+STICSA somatic scale again immediately afterwards. The session ended with the post-film questions, the second
+attention check, a written description of the experience of at least 100 words and an optional feedback field. If
+participants switched tabs, left full screen or released the mouse pointer, the film paused until they returned.
+
+\subsection{Measures}
+
+\subsubsection{Continuous Valence and Arousal}
+
+Throughout the film, participants moved a dot within a small affect grid in the corner of the video using the mouse
+(pointer locked). The horizontal position coded valence (0~=~unpleasant, 50~=~neutral, 100~=~pleasant) and the
+vertical position coded arousal (0~=~low, 100~=~high activation). The position was sampled at 20~Hz and time-stamped
+against film playback time.
+
+\subsubsection{Somatic Anxiety}
+
+State somatic anxiety was measured with the somatic subscale of the State-Trait Inventory for Cognitive and Somatic
+Anxiety (STICSA; state form), immediately before and immediately after the film, with the instruction
+\enquote{Please indicate how you feel right now, at this moment.} The subscale has 11 items (items 1, 2, 6, 7, 8, 12,
+14, 15, 18, 20 and 21), each answered from 1 (\emph{not at all}) to 4 (\emph{very much so}). The total ranges from 11
+to 44 and was computed only when all items were answered; the change score is post minus pre.
+
+\subsubsection{Single-Item Ratings}
+
+Before the film, participants answered \enquote{In everyday life, how afraid are you of heights?} from 1 (\emph{not
+at all}) to 7 (\emph{extremely}). After the film, they rated on 1--7 scales how tense or anxious they had felt overall
+while watching (\enquote{Overall, how tense or anxious did you feel while watching the film?}), how concerned they
+had been for the safety of the people in the film, and how strong their bodily sensations had been. They also
+reported whether they had seen the film before, whether they had watched attentively and which input device they had
+used.
+
+\subsection{Data Processing}
+
+For each participant, the 20-Hz ratings were resampled to 1~Hz of film time (808 values, 0--807~s) by linear
+interpolation over the samples recorded while the film was playing. The film was divided into four segments with
+edges fixed in advance: baseline (0--262~s), rise (262--470~s), plateau (470--692~s) and return (692--808~s). These
+edges had been estimated in the exploratory sample by piecewise-linear segmentation of the group-mean arousal series.
+A participant's segment mean is the mean of their 1-Hz series within a segment, and the whole-film mean is the mean
+over all 808 values. Group-mean series are the mean across participants at each second.
+
+\subsection{Exclusions}
+
+Participants who completed the study were excluded if any of seven registered rules applied, all decided from
+data-quality logs without reference to the hypotheses: (a) failing both attention checks; (b) script-generated input
+events during the film; (c) a written description that was not typed (keystrokes fewer than 0.2 times the number of
+characters, for texts of at least 200 characters); (d) erratic input (more than 10\% of mouse movements larger than
+250 pixels); (e) disrupted viewing (more than 30~s of buffering or more than 60~s of interruptions during the film);
+(f) ratings recorded during fewer than 95\% of the film's seconds; or (g) having seen the film before.
+
+Two sensitivity samples were also registered, and every confirmatory test was repeated in each. The first
+additionally excluded sparse raters (fewer than one rating bout per minute, where inputs more than 2~s apart start a
+new bout, or a stretch of more than 180~s without input), participants who failed one of the two attention checks,
+and participants who reported not watching attentively. The second additionally excluded participants whose Prolific
+submissions had been rejected for their behaviour on the free-text page but who passed the registered exclusion
+rules.
+
+\subsection{Statistical Analysis}
+
+All tests were two-sided with $\alpha$~=~.05 after Holm correction within each family of hypotheses. A directional
+hypothesis was considered supported only if the effect was significant in the predicted direction.
+
+\paragraph{H1.} STICSA somatic totals after and before the film were compared with a paired $t$ test. The effect size
+is Cohen's $d_z$ (the mean of the differences divided by their standard deviation) with an exact 95\% confidence
+interval from the noncentral $t$ distribution. A Wilcoxon signed-rank test was run as a robustness check.
+
+\paragraph{H2.} Four within-participant contrasts of segment means were tested with paired $t$ tests: arousal in the
+rise and on the plateau against baseline (both predicted higher), arousal in the return against the plateau
+(predicted lower) and valence on the plateau against baseline (predicted lower). Effect sizes are $d_z$ with exact
+95\% confidence intervals; $p$ values were Holm-corrected across the four contrasts.
+
+\paragraph{H3.} For arousal and for valence separately, the group-mean series of the confirmatory sample was
+correlated with the group-mean series of the exploratory sample (Pearson $r$ over the 808 one-second values). Because
+neighbouring seconds are not independent, the 95\% confidence interval was obtained with a circular block bootstrap
+over time (30-s blocks, 5,000 resamples, the same blocks drawn from both series). H3 was considered supported for a
+dimension if the lower bound of this interval exceeded .50.
+
+\paragraph{H4--H6.} The individual-difference hypotheses were tested with Spearman rank correlations across
+participants, chosen because the predictors are ordinal and the outcomes bounded. H4 related everyday fear of heights
+to plateau arousal (H4a, predicted positive), plateau valence (H4b, negative) and the STICSA change (H4c, positive).
+H5 related the STICSA change to whole-film mean arousal (H5a, positive) and valence (H5b, negative). H6 related
+post-film overall anxiety to the STICSA change (H6a, positive) and to plateau arousal (H6b, positive). Each
+correlation has a percentile bootstrap 95\% confidence interval (5,000 resamples of participants), and Holm
+correction was applied within H4 (three tests), H5 (two) and H6 (two). The trend lines in
+Figure~\ref{fig:correlations} are least-squares fits drawn as a visual guide; they are not the tests.
+
+\paragraph{Descriptive Analyses.} Two registered descriptive analyses accompany the tests. The reliability of the
+group-mean series was estimated by splitting the participants randomly into two halves 1,000 times, correlating the
+two half-sample means and applying the Spearman--Brown correction. The segment edges were re-estimated in the
+confirmatory sample with the method used in the exploratory sample: an exact piecewise-linear segmentation of the
+group-mean arousal series into four straight-line segments (three breakpoints, each segment at least 30~s long, found
+by dynamic programming), with 95\% intervals from 1,000 bootstrap resamples of participants.
+
+\paragraph{Exploratory Analyses.} Two analyses were not registered as tests and are reported as exploratory. The
+first describes how participants occupied the affect grid in each segment. The second examines age and sex, which the
+registration lists among the planned exploratory analyses. Sex was taken from participants' Prolific profiles (female
+or male); Prolific withholds age and sex for rejected submissions, so these analyses include only participants with
+both. The STICSA change was regressed on sex and age. For the segment means of each rating, a mixed model with a random
+intercept per participant included segment (sum-coded), sex, age and the segment~$\times$~sex and segment~$\times$~age
+interactions; each interaction was tested with a likelihood-ratio test (3 degrees of freedom) against the model
+without it. As a check, the same model was fitted by least squares with standard errors clustered by participant and
+the interactions tested with Wald $F$ tests. The age and sex analyses, including the rule that the mixed model is
+the main result, were specified and tried out on the exploratory sample before they were run on the confirmatory
+sample. There is no registered correction family for these
+analyses, so $p$ values are uncorrected and the estimates with their confidence intervals should carry the weight.
+
+\paragraph{Missing Data and Software.} STICSA items were required, so all participants had complete totals, and no
+rating series had gaps after resampling; every test therefore used all participants in the sample. Analyses were run
+in Python \val{python_version} with NumPy \val{version:numpy}, pandas \val{version:pandas}, SciPy
+\val{version:scipy}, Matplotlib \val{version:matplotlib} and, for the mixed models, statsmodels
+\val{version:statsmodels}, using the random seed \val{seed} for all resampling.
+Each analysis run saved a record of the code version, input-file checksums, settings and package versions.
+
+\section{Results}
+
+\subsection{Sample}
+
+Of the \val{n_completed} participants in the confirmatory sample who completed the study, \val{n_excluded} were
+excluded under the registered rules: \val{n_excl_disrupted} for disrupted viewing, \val{n_excl_freetext} because
+their written description was not typed and \val{n_excl_erratic} for erratic mouse input. No participant met any of
+the other four rules. The primary sample therefore comprised $N$~=~\val{n_primary} participants (\val{n_cohort_two},
+\val{n_cohort_three} and \val{n_cohort_four} from cohorts 2, 3 and 4). Table~\ref{tab:sample} describes the
+confirmatory and exploratory samples. Participants in the primary sample were on average \val{age_mean} years old
+($SD$~=~\val{age_sd}, range \val{age_min}--\val{age_max}); \val{n_female} reported their sex as female and
+\val{n_male} as male, and Prolific withheld age and sex for the \val{n_sex_missing} participants whose submissions
+had been rejected. Most rated with a mouse (\val{n_mouse}); \val{n_trackpad} used a trackpad.
+
+\input{generated/table_sample.tex}
+
+The stricter-engagement sensitivity sample comprised $n$~=~\val{n_stricter} participants after removing
+\val{n_sparse} sparse raters, \val{n_one_check} participants who failed one attention check and
+\val{n_not_attentive} who reported not watching attentively (these groups overlap). Removing the
+\val{n_rejection_set} participants in the rejection set left $n$~=~\val{n_without_rejected}. The reference curve for
+H3 was the group mean of the \val{n_exploratory} usable exploratory participants (of \val{n_exploratory_completed}
+who completed the study).
+
+\subsection{Descriptive Statistics}
+
+Table~\ref{tab:descriptives} summarizes the measures used in the confirmatory tests. Somatic anxiety was low before
+the film: \val{n_floor_pre} participants (\val{pct_floor_pre}\%) had the lowest possible STICSA somatic score of 11.
+Everyday fear of heights covered the whole scale, but the top was thinly populated; only \val{n_fear_top}
+participants rated their fear at 6 or 7, and \val{n_fear_seven} chose 7. This fits the recruitment material, which
+advised people with a strong fear of heights not to take part. Participants reported feeling clearly tense or
+anxious while watching ($M$~=~\val{anxiety_overall_mean} on a 1--7 scale) and were very concerned for the safety of
+the people in the film ($Mdn$~=~\val{concern_safety_median}).
+
+\input{generated/table_descriptives.tex}
+
+The continuous ratings traced the expected course (Figure~\ref{fig:timecourse}). Mean arousal was moderate during
+the baseline segment, climbed through the rise, stayed high across the plateau and fell again during the return.
+Valence moved in the opposite direction, from close to the neutral midpoint at baseline to clearly unpleasant on the
+plateau, and back to neutral by the end of the film.
+
+\begin{figure}[tbp]
+\caption{Continuous Arousal and Valence Ratings Over the Film}
+\label{fig:timecourse}
+\includegraphics[width=\textwidth]{fig1_time_course.pdf}
+\figurenote{Thin lines show individual participants; the thick line is the group mean with its 95\% confidence
+interval ($N$~=~\val{n_primary}). Shading marks the four preregistered segments (baseline, rise, plateau, return).}
+\end{figure}
+
+\subsection{Confirmatory Analyses}
+
+Table~\ref{tab:confirmatory} lists all preregistered tests for the primary sample. Ten of the 12 directional
+predictions were supported, as were both replication criteria.
+
+\input{generated/table_confirmatory.tex}
+
+\subsubsection{Somatic Anxiety Induction (H1)}
+
+STICSA somatic scores were higher immediately after the film than immediately before it, by \val{H1:diff} points
+on average (pre: $M$~=~\val{sticsa_pre_mean}, $SD$~=~\val{sticsa_pre_sd}; post: $M$~=~\val{sticsa_post_mean},
+$SD$~=~\val{sticsa_post_sd}), \val{H1:report}. Scores rose for \val{n_increase} participants, did not change for
+\val{n_nochange} and fell for \val{n_decrease}. Because many pre-film scores sat at the floor of the scale, we also
+ran the registered Wilcoxon signed-rank test, which gave the same result (\val{H1:wilcoxon}). The increase was
+spread across all eleven items rather than driven by one or two symptoms (Figure~\ref{fig:sticsa}); a racing heart
+and muscle tension were the sensations most often endorsed after the film. H1 was supported.
+
+\begin{figure}[tbp]
+\caption{Somatic Anxiety Before and After the Film}
+\label{fig:sticsa}
+\includegraphics[width=\textwidth]{fig2_sticsa.pdf}
+\figurenote{(A) STICSA somatic totals. Grey lines connect each participant's scores; boxes show medians and
+interquartile ranges; the black line shows means with 95\% confidence intervals. (B) Share of participants giving
+each answer to the eleven somatic items before (top) and after (bottom) the film.}
+\end{figure}
+
+\subsubsection{Affective Time Course (H2)}
+
+All four segment contrasts went in the predicted direction and remained significant after Holm correction
+(Figure~\ref{fig:segments}). Compared with the baseline, arousal was higher during the rise, by \val{H2a:diff}
+points on the 0--100 scale, \val{H2a:report} (H2a), and higher still during the plateau, by \val{H2b:diff} points,
+\val{H2b:report} (H2b). From the plateau to the return, arousal fell by \val{H2c:diffabs} points,
+\val{H2c:report} (H2c). Valence was lower on the plateau than at baseline, by \val{H2d:diffabs} points,
+\val{H2d:report} (H2d). The arousal effects were larger than the valence effect, partly because valence ratings
+varied more between participants on the plateau ($SD$~=~\val{valence_plateau_sd}, against
+\val{arousal_plateau_sd} for arousal).
+
+\begin{figure}[tbp]
+\caption{Mean Ratings in the Four Preregistered Segments}
+\label{fig:segments}
+\includegraphics[width=\textwidth]{fig3_segment_means.pdf}
+\figurenote{Each thin line is one participant's segment means; the thick line shows group means with 95\%
+confidence intervals. Panel headings give the H2 contrasts with $d_z$ and Holm-adjusted $p$ values.}
+\end{figure}
+
+\subsubsection{Replication of the Group Time Course (H3)}
+
+The group-mean time series of the confirmatory sample closely followed that of the independent exploratory sample
+(Figure~\ref{fig:replication}). For arousal, \val{H3arousal:report}, and for valence, \val{H3valence:report}. In both
+cases the lower bound of the confidence interval lay well above the preregistered criterion of .50, so H3 was
+supported for both dimensions. The two arousal curves had almost the same shape but differed somewhat in level:
+the confirmatory sample rated arousal a little higher during the baseline and the final minutes, and a little lower
+on the plateau.
+
+\begin{figure}[tbp]
+\caption{Group-Mean Time Series in the Confirmatory and Exploratory Samples}
+\label{fig:replication}
+\includegraphics[width=\textwidth]{fig4_replication.pdf}
+\figurenote{Solid lines: confirmatory sample ($n$~=~\val{n_primary}); dashed lines: exploratory sample
+($n$~=~\val{n_exploratory}). Pearson $r$ is computed over the 808 one-second values; the 95\% confidence interval
+comes from a circular block bootstrap with 30-s blocks.}
+\end{figure}
+
+\subsubsection{Individual Differences (H4--H6)}
+
+Everyday fear of heights was related to how unpleasant the plateau felt, but not to how arousing it was or to the
+change in somatic anxiety (Figure~\ref{fig:correlations}). Participants with a greater fear of heights rated
+valence on the plateau as more negative, \val{H4b:report} (H4b). The predicted positive correlations with plateau
+arousal, \val{H4a:report} (H4a), and with the STICSA change, \val{H4c:report} (H4c), were not supported; the latter
+was significant only before correction.
+
+The change in somatic anxiety was related to the continuous ratings as predicted. Participants whose STICSA scores
+rose more gave higher arousal ratings over the whole film, \val{H5a:report} (H5a), and lower valence ratings,
+\val{H5b:report} (H5b).
+
+Overall anxiety reported after the film converged with both other measures. It correlated with the STICSA change,
+\val{H6a:report} (H6a), and with plateau arousal, \val{H6b:report} (H6b). Both H5 and H6 were supported.
+
+\begin{figure}[tbp]
+\caption{Individual Differences Tested in H4--H6}
+\label{fig:correlations}
+\includegraphics[width=\textwidth]{fig5_correlations.pdf}
+\figurenote{Points are participants (shifted sideways slightly so that equal scores remain visible). The black line
+and grey band show a least-squares fit with its 95\% confidence interval, drawn as a visual guide; the tests are
+Spearman correlations. Panel headings give Spearman $\rho$ with bootstrap 95\% confidence intervals and
+Holm-adjusted $p$ values.}
+\end{figure}
+
+\subsubsection{Sensitivity Analyses}
+
+Repeating every test in the two sensitivity samples did not change any conclusion (Table~\ref{tab:sensitivity}).
+The same ten directional predictions and both replication criteria were supported in each sample, and H4a and
+H4c were not supported in either. Effect sizes stayed close to those in the primary sample; the segment contrasts
+for arousal were somewhat larger when sparse and less engaged raters were removed.
+
+\input{generated/table_sensitivity.tex}
+
+\subsection{Preregistered Descriptive Analyses}
+
+The group-mean time series were highly reliable. Split-half reliability (1,000 random splits, Spearman--Brown
+corrected) was \val{rel:arousal} for arousal and \val{rel:valence} for valence.
+
+Re-estimating the segment edges in the confirmatory sample with the same piecewise-linear method placed the first
+edge at \val{edge1:est}~s (participant-bootstrap 95\% interval \val{edge1:ci}), identical to the registered value of
+\val{edge1:reg}~s, and the second at \val{edge2:est}~s \val{edge2:ci}, against \val{edge2:reg}~s registered. The third
+edge, the start of the return, came out at \val{edge3:est}~s \val{edge3:ci}, about half a minute earlier than the
+registered \val{edge3:reg}~s, which lies just outside the interval. The first two intervals are wide, reflecting a
+gradual rise rather than a sharp change. As preregistered, all tests used the fixed edges.
+
+\subsection{Exploratory Analysis: The Affect Grid by Film Phase}
+
+The following analysis was not preregistered as a test and is purely descriptive. Figure~\ref{fig:grid} shows where
+on the valence--arousal grid participants spent their time in each segment. At baseline, ratings were spread around
+the centre of the grid with a slight lean towards low arousal. During the rise they moved upwards and to the left.
+On the plateau most participants converged on the high-arousal, unpleasant corner, which was by far the most
+occupied region of the grid at any point in the film. During the return they dispersed again around the centre,
+with roughly as many participants on the pleasant as on the unpleasant side.
+
+\begin{figure}[tbp]
+\caption{Occupancy of the Affect Grid in Each Film Segment (Exploratory)}
+\label{fig:grid}
+\includegraphics[width=\textwidth]{fig6_affect_grid_by_phase.pdf}
+\figurenote{Blue shading shows the share of viewing time spent in each region of the grid (smoothed; each
+participant weighted equally; same colour scale in all panels). Dots are participants' mean ratings in the segment;
+the open circle is the group mean with 95\% confidence intervals.}
+\end{figure}
+
+\subsection{Exploratory Analysis: Age and Sex}
+
+Age and sex were available for \val{n_demo} participants of the primary sample (\val{n_demo_female} female,
+\val{n_demo_male} male). The film affected women and men, and younger and older participants, in much the same way
+(Table~\ref{tab:agesex}).
+
+The STICSA somatic score rose by \val{change_female_mean} points on average in women and \val{change_male_mean}
+points in men. Adjusted for age, the difference (female minus male) was \val{agesex:change_sex}, and the change did not
+depend on age (per 10 years, \val{agesex:change_age}; Figure~\ref{fig:agesex}A and B).
+
+The time course of the ratings did not differ by sex or by age (Figures~\ref{fig:sexcourse} and \ref{fig:agesex}C
+and D). For arousal, neither the segment~$\times$~sex interaction (\val{agesex:arousal:sex_x_segment}) nor the
+segment~$\times$~age interaction (\val{agesex:arousal:age_x_segment}) was significant, and the same was true for
+valence (sex: \val{agesex:valence:sex_x_segment}; age: \val{agesex:valence:age_x_segment}). The clustered-regression
+check agreed in every case (Table~\ref{tab:agesex}). Averaged over the film, women's valence ratings were somewhat
+lower than men's, by \val{agesex:valence:female_minus_male}; the difference was largest during the rise
+(\val{agesex:valence_rise_diff}), but neither was significant.
+
+\input{generated/table_age_sex.tex}
+
+\begin{figure}[tbp]
+\caption{Group-Mean Ratings by Sex (Exploratory)}
+\label{fig:sexcourse}
+\includegraphics[width=\textwidth]{fig7_time_course_by_sex.pdf}
+\figurenote{Group means with 95\% confidence intervals for female ($n$~=~\val{n_demo_female}, solid) and male
+($n$~=~\val{n_demo_male}, dashed) participants. Shading marks the four preregistered segments.}
+\end{figure}
+
+\begin{figure}[tbp]
+\caption{Somatic Anxiety Change and Segment Means by Sex and Age (Exploratory)}
+\label{fig:agesex}
+\includegraphics[width=\textwidth]{fig8_age_sex.pdf}
+\figurenote{(A) STICSA somatic change by sex; points are participants, black markers means with 95\% confidence
+intervals. (B) STICSA somatic change by age, with a least-squares line and 95\% confidence band as a visual guide;
+points are jittered slightly because both variables take whole-number values. (C, D) Segment means of arousal and
+valence by sex (means with 95\% confidence intervals). $n$~=~\val{n_demo}.}
+\end{figure}
+
+\subsection{Notes on the Preregistered Plan}
+
+Five points should be read alongside the preregistration. First, the registration reported 123 usable confirmatory
+participants at submission; one further participant completed the study after that count was made, had complete
+data and passed all exclusion rules, and was included as registered ($N$~=~\val{n_primary}). Second, the fixed
+segment edges were estimated on 22 exploratory participants under the quality-control rules in use at the time; under
+the final registered rules, 21 of them are usable, and these 21 form the reference curve for H3. Third, one
+participant's Prolific rejection was reversed for payment reasons after the registration; the participant remains in
+the registered rejection set for the sensitivity analysis. Fourth, \enquote{reported not watching attentively} was
+implemented as answering \enquote{No} to the attentiveness question; participants who answered \enquote{Mostly}
+were retained. Fifth, in the exploratory age and sex analyses, the first confirmatory run reported the mixed models
+as not converging. This was caused by the optimization algorithm, which failed on these data while three other
+algorithms converged to the same solution; the code was corrected to try algorithms in turn, the model and decision
+rule were left unchanged, and the analysis was rerun. The registration's example of mixed models over the 1-Hz series
+was not implemented; the models use segment means.
+
+\end{document}
