@@ -1,8 +1,28 @@
-# Heights film: continuous valence and arousal ratings
+# Moment-to-Moment Affect During Film-Induced Somatic Anxiety
 
-Analysis for the online validation study of a first-person heights film as an induction of somatic anxiety and
-a reproducible affective time course. Participants (Prolific) watched the muted 13.5-minute film while rating
-valence and arousal continuously on a 2D affect grid, and filled in the STICSA somatic scale before and after.
+Micah Allen, Center of Functionally Integrative Neuroscience, Aarhus University
+([ORCID 0000-0001-9399-4179](https://orcid.org/0000-0001-9399-4179)). Submitted to *Cognition and Emotion*
+(Brief Article), October 2026.
+
+This repository holds the data, analysis code, study materials and manuscript.
+
+## Abstract
+
+Studying sustained anxiety requires tracing how unpleasant arousal develops, persists and subsides over an unfolding
+experience. We characterised a 13.5-min first-person film of people undertaking dangerous activities at height as an
+induction for this purpose. Using an open-source browser-based platform developed for this study, online participants
+continuously rated their own valence and arousal and completed the somatic subscale of the State-Trait Inventory for
+Cognitive and Somatic Anxiety before and after viewing. In the confirmatory sample (*N* = 124), arousal was elevated
+during the film's rising and sustained phases and declined towards the end, while valence was more unpleasant during
+the sustained phase than during the opening. Group-mean trajectories closely reproduced the temporal shape observed in
+an exploratory sample (*n* = 21; arousal *r* = .99; valence *r* = .94). Somatic anxiety increased after viewing
+(*d*<sub>z</sub> = 1.03). Participants reporting larger increases rated the film as more arousing (*ρ* = .24) and more
+unpleasant (*ρ* = −.38). The open-source platform and reference trajectories provide a reusable resource for studying
+the temporal course of affect during a sustained anxiety induction.
+
+*Keywords:* emotion induction, film, continuous ratings, valence and arousal, somatic anxiety
+
+## Links
 
 - **Archive:** [doi:10.5281/zenodo.23151387](https://doi.org/10.5281/zenodo.23151387) (Zenodo; this DOI always
   points to the latest version; v1.0.0, the submission version, is 10.5281/zenodo.23151388).
