@@ -1,5 +1,8 @@
 # Moment-to-Moment Affect During Film-Induced Somatic Anxiety
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23151387.svg)](https://doi.org/10.5281/zenodo.23151387)
+[![Preregistered](https://img.shields.io/badge/preregistered-osf.io%2Fs2yvb-blue?logo=osf)](https://osf.io/s2yvb)
+
 Micah Allen, Center of Functionally Integrative Neuroscience, Aarhus University
 ([ORCID 0000-0001-9399-4179](https://orcid.org/0000-0001-9399-4179)). Submitted to *Cognition and Emotion*
 (Brief Article), October 2026.
