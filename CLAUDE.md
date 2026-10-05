@@ -36,10 +36,12 @@ The rating task, deployment, data download and QC live in the tooling repo (vmp_
 
 ## Data
 - `data/processed/` is participant data (age, sex, questionnaires, ratings; pseudonyms P001..., no Prolific IDs
-  or free text). Micah decided on 2026-10-05 to publish it with the code: participant codes were redacted from the
-  logs, the public repository starts from a fresh history (the full history stays in the private
-  heights-film-paper-private), and the pseudonym key in the tooling repo is deleted after release. Never add
-  identifying information (Prolific IDs or prefixes, free text, dates of participation).
+  or free text), published with the code since 2026-10-05. The raw results and pseudonym key stay in the private
+  tooling repo; while they exist the published data are pseudonymised, not anonymous (retention decision open in
+  TASKS.md). Never add identifying information (Prolific IDs or prefixes, free text, dates of participation).
+- Repositories: work in the public `heights-film-paper` (local `~/vibes/heights-film-paper-public`). The private
+  `heights-film-paper-private` holds the full development history; its `main` has been kept identical so far.
+  Never push the private history to the public repo.
 - Never edit files in `data/processed/`; re-export from the tooling repo instead.
 - If an input is missing, report it. Do not invent replacement values.
 

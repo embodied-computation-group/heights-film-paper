@@ -26,6 +26,8 @@
 
 ## Submission (Cognition and Emotion, Brief Article)
 
+**Submitted 2026-10-05** (3,549 words abstract to references; 22 references). Awaiting the editor.
+
 Final manuscript and supplement: `manuscript/manuscript.tex`, `manuscript/supplement.tex` (the brief-report revision
 of 2026-10-05; earlier drafts and revision folders are in the private history only).
 
@@ -43,11 +45,16 @@ GitHub release.
 PsyArXiv preprint szv9e_v1 (manuscript + supplement) submitted 2026-10-05, pending moderation. On acceptance of
 the paper, add the published article's DOI to the preprint (Taylor & Francis requirement).
 
-Still open before submission:
+Open:
 1. **Film permission:** request sent to the creator on 2026-10-05 (`docs/permission_email_draft.md`). If granted,
-   add the film to the archive and change "is not redistributed" in the Data Availability Statement.
-2. **Pseudonym key:** delete `data/pseudonym_key.csv` (and `data/rejection_set.txt` once no re-export is needed)
-   in the tooling repo after the release.
-3. **MindProbe:** take down the JATOS study (its public link is still live).
+   add the film to a new release and change "is not redistributed" in the Data Availability Statement.
+2. **Data retention and anonymity (decide, possibly with the AU data office):** the tooling repo keeps the raw
+   results (`data/raw/`, with Prolific IDs) and the pseudonym key. Deleting only the key does not anonymise the
+   published data, because each row can be matched to its raw file by its values. Options: keep raw data under the
+   research-integrity retention period and describe the release as pseudonymised (de-identified), or strip IDs from
+   the raw data after the retention decision. Until then the key and `data/rejection_set.txt` stay. At revision,
+   word the Data Availability Statement to match ("pseudonymised" while raw data are kept; it now says "anonymised").
+3. **MindProbe:** take down the JATOS study link (deleting the study would also delete the raw results there).
+4. **PsyArXiv:** check that moderation accepts the preprint (OSF emails); on acceptance of the paper, add its DOI.
 
 Later: make online-affect-rating configurable (questionnaires, film and questions in one config file).

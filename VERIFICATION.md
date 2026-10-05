@@ -155,3 +155,17 @@ pdftotext -layout manuscript-final.pdf manuscript-count.txt
 Split the text at the Abstract and Figure 1 page headings, remove running heads/page numbers, and count
 whitespace-separated tokens. Exclude the Abstract heading and stop before Keywords for the abstract count.
 The pre-existing counting script was left intact in accordance with the standalone-revision request.
+
+## Submission checks (2026-10-05, Claude Code)
+
+- Final PDFs: `manuscript/manuscript.pdf` (16 pages) and `supplement.pdf` (8 pages) up to date with their sources
+  (`latexmk` reports nothing to do); no `[AUTHOR TO CONFIRM]` text; no unresolved citations or references.
+- Word count, Abstract to end of References (incl. keywords and statements, excl. title and figure pages), from a
+  `pdftotext -layout` extraction: 3,549 (limit 4,000). `analysis/08_word_count.py` gives lower numbers because its
+  pypdf extraction joins some words, and its breakdown does not sum to its total; not used for the form.
+- References: 22 unique entries (the `.bbl` lists each twice). The three added references were checked against
+  Crossref records (DOI, authors, year, title, journal).
+- Zenodo: v1.0.0 = 10.5281/zenodo.23151388, v1.0.1 = 10.5281/zenodo.23152896 (concept 10.5281/zenodo.23151387),
+  metadata read back through the Zenodo API.
+- PsyArXiv: draft szv9e_v1 submitted (state `pending`); the primary file's SHA-256 on OSF equals the local merged
+  manuscript + supplement PDF.
