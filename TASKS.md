@@ -35,13 +35,15 @@ exemption letter filed at `docs/Undtagelsesbrev_v2 (English).pdf`; OSF registrat
 participant codes redacted from the logs; public repositories created from a fresh history (full history in the
 private heights-film-paper-private); the platform published as online-affect-rating (tag `v1.0-heights-film`).
 
+Done 2026-10-05: Zenodo archive of release v1.0.0, version DOI 10.5281/zenodo.23151388 (concept DOI
+10.5281/zenodo.23151387, always the latest version), cited in the Data Availability Statement. If the manuscript or
+data change before acceptance, make a new GitHub release and cite its version DOI.
+
 Still open before submission:
-1. **Zenodo:** connect heights-film-paper to Zenodo, make a release, and replace `\confirm{Zenodo DOI}` in the
-   Data Availability Statement.
-2. **Film permission:** request sent to the creator on 2026-10-05 (`docs/permission_email_draft.md`). If granted,
+1. **Film permission:** request sent to the creator on 2026-10-05 (`docs/permission_email_draft.md`). If granted,
    add the film to the archive and change "is not redistributed" in the Data Availability Statement.
-3. **Pseudonym key:** delete `data/pseudonym_key.csv` (and `data/rejection_set.txt` once no re-export is needed)
+2. **Pseudonym key:** delete `data/pseudonym_key.csv` (and `data/rejection_set.txt` once no re-export is needed)
    in the tooling repo after the release.
-4. **MindProbe:** take down the JATOS study (its public link is still live).
+3. **MindProbe:** take down the JATOS study (its public link is still live).
 
 Later: make online-affect-rating configurable (questionnaires, film and questions in one config file).
