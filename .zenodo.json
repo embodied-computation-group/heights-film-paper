@@ -1,0 +1,32 @@
+{
+  "title": "Moment-to-Moment Affect During Film-Induced Somatic Anxiety: data, analysis code and study materials",
+  "upload_type": "dataset",
+  "description": "<p>Data, analysis code, study materials and manuscript for a preregistered online study (osf.io/s2yvb) in which participants watched a muted first-person heights film (13.5 min) while rating valence and arousal continuously on an affect grid, and completed the STICSA somatic anxiety subscale before and after viewing.</p><p>Contents: pseudonymised participant data (questionnaires and 1 Hz valence and arousal time series; no Prolific IDs or free text), the analysis scripts and tests, the rating task and study settings exactly as used, the data-preparation scripts, results, and the manuscript and supplement. The film is a third-party video and is not included.</p><p>Licences: data and documents CC BY 4.0; code MIT (see LICENSE). The general rating platform is available as online-affect-rating.</p>",
+  "creators": [
+    {
+      "name": "Allen, Micah",
+      "affiliation": "Center of Functionally Integrative Neuroscience, Department of Clinical Medicine, Aarhus University",
+      "orcid": "0000-0001-9399-4179"
+    }
+  ],
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "keywords": [
+    "emotion induction",
+    "film",
+    "continuous ratings",
+    "valence and arousal",
+    "somatic anxiety"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://osf.io/s2yvb",
+      "relation": "isDocumentedBy"
+    },
+    {
+      "identifier": "https://github.com/embodied-computation-group/online-affect-rating",
+      "relation": "requires",
+      "resource_type": "software"
+    }
+  ]
+}
