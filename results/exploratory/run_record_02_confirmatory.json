@@ -1,0 +1,27 @@
+{
+  "script": "02_confirmatory.py",
+  "sample": "exploratory",
+  "seed": 20261004,
+  "settings": {
+    "n_boot": 5000,
+    "n_splits": 1000,
+    "n_boot_edges": 1000
+  },
+  "started": "2026-10-04T17:21:38+02:00",
+  "command": "analysis/02_confirmatory.py",
+  "git_commit": "bf022b3ec73f00595ebcbf0c6030344786837630",
+  "uncommitted_changes": false,
+  "inputs": {
+    "C:\\Users\\Micah\\vibes\\heights_film_paper\\data\\processed\\participants.csv": "6420576e5a9bdc3ed0de36ce48bf6d2e103dc55f10059c8dd6fd7ec9443e0e6d",
+    "C:\\Users\\Micah\\vibes\\heights_film_paper\\data\\processed\\ratings_arousal_1hz.csv": "30c33871703679a117cdc1ee634058f6f5170ff4e9c5a7504e07fd6fb0dd0afc",
+    "C:\\Users\\Micah\\vibes\\heights_film_paper\\data\\processed\\ratings_valence_1hz.csv": "011ff126fc768ffc6f27b6fb5ee68cc3e0d0cdc232ee66ed692a016c556ddc4f"
+  },
+  "python": "3.13.7",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "packages": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2"
+  }
+}

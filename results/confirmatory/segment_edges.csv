@@ -1,0 +1,4 @@
+analysis_sample,edge,registered_s,estimated_s,ci_low_s,ci_high_s,n
+primary,baseline -> rise,262,262,132.975,271.0,124
+primary,rise -> plateau,470,467,317.0,475.0,124
+primary,plateau -> return,692,660,631.0,690.0,124

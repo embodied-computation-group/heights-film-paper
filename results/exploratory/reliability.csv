@@ -1,0 +1,7 @@
+analysis_sample,rating,n,split_half_reliability
+primary,valence,21,0.9206113731569098
+primary,arousal,21,0.9743719748012486
+stricter_engagement,valence,18,0.9136476747787629
+stricter_engagement,arousal,18,0.978195794099269
+without_rejected,valence,21,0.9206113731569098
+without_rejected,arousal,21,0.9743719748012486

@@ -1,0 +1,36 @@
+\begin{table}[tbp]
+\caption{Preregistered Confirmatory Tests, Primary Sample}
+\label{tab:confirmatory}
+\begin{threeparttable}
+\footnotesize\linespread{1}\selectfont\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{3.0cm}cllll@{}}
+\toprule
+Hypothesis & Prediction & Test statistic & Effect size [95\% CI] & $p$ & $p_\mathrm{Holm}$ & Supported \\
+\midrule
+H1 & STICSA somatic: post $>$ pre & $t$(123) = 11.46 & $d_z$ = 1.03 [0.81, 1.25] & $<$ .001 & -- & Yes \\
+\addlinespace
+H2a & Arousal: rise $>$ baseline & $t$(123) = 14.67 & $d_z$ = 1.32 [1.07, 1.56] & $<$ .001 & $<$ .001 & Yes \\
+H2b & Arousal: plateau $>$ baseline & $t$(123) = 19.77 & $d_z$ = 1.78 [1.49, 2.06] & $<$ .001 & $<$ .001 & Yes \\
+H2c & Arousal: return $<$ plateau & $t$(123) = $-$14.70 & $d_z$ = $-$1.32 [$-$1.56, $-$1.08] & $<$ .001 & $<$ .001 & Yes \\
+H2d & Valence: plateau $<$ baseline & $t$(123) = $-$9.85 & $d_z$ = $-$0.88 [$-$1.09, $-$0.68] & $<$ .001 & $<$ .001 & Yes \\
+\addlinespace
+H3 arousal & Arousal curve replicates & -- & $r$ = .993 [.990, .996] & -- & -- & Yes \\
+H3 valence & Valence curve replicates & -- & $r$ = .937 [.893, .966] & -- & -- & Yes \\
+\addlinespace
+H4a & Fear of heights, plateau arousal (+) & -- & $\rho$ = .08 [$-$.09, .26] & .355 & .355 & No \\
+H4b & Fear of heights, plateau valence ($-$) & -- & $\rho$ = $-$.32 [$-$.46, $-$.16] & $<$ .001 & .001 & Yes \\
+H4c & Fear of heights, STICSA change (+) & -- & $\rho$ = .18 [.00, .35] & .049 & .098 & No \\
+\addlinespace
+H5a & STICSA change, whole-film arousal (+) & -- & $\rho$ = .24 [.05, .41] & .008 & .008 & Yes \\
+H5b & STICSA change, whole-film valence ($-$) & -- & $\rho$ = $-$.38 [$-$.51, $-$.23] & $<$ .001 & $<$ .001 & Yes \\
+\addlinespace
+H6a & Overall anxiety, STICSA change (+) & -- & $\rho$ = .56 [.44, .67] & $<$ .001 & $<$ .001 & Yes \\
+H6b & Overall anxiety, plateau arousal (+) & -- & $\rho$ = .34 [.15, .50] & $<$ .001 & $<$ .001 & Yes \\
+\bottomrule
+\end{tabular}
+\vspace{4pt}
+\begin{tablenotes}[para,flushleft]
+{\small\textit{Note.} $N$ = 124. H1 and H2: paired $t$ tests with $d_z$ and exact 95\% CIs (noncentral $t$). H3: Pearson $r$ between the confirmatory and exploratory group-mean series (808 one-second values), 95\% CI from a circular block bootstrap (30-s blocks, 5,000 resamples); supported if the lower bound exceeds .50. H4--H6: Spearman $\rho$ with percentile bootstrap 95\% CIs (5,000 resamples). Holm correction within H2 (four tests), H4 (three), H5 (two) and H6 (two); H1 is a single test. All tests two-sided; a directional hypothesis counts as supported only if significant in the predicted direction.}
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
