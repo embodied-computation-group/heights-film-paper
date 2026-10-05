@@ -29,6 +29,8 @@ the temporal course of affect during a sustained anxiety induction.
 
 - **Archive:** [doi:10.5281/zenodo.23151387](https://doi.org/10.5281/zenodo.23151387) (Zenodo; this DOI always
   points to the latest version; the submission version is release v1.0.1).
+- **Preprint:** [PsyArXiv](https://osf.io/preprints/psyarxiv/szv9e_v1) (manuscript and supplement; submitted
+  2026-10-05, visible once moderation is complete).
 - **Preregistration:** [osf.io/s2yvb](https://osf.io/s2yvb), registered 2026-10-04 (public).
   Text in [docs/preregistration.md](docs/preregistration.md); decisions and deviations in
   [docs/prereg_log.md](docs/prereg_log.md).
