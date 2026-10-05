@@ -35,9 +35,10 @@ exemption letter filed at `docs/Undtagelsesbrev_v2 (English).pdf`; OSF registrat
 participant codes redacted from the logs; public repositories created from a fresh history (full history in the
 private heights-film-paper-private); the platform published as online-affect-rating (tag `v1.0-heights-film`).
 
-Done 2026-10-05: Zenodo archive of release v1.0.0, version DOI 10.5281/zenodo.23151388 (concept DOI
-10.5281/zenodo.23151387, always the latest version), cited in the Data Availability Statement. If the manuscript or
-data change before acceptance, make a new GitHub release and cite its version DOI.
+Done 2026-10-05: Zenodo archives of releases v1.0.0 (10.5281/zenodo.23151388) and v1.0.1 (submission version,
+with the revised Discussion). The manuscript cites the concept DOI 10.5281/zenodo.23151387, which always resolves
+to the latest version, so it stays correct in every release. If anything changes before acceptance, make a new
+GitHub release.
 
 Still open before submission:
 1. **Film permission:** request sent to the creator on 2026-10-05 (`docs/permission_email_draft.md`). If granted,
