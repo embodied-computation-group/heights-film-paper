@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use these data, code or materials, please cite the preprint below."
+title: "Moment-to-Moment Affect During Film-Induced Somatic Anxiety: data, analysis code and study materials"
+type: dataset
+authors:
+  - family-names: Allen
+    given-names: Micah G.
+    orcid: "https://orcid.org/0000-0001-9399-4179"
+    affiliation: "Center of Functionally Integrative Neuroscience, Department of Clinical Medicine, Aarhus University"
+doi: 10.5281/zenodo.23151387
+repository-code: "https://github.com/embodied-computation-group/heights-film-paper"
+license:
+  - MIT
+  - CC-BY-4.0
+version: 1.0.1
+date-released: 2026-10-05
+keywords:
+  - emotion induction
+  - film
+  - continuous ratings
+  - valence and arousal
+  - somatic anxiety
+preferred-citation:
+  type: article
+  title: "Moment-to-Moment Affect During Film-Induced Somatic Anxiety"
+  authors:
+    - family-names: Allen
+      given-names: Micah G.
+      orcid: "https://orcid.org/0000-0001-9399-4179"
+  journal: PsyArXiv
+  year: 2026
+  month: 10
+  doi: 10.31234/osf.io/szv9e_v1
+  url: "https://osf.io/preprints/psyarxiv/szv9e_v1"
