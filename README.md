@@ -2,6 +2,30 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23151387.svg)](https://doi.org/10.5281/zenodo.23151387)
 [![Preregistered](https://img.shields.io/badge/preregistered-osf.io%2Fs2yvb-blue?logo=osf)](https://osf.io/s2yvb)
+[![Preprint](https://img.shields.io/badge/preprint-PsyArXiv-blue?logo=osf)](https://doi.org/10.31234/osf.io/szv9e_v1)
+
+> **Please cite:** Allen, M. G. (2026). *Moment-to-moment affect during film-induced somatic anxiety* [Preprint].
+> PsyArXiv. https://doi.org/10.31234/osf.io/szv9e_v1
+
+<details>
+<summary>BibTeX</summary>
+
+```bibtex
+@article{allen2026heights,
+  title   = {Moment-to-Moment Affect During Film-Induced Somatic Anxiety},
+  author  = {Allen, Micah G.},
+  journal = {PsyArXiv},
+  year    = {2026},
+  doi     = {10.31234/osf.io/szv9e_v1},
+  url     = {https://osf.io/preprints/psyarxiv/szv9e_v1}
+}
+```
+
+</details>
+
+To cite the data and code themselves, use the Zenodo archive
+([doi:10.5281/zenodo.23151387](https://doi.org/10.5281/zenodo.23151387)). GitHub's "Cite this repository" button
+(from [CITATION.cff](CITATION.cff)) gives both.
 
 Micah G. Allen, Center of Functionally Integrative Neuroscience, Aarhus University
 ([ORCID 0000-0001-9399-4179](https://orcid.org/0000-0001-9399-4179)). Submitted to *Cognition and Emotion*
@@ -29,8 +53,8 @@ the temporal course of affect during a sustained anxiety induction.
 
 - **Archive:** [doi:10.5281/zenodo.23151387](https://doi.org/10.5281/zenodo.23151387) (Zenodo; this DOI always
   points to the latest version; the submission version is release v1.0.1).
-- **Preprint:** [PsyArXiv](https://osf.io/preprints/psyarxiv/szv9e_v1) (manuscript and supplement; submitted
-  2026-10-05, visible once moderation is complete).
+- **Preprint:** [doi:10.31234/osf.io/szv9e_v1](https://doi.org/10.31234/osf.io/szv9e_v1) (PsyArXiv; manuscript
+  and supplement, posted 2026-10-05).
 - **Preregistration:** [osf.io/s2yvb](https://osf.io/s2yvb), registered 2026-10-04 (public).
   Text in [docs/preregistration.md](docs/preregistration.md); decisions and deviations in
   [docs/prereg_log.md](docs/prereg_log.md).

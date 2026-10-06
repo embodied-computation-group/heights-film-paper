@@ -42,7 +42,8 @@ submission version, with the revised Discussion). The manuscript cites the conce
 to the latest version, so it stays correct in every release. If anything changes before acceptance, make a new
 GitHub release.
 
-PsyArXiv preprint szv9e_v1 (manuscript + supplement) submitted 2026-10-05, pending moderation. On acceptance of
+PsyArXiv preprint szv9e_v1 (manuscript + supplement) public, doi:10.31234/osf.io/szv9e_v1; README citation block
+and CITATION.cff added 2026-10-06. On acceptance of
 the paper, add the published article's DOI to the preprint (Taylor & Francis requirement).
 
 Open:
@@ -55,6 +56,6 @@ Open:
    the raw data after the retention decision. Until then the key and `data/rejection_set.txt` stay. At revision,
    word the Data Availability Statement to match ("pseudonymised" while raw data are kept; it now says "anonymised").
 3. **MindProbe:** take down the JATOS study link (deleting the study would also delete the raw results there).
-4. **PsyArXiv:** check that moderation accepts the preprint (OSF emails); on acceptance of the paper, add its DOI.
+4. **PsyArXiv:** on acceptance of the paper, add its DOI to the preprint, README and CITATION.cff.
 
 Later: make online-affect-rating configurable (questionnaires, film and questions in one config file).
