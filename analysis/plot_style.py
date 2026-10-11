@@ -36,7 +36,7 @@ PARTICIPANT_ALPHA = 0.18  # thin, faint lines/points for single participants
 # Journal artwork rules (Affective Science): at most 174 mm wide and 234 mm high, lettering 8-12 pt with little
 # variation, lowercase panel letters, no titles inside figures. Figures are drawn at their printed size.
 MAX_WIDTH_MM, MAX_HEIGHT_MM = 174, 234
-FULL_WIDTH = MAX_WIDTH_MM / 25.4  # inches
+FULL_WIDTH = 6.5  # inches (165 mm): within the limit and the text width of both documents, so no rescaling
 LETTER_SIZE = 10                  # panel letters (a, b, c), bold
 PRINT_DPI = 600                   # combination art (colour, lettering) needs at least 600 dpi
 

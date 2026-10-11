@@ -63,7 +63,7 @@ def sticsa_table(measures, people):
 # ------------------------------------------------------------------------------------------- figures
 
 def time_course_by_sex(valence, arousal, people, sample, out):
-    fig, axes = plt.subplots(2, 1, figsize=(7.2, 5.0), sharex=True)
+    fig, axes = plt.subplots(2, 1, figsize=(plot_style.FULL_WIDTH, 4.6), sharex=True, layout="constrained")
     seconds = np.arange(study_data.FILM_SECONDS)
     for ax, rating, ratings in ((axes[0], "arousal", arousal), (axes[1], "valence", valence)):
         plot_style.shade_segments(ax, label=ax is axes[0])
@@ -78,19 +78,22 @@ def time_course_by_sex(valence, arousal, people, sample, out):
                     label=f"{sex.lower()} (n = {len(rows)})")
         ax.set_ylim(0, 100)
         ax.set_ylabel(plot_style.RATING_LABELS[rating])
-        ax.legend(loc="lower left", fontsize=8)
+        ax.legend(loc="lower left")
+    for ax, letter in zip(axes, "ab"):
+        plot_style.panel_letter(ax, letter, x=-0.1, y=1.06)
     plot_style.minutes_axis(axes[1])
-    axes[0].set_title("Exploratory: group-mean ratings by sex (mean with 95% CI)", loc="left", pad=14)
     note(fig, sample)
     plot_style.save(fig, out / "fig7_time_course_by_sex")
 
 
 def age_sex_panels(measures, people, sample, out):
     data = demographics.complete_cases(people[["sex", "age"]].join(measures))
-    fig, axes = plt.subplots(1, 4, figsize=(10.5, 3.0), gridspec_kw={"width_ratios": [0.8, 1, 1.2, 1.2]})
+    # 2 x 2 at the printed width; letters a-d, no titles (journal rule): the caption describes the panels.
+    fig, axes = plt.subplots(2, 2, figsize=(plot_style.FULL_WIDTH, 5.6), layout="constrained")
+    axes = axes.ravel()
     rng = np.random.default_rng(0)
 
-    # A: STICSA change by sex
+    # a: STICSA change by sex
     ax = axes[0]
     for i, sex in enumerate(("Female", "Male")):
         values = data.loc[data["sex"] == sex, "sticsa_change"]
@@ -101,25 +104,24 @@ def age_sex_panels(measures, people, sample, out):
                     lw=1.5)
     ax.set_xticks([0, 1], ["Female", "Male"])
     ax.set_xlim(-0.6, 1.6)
-    ax.set_ylabel("STICSA somatic change (points)")
-    ax.set_title("A  STICSA change by sex", loc="left", fontsize=8.5)
+    ax.set_ylabel("STICSA change (points)")
+    plot_style.panel_letter(ax, "a", x=-0.2)
 
-    # B: STICSA change by age
+    # b: STICSA change by age
     ax = axes[1]
     # Age and change are whole numbers, so some people share a position: a small jitter keeps every point visible.
     ax.scatter(data["age"] + rng.uniform(-0.4, 0.4, len(data)), data["sticsa_change"] + rng.uniform(-0.3, 0.3, len(data)),
                s=16, color=plot_style.TEXT_SOFT, alpha=0.6, edgecolor="white", linewidth=0.4)
-    ax.text(0.02, 0.98, f"n = {len(data)}", transform=ax.transAxes, va="top", fontsize=7.5,
-            color=plot_style.TEXT_SOFT)
     grid = np.linspace(data["age"].min(), data["age"].max(), 100)
     fit, low, high = stats_tools.linear_fit_band(data["age"], data["sticsa_change"], grid)
     ax.fill_between(grid, low, high, color=plot_style.TEXT, alpha=0.12, lw=0)
     ax.plot(grid, fit, color=plot_style.TEXT, lw=1.3)
     ax.set_xlabel("Age (years)")
-    ax.set_title("B  STICSA change by age", loc="left", fontsize=8.5)
+    ax.set_ylabel("STICSA change (points)")
+    plot_style.panel_letter(ax, "b", x=-0.2)
 
-    # C, D: segment means by sex
-    for ax, rating, letter in ((axes[2], "arousal", "C"), (axes[3], "valence", "D")):
+    # c, d: segment means by sex
+    for ax, rating, letter in ((axes[2], "arousal", "c"), (axes[3], "valence", "d")):
         for shift, sex in ((-0.08, "Female"), (0.08, "Male")):
             values = data.loc[data["sex"] == sex, [f"{rating}_{s}" for s in study_data.SEGMENTS]]
             means = values.mean()
@@ -127,20 +129,21 @@ def age_sex_panels(measures, people, sample, out):
             ax.errorbar(np.arange(4) + shift, means, yerr=half_widths, color=plot_style.SEX_COLOURS[sex],
                         ls=plot_style.SEX_LINES[sex], marker="o", ms=5, mfc="white", capsize=3, lw=1.5,
                         label=sex.lower())
-        ax.set_xticks(range(4), list(study_data.SEGMENTS), fontsize=7.5)
+        ax.set_xticks(range(4), list(study_data.SEGMENTS))
         ax.set_ylim(0, 100)
-        ax.set_ylabel(f"{rating.capitalize()} segment mean (0–100)")
-        ax.set_title(f"{letter}  {rating.capitalize()} by sex (mean ± 95% CI)", loc="left", fontsize=8.5)
-        ax.legend(fontsize=7, loc="lower center")
-    fig.tight_layout()
+        ax.set_ylabel(f"{rating.capitalize()}, segment mean (0–100)")
+        plot_style.panel_letter(ax, letter, x=-0.2)
+        ax.legend(loc="lower center")
     note(fig, sample)
     plot_style.save(fig, out / "fig8_age_sex")
 
 
 def note(fig, sample):
-    text = "EXPLORATORY SAMPLE – development run" if sample == "exploratory" else "Confirmatory sample"
-    fig.text(0.995, 0.005, f"{text}; exploratory analysis", ha="right", va="bottom", fontsize=7,
-             color=plot_style.TEXT_SOFT)
+    """Mark development figures (exploratory sample). Confirmatory figures go into the Online Resource, whose captions
+    say that the analysis is exploratory."""
+    if sample == "exploratory":
+        fig.text(0.995, 0.005, "EXPLORATORY SAMPLE – development run; exploratory analysis", ha="right",
+                 va="bottom", color=plot_style.TEXT_SOFT)
 
 
 def main():

@@ -76,7 +76,9 @@ def main():
         means[name] = (segment_valence.mean(axis=1), segment_arousal.mean(axis=1))
     highest = max(grid.max() for grid in maps.values())
 
-    fig, axes = plt.subplots(1, 4, figsize=(10.5, 3.0))
+    # 2 x 2 panels at the printed width; no title inside the figure (journal rule), the caption says what it shows.
+    fig, axes = plt.subplots(2, 2, figsize=(plot_style.FULL_WIDTH, 6.2), layout="constrained")
+    axes = axes.ravel()
     for i, (ax, name) in enumerate(zip(axes, study_data.SEGMENTS)):
         image = ax.imshow(maps[name].T, origin="lower", extent=[0, 100, 0, 100], cmap="Blues",
                           norm=PowerNorm(gamma=0.6, vmin=0, vmax=highest), interpolation="bilinear", zorder=0)
@@ -87,18 +89,17 @@ def main():
                     yerr=half_width_95(person_arousal), fmt="o", color=plot_style.TEXT, mfc="white", mew=1.6, ms=7,
                     capsize=3, lw=1.4, zorder=4, label="group mean ± 95% CI" if i == 0 else None)
         start, end = study_data.SEGMENTS[name]
-        style_grid(ax, show_arousal_labels=i == 0)
-        ax.set_title(f"{i + 1} {name}  {mm_ss(start)}–{mm_ss(end)}", loc="left", fontsize=9)
+        style_grid(ax, show_arousal_labels=i % 2 == 0)
+        plot_style.panel_letter(ax, "abcd"[i], x=-0.12)
+        ax.text(0.0, 1.02, f"   {name} {mm_ss(start)}–{mm_ss(end)}", transform=ax.transAxes, va="bottom",
+                color=plot_style.TEXT_SOFT)
 
-    axes[0].legend(loc="lower left", fontsize=6.5, frameon=True, framealpha=0.9, edgecolor="none")
-    fig.subplots_adjust(left=0.06, right=0.89, top=0.86, bottom=0.15, wspace=0.08)
-    colour_bar = fig.colorbar(image, cax=fig.add_axes([0.905, 0.2, 0.01, 0.55]))
-    colour_bar.set_label("% of segment time per 2×2 cell\n(smoothed; participants weighted equally)", fontsize=7)
-    colour_bar.ax.tick_params(labelsize=7)
-    fig.suptitle(f"Affect grid by film phase (n = {len(rows)}; registered segments; shared colour scale) – "
-                 "exploratory, descriptive", x=0.01, ha="left", fontsize=9.5)
-    note = ("EXPLORATORY SAMPLE – development run" if args.sample == "exploratory" else "Confirmatory sample")
-    fig.text(0.995, 0.005, note, ha="right", va="bottom", fontsize=7, color=plot_style.TEXT_SOFT)
+    axes[0].legend(loc="lower left", frameon=True, framealpha=0.9, edgecolor="none")
+    colour_bar = fig.colorbar(image, ax=list(axes), shrink=0.5)
+    colour_bar.set_label("% of segment time per 2×2 cell")
+    if args.sample == "exploratory":
+        fig.text(0.995, 0.005, "EXPLORATORY SAMPLE – development run", ha="right", va="bottom",
+                 color=plot_style.TEXT_SOFT)
     plot_style.save(fig, out / "figures" / "fig6_affect_grid_by_phase")
     run_record.save_record(record, out)
 

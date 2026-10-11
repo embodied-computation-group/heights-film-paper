@@ -69,26 +69,26 @@ the temporal course of affect during a sustained anxiety induction.
 
 ## Figures
 
-**The rating task (Supplementary Figure S1).** Participants moved a dot within the affect grid in the corner of the
+**The rating task (Online Resource 1, Fig. S2).** Participants moved a dot within the affect grid in the corner of the
 video: left to right for unpleasant to pleasant, down to up for low to high activation. Film frame at 10:36 with the
 grid redrawn as in the task; the dot is the confirmatory sample's mean rating at that moment.
 
 ![The rating screen during the film](manuscript/figures/task_illustration.png)
 
-**Figure 1. Continuous arousal and valence ratings over the film.** Thin lines are individual participants of the
+**Figure 1. The rating screen (a) and continuous arousal (b) and valence (c) over the film.** Thin lines are individual participants of the
 confirmatory sample; the thick line is the group mean with its 95% confidence interval (N = 124); the dashed line is
 the exploratory sample's group mean (n = 21). Shading marks the four preregistered segments.
 
-![Continuous arousal and valence ratings over the film](manuscript/figures/figure1.png)
+![Continuous arousal and valence ratings over the film](manuscript/figures/Fig1_nostill.png)
 
-**Figure 2. Somatic anxiety before and after the film.** (A) STICSA somatic totals (11–44) before and after; grey lines
+**Figure 2. Somatic anxiety before and after the film.** (a) STICSA somatic totals (11–44) before and after; grey lines
 connect each participant's scores, boxes show medians and interquartile ranges, and the black line shows means with
-95% confidence intervals. (B) Share of participants giving each answer to the
-eleven somatic items, before (top) and after (bottom).
+95% confidence intervals. (b) Share of participants giving each answer to the
+eleven somatic items, before (top) and after (bottom). (c, d) STICSA change against whole-film arousal and valence.
 
-![Somatic anxiety before and after the film](manuscript/figures/figure2.png)
+![Somatic anxiety before and after the film](manuscript/figures/Fig2.png)
 
-**Affect-grid occupancy by segment (Supplementary Figure S5, exploratory).** Blue shading shows the share of viewing
+**Affect-grid occupancy by segment (Online Resource 1, Fig. S5, exploratory).** Shading shows the share of viewing
 time in each region of the grid; dots are participants' mean ratings; the open circle is the group mean with 95%
 confidence intervals.
 

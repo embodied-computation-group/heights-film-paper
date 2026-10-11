@@ -1,13 +1,13 @@
-"""Step 7: the two figures of the Brief Article (Cognition and Emotion allows two tables/figures in total).
+"""Step 7: Figure 2 of the manuscript (somatic anxiety), and the time-course panels reused by Figure 1.
 
-  Figure 2  somatic anxiety: (A) STICSA somatic totals before and after the film, (B) item-level responses
-            (as fig2_sticsa from 03_figures.py, without the sample note), (C, D) STICSA change against whole-film
-            mean arousal and valence (registered H5a, H5b)
-  Figure 1  continuous ratings: group-mean arousal and valence over the film (confirmatory sample, 95% CI;
-            participants as faint lines), with the exploratory sample's group mean overlaid (dashed)
+  Fig2  (a) STICSA somatic totals before and after the film, (b) item-level responses (as fig2_sticsa from
+        03_figures.py), (c, d) STICSA change against whole-film mean arousal and valence (registered H5a, H5b).
+        The statistics are in the caption (journal rule: no titles or statistics inside figures).
+  time_course_panel() draws panels b and c of Figure 1 (12_overview_figure.py).
 
 Confirmatory sample, primary analysis sample. Run:  uv run python analysis/07_manuscript_figure.py
-Writes manuscript/figures/figure1 and figure2 (.pdf and .png at 600 dpi) and a run record.
+Writes manuscript/figures/Fig2 (.pdf, and .png at 600 dpi; 165 mm wide) and a run record.
+(The Brief Article's two-panel time-course figure, figure1, was replaced by Figure 1 of 12_overview_figure.py.)
 """
 import importlib.util
 import sys
@@ -24,7 +24,6 @@ from analysis import hypotheses, plot_style, run_record, study_data  # noqa: E40
 
 OUT = ANALYSIS.parent / "manuscript" / "figures"
 RESULTS = ANALYSIS.parent / "results" / "confirmatory"
-DPI = 600  # journal production: 300 dpi colour minimum
 
 
 def load_figure_script():
@@ -54,51 +53,27 @@ def time_course_panel(ax, ratings, confirmatory, exploratory, rating, show_segme
     ax.plot(seconds, ratings[exploratory].mean(axis=0), color=plot_style.TEXT, lw=0.9, ls="--", zorder=4,
             label=f"Exploratory (n = {len(exploratory)})")
     ax.set_ylim(0, 100)
-    ax.set_ylabel(f"{rating.capitalize()} (0–100)", fontsize=8)
-
-
-def time_course_figure(valence, arousal, confirmatory, exploratory):
-    fig, axes = plt.subplots(2, 1, figsize=(6.9, 4.8), sharex=True)
-    time_course_panel(axes[0], arousal, confirmatory, exploratory, "arousal", show_segment_names=True)
-    time_course_panel(axes[1], valence, confirmatory, exploratory, "valence", show_segment_names=False)
-    axes[1].axhline(50, color=plot_style.GRID, lw=0.8, zorder=1)
-    plot_style.minutes_axis(axes[1])
-    axes[0].legend(loc="lower right", fontsize=7, handlelength=2.2)
-    for ax, letter in zip(axes, "AB"):
-        ax.text(-0.08, 1.03, letter, transform=ax.transAxes, fontsize=11, fontweight="bold", va="bottom")
-    fig.tight_layout()
-    return fig
+    ax.set_ylabel(f"{rating.capitalize()} (0–100)")
 
 
 def main():
     record = run_record.make_record("07_manuscript_figure.py", "confirmatory", seed=None,
                                     inputs=[*sorted(study_data.DATA.glob("*.csv")), RESULTS / "hypothesis_tests.csv"])
     plot_style.use()
-    plt.rcParams["savefig.dpi"] = DPI
     participants, valence, arousal = study_data.load()
     measures = hypotheses.participant_measures(participants, valence, arousal)
     primary = study_data.analysis_samples(participants[participants["sample"] == "confirmatory"])["primary"]
-    exploratory = participants.index[(participants["sample"] == "exploratory") & study_data.is_usable(participants)]
     OUT.mkdir(parents=True, exist_ok=True)
 
     # Figure 2: STICSA (reuses the figure function from 03_figures.py)
     figures_03 = load_figure_script()
     tests = pd.read_csv(RESULTS / "hypothesis_tests.csv").query("analysis_sample == 'primary'")
     tests = tests.set_index("hypothesis", drop=False)
-    h1 = tests.loc[["H1"]]
     h5_rows = [tests.loc["H5a"], tests.loc["H5b"]]
     items = participants.loc[primary.index, [c for c in participants.columns if c.startswith("sticsa_") and "_item" in c]]
-    figures_03.sticsa(measures.loc[primary.index], items, h1.iloc[0], "manuscript", OUT, h5_rows=h5_rows)
-    for suffix in (".pdf", ".png"):
-        (OUT / f"fig2_sticsa{suffix}").replace(OUT / f"figure2{suffix}")
-
-    # Figure 1: time course
-    fig = time_course_figure(valence, arousal, primary.index, exploratory)
-    for suffix in (".pdf", ".png"):
-        fig.savefig(OUT / f"figure1{suffix}", dpi=DPI, bbox_inches="tight")
-    plt.close(fig)
+    figures_03.sticsa(measures.loc[primary.index], items, tests.loc["H1"], "manuscript", OUT, h5_rows=h5_rows,
+                      path=OUT / "Fig2")
     run_record.save_record(record, OUT)
-    print("wrote", OUT / "figure1.pdf (time course) and", OUT / "figure2.pdf (STICSA)")
 
 
 if __name__ == "__main__":

@@ -5,9 +5,9 @@
   "settings": {
     "second": 636
   },
-  "started": "2026-10-10T17:39:20+02:00",
+  "started": "2026-10-11T06:36:32+02:00",
   "command": "analysis/12_overview_figure.py",
-  "git_commit": "3ff22fa4093d8eb511bd860e04e177ce9c8aa0b4",
+  "git_commit": "2360634630cb8ab32dbb178846cd48966947cf05",
   "uncommitted_changes": true,
   "inputs": {
     "C:\\Users\\Micah\\vibes\\heights-film-paper-public\\data\\processed\\participants.csv": "6420576e5a9bdc3ed0de36ce48bf6d2e103dc55f10059c8dd6fd7ec9443e0e6d",

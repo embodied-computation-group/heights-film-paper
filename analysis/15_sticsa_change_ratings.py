@@ -10,7 +10,7 @@ Holm adjustment over the eight correlations is added to the table as a check.
 Run:  uv run python analysis/15_sticsa_change_ratings.py
 
 Writes results/pooled/exploratory_sticsa_by_segment.csv, results/pooled/figures/fig9_sticsa_by_segment,
-Figure 3 of the manuscript (manuscript/figures/figure3) and manuscript/generated/sticsa_segment_numbers.tex
+Figure 3 of the manuscript (manuscript/figures/Fig3, print size) and manuscript/generated/sticsa_segment_numbers.tex
 (\\val{xseg:...} keys).
 """
 import sys
@@ -43,11 +43,13 @@ def correlations_by_segment(measures):
     return table
 
 
-def figure(measures, table, note, path):
-    """Top row arousal, bottom row valence; one column per segment, shaded as in the other figures."""
+def figure(measures, table, note, path, journal=False):
+    """Top row arousal, bottom row valence; one column per segment, shaded as in the other figures.
+    The statistics are in the text and caption, not in the figure (journal rule). `journal`: save at print size."""
     jitter = np.random.default_rng(0)  # only moves points sideways so they do not hide each other
     segments = list(study_data.SEGMENTS)
-    fig, axes = plt.subplots(2, len(segments), figsize=(9.6, 5.0), sharex=True, sharey=True)
+    fig, axes = plt.subplots(2, len(segments), figsize=(plot_style.FULL_WIDTH, 4.0), sharex=True, sharey=True,
+                             layout="constrained")
     for row, (rating, (label, colour)) in enumerate(RATINGS.items()):
         for col, segment in enumerate(segments):
             ax = axes[row, col]
@@ -61,20 +63,21 @@ def figure(measures, table, note, path):
             ax.fill_between(grid, low, high, color=plot_style.TEXT, alpha=0.2, lw=0, zorder=2)
             ax.plot(grid, fit, color=plot_style.TEXT, lw=1.3, zorder=3)
             ax.set_facecolor(plot_style.SEGMENT_SHADES[segment])
-            result = table.set_index(["rating", "segment"]).loc[(rating, segment)]
-            start, end = study_data.SEGMENTS[segment]
-            heading = f"{segment.capitalize()} ({start}–{end} s)\n" if row == 0 else ""
-            ax.set_title(f"{heading}ρ = {result['rho']:.2f}, 95% CI [{result['ci_low']:.2f}, {result['ci_high']:.2f}]",
-                         loc="left", fontsize=7.5)
+            if row == 0:  # segment names along the top, as in Figure 1
+                start, end = study_data.SEGMENTS[segment]
+                ax.text(0.5, 1.03, f"{segment} ({start}–{end} s)", transform=ax.transAxes, ha="center",
+                        va="bottom", color=plot_style.TEXT_SOFT)
             ax.set_ylim(-3, 103)
             if col == 0:
-                ax.set_ylabel(f"Segment mean {label[0].lower()}{label[1:]}", fontsize=8)
+                ax.set_ylabel(label)
             if row == 1:
-                ax.set_xlabel("STICSA change (points)", fontsize=8)
-    fig.tight_layout()
+                ax.set_xlabel("STICSA change")
     if note:
-        fig.text(0.995, 0.005, note, ha="right", va="bottom", fontsize=7, color=plot_style.TEXT_SOFT)
-    plot_style.save(fig, path)
+        fig.text(0.995, 0.005, note, ha="right", va="bottom", color=plot_style.TEXT_SOFT)
+    if journal:
+        plot_style.save_print(fig, path)
+    else:
+        plot_style.save(fig, path)
 
 
 def tex_numbers(table, n):
@@ -109,8 +112,7 @@ def main():
     print(table.to_string(index=False))
 
     figure(group, table, "Both samples pooled (exploratory analysis)", OUT / "figures" / "fig9_sticsa_by_segment")
-    plt.rcParams["savefig.dpi"] = 600  # journal production
-    figure(group, table, None, ROOT / "manuscript" / "figures" / "figure3")
+    figure(group, table, None, ROOT / "manuscript" / "figures" / "Fig3", journal=True)
     (GENERATED / "sticsa_segment_numbers.tex").write_text(tex_numbers(table, len(group)), encoding="utf-8")
     print("wrote", GENERATED / "sticsa_segment_numbers.tex")
     run_record.save_record(record, OUT)

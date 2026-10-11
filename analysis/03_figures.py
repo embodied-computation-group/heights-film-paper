@@ -29,11 +29,11 @@ RNG_JITTER = np.random.default_rng(0)  # only moves points sideways so they do n
 LABELS = {
     "height_fear": "Everyday fear of heights (1–7)",
     "anxiety_overall": "Post-film overall anxiety (1–7)",
-    "sticsa_change": "STICSA somatic change, post − pre (points)",
+    "sticsa_change": "STICSA change (points)",
     "arousal_plateau": "Plateau arousal (0–100)",
     "valence_plateau": "Plateau valence (0–100)",
-    "arousal_whole_film": "Whole-film mean arousal (0–100)",
-    "valence_whole_film": "Whole-film mean valence (0–100)",
+    "arousal_whole_film": "Whole-film arousal (0–100)",
+    "valence_whole_film": "Whole-film valence (0–100)",
 }
 
 
@@ -45,24 +45,21 @@ def mean_and_ci(values, axis=0):
     return values.mean(axis=axis), stats.t.ppf(0.975, n - 1) * sem
 
 
-def p_text(p):
-    return "p < .001" if p < 0.001 else f"p = {p:.3f}"
-
-
 def sample_note(fig, sample):
-    """Mark every figure with the sample, so development figures cannot be mistaken for results.
-    Manuscript figures (sample = "manuscript") carry no note."""
-    if sample == "manuscript":
+    """Mark development figures (exploratory sample), so they cannot be mistaken for results. Confirmatory and
+    manuscript figures carry no note: they go into the paper and its Online Resource, where the caption says it."""
+    if sample != "exploratory":
         return
-    text = ("EXPLORATORY SAMPLE – development run" if sample == "exploratory"
-            else "Confirmatory sample")
-    fig.text(0.995, 0.005, text, ha="right", va="bottom", fontsize=7, color=plot_style.TEXT_SOFT)
+    fig.text(0.995, 0.005, "EXPLORATORY SAMPLE – development run", ha="right", va="bottom",
+             color=plot_style.TEXT_SOFT)
 
 
 # --------------------------------------------------------------------------------------- figures
+# Journal rules (2026-10-11): no titles or statistics inside the figures (they go into the captions), lowercase panel
+# letters, text 8-10 pt at the printed width (plot_style.FULL_WIDTH).
 
 def time_course(valence, arousal, rows, sample, out):
-    fig, axes = plt.subplots(2, 1, figsize=(7.2, 5.2), sharex=True)
+    fig, axes = plt.subplots(2, 1, figsize=(plot_style.FULL_WIDTH, 4.6), sharex=True, layout="constrained")
     seconds = np.arange(study_data.FILM_SECONDS)
     for ax, rating, ratings in ((axes[0], "arousal", arousal), (axes[1], "valence", valence)):
         colour = plot_style.RATING_COLOURS[rating]
@@ -77,8 +74,6 @@ def time_course(valence, arousal, rows, sample, out):
         ax.set_ylabel(plot_style.RATING_LABELS[rating])
     axes[1].axhline(50, color=plot_style.GRID, lw=0.8, zorder=1)
     plot_style.minutes_axis(axes[1])
-    axes[0].set_title(f"Continuous ratings (n = {len(rows)}): participants (thin lines), group mean with 95% CI",
-                      loc="left", pad=14)
     sample_note(fig, sample)
     plot_style.save(fig, out / "fig1_time_course")
 
@@ -87,26 +82,30 @@ STICSA_ITEM_LABELS = {"01": "Heartbeat", "02": "Tense", "06": "Dizzy", "07": "We
                       "12": "Face hot", "14": "Stiff limbs", "15": "Dry throat", "18": "Breathing",
                       "20": "Butterflies", "21": "Clammy palms"}
 STICSA_ANSWERS = {1: "Not at all", 2: "A little", 3: "Moderately", 4: "Very much so"}
+# Hatching tells the answers apart without colour (greyscale print): 1 dark, 2 light, 3 light hatched, 4 dark hatched.
+STICSA_HATCHES = {1: "", 2: "", 3: "////", 4: "////"}
 
 
-def sticsa(measures, items, h1, sample, out, h5_rows=None):
-    """A: STICSA somatic totals before and after the film; B: answers to each item before and after.
-    With `h5_rows` (the H5a and H5b result rows; manuscript figure), a second row adds C and D: STICSA change against
-    whole-film mean arousal and valence.
+def sticsa(measures, items, h1, sample, out, h5_rows=None, path=None):
+    """a: STICSA somatic totals before and after the film; b: answers to each item before and after.
+    With `h5_rows` (the H5a and H5b result rows; manuscript figure), a second row adds c and d: STICSA change against
+    whole-film mean arousal and valence. The statistics are given in the caption, not in the figure.
 
     Layout from the exploratory STICSA figure in vmp_film_rating (qc/plot_sticsa.py, sticsa_items_stacked.png).
     `items` holds the item columns (sticsa_pre_itemNN, sticsa_post_itemNN) of the same participants.
+    `path`: where to save as a journal figure (plot_style.save_print); by default results/<sample>/figures.
     """
     complete = measures[["sticsa_pre", "sticsa_post"]].dropna()
+    plt.rcParams["hatch.linewidth"] = 0.6
     if h5_rows is None:
-        fig = plt.figure(figsize=(9.6, 4.6))
-        grid = fig.add_gridspec(2, 3, width_ratios=[0.85, 0.35, 2.2], hspace=0.12, wspace=0.05)
+        fig = plt.figure(figsize=(plot_style.FULL_WIDTH, 3.6), layout="constrained")
+        grid = fig.add_gridspec(2, 2, width_ratios=[0.9, 2.2])
     else:
-        fig = plt.figure(figsize=(9.6, 8.4))
-        outer = fig.add_gridspec(2, 1, height_ratios=[4.6, 3.4], hspace=0.32)
-        grid = outer[0].subgridspec(2, 3, width_ratios=[0.85, 0.35, 2.2], hspace=0.12, wspace=0.05)
+        fig = plt.figure(figsize=(plot_style.FULL_WIDTH, 6.6), layout="constrained")
+        outer = fig.add_gridspec(2, 1, height_ratios=[3.6, 3.0])
+        grid = outer[0].subgridspec(2, 2, width_ratios=[0.9, 2.2])
 
-    # A: boxplots at the sides, paired lines and mean +/- 95% CI in the middle
+    # a: boxplots at the sides, paired lines and mean +/- 95% CI in the middle
     ax = fig.add_subplot(grid[:, 0])
     faintness = min(0.5, 25 / len(complete))  # fainter lines when there are many people
     for pre, post in complete.to_numpy():
@@ -125,68 +124,76 @@ def sticsa(measures, items, h1, sample, out, h5_rows=None):
     ax.set_xlim(-0.4, 1.4)
     ax.set_ylim(10, 45)  # a little room around the scale limits (11-44)
     ax.set_ylabel("STICSA somatic total (11–44)")
-    ax.set_title(f"A  Somatic anxiety (n = {len(complete)})\nH1: dz = {h1['estimate']:.2f} "
-                 f"[{h1['ci_low']:.2f}, {h1['ci_high']:.2f}], {p_text(h1['p'])}", loc="left", fontsize=9)
-    ax.text(0.5, 0.995, "lines: participants; black: mean ± 95% CI", transform=ax.transAxes, ha="center",
-            va="top", fontsize=6.5, color=plot_style.TEXT_SOFT)
+    plot_style.panel_letter(ax, "a", x=-0.38)
 
-    # B: share of each answer per item, before (top) and after (bottom) the film
+    # b: share of each answer per item, before (top) and after (bottom) the film
     order = list(STICSA_ITEM_LABELS)
     for row, when in enumerate(("pre", "post")):
-        bx = fig.add_subplot(grid[row, 2])
+        bx = fig.add_subplot(grid[row, 1])
         answers = items[[f"sticsa_{when}_item{item}" for item in order]]
         shares = pd.DataFrame({k: (answers == k).mean().to_numpy() for k in STICSA_ANSWERS}, index=order)
         y = np.arange(len(order))[::-1]
         left = np.zeros(len(order))
         for answer, label in STICSA_ANSWERS.items():
             bx.barh(y, shares[answer], left=left, height=0.85, color=plot_style.STICSA_RESPONSE_COLOURS[answer],
-                    edgecolor="white", linewidth=1, label=f"{answer} {label}")
+                    edgecolor="white", linewidth=0.8, hatch=STICSA_HATCHES[answer], label=f"{answer} {label}")
             left += shares[answer].to_numpy()
-        bx.set_yticks(y, [STICSA_ITEM_LABELS[item] for item in order], fontsize=7.5)
+        bx.set_yticks(y, [STICSA_ITEM_LABELS[item] for item in order])
         bx.set_xlim(0, 1)
         bx.set_ylim(-0.6, len(order) - 0.4)
         bx.text(1.01, 0.5, "Before film" if when == "pre" else "After film", transform=bx.transAxes,
-                rotation=270, ha="left", va="center", fontsize=8.5)
+                rotation=270, ha="left", va="center")
         if row == 0:
             bx.set_xticks([])
             bx.spines["bottom"].set_visible(False)
-            bx.set_title("B  Item-level responses", loc="left", fontsize=9, pad=16)
-            bx.legend(ncol=4, loc="lower left", bbox_to_anchor=(0, 0.99), fontsize=7, handlelength=1.2,
-                      columnspacing=1.2)
+            bx.legend(ncol=4, loc="lower left", bbox_to_anchor=(0, 1.0), handlelength=1.6, columnspacing=1.0,
+                      borderaxespad=0.2)
+            plot_style.panel_letter(bx, "b", x=-0.3, y=1.04)
         else:
             bx.set_xticks([0, 0.25, 0.5, 0.75, 1], ["0%", "25%", "50%", "75%", "100%"])
             bx.set_xlabel("Share of participants")
 
-    # C, D: STICSA change against whole-film mean ratings (registered H5a, H5b)
+    # c, d: STICSA change against whole-film mean ratings (registered H5a, H5b)
     if h5_rows is not None:
-        lower = outer[1].subgridspec(1, 2, wspace=0.28)
-        for i, (row, letter) in enumerate(zip(h5_rows, "CD")):
+        lower = outer[1].subgridspec(1, 2)
+        for i, (row, letter) in enumerate(zip(h5_rows, "cd")):
             spec = next(s for s in hypotheses.CORRELATIONS if s["hypothesis"] == row["hypothesis"])
             cx = fig.add_subplot(lower[0, i])
-            pair = measures[[spec["x"], spec["y"]]].dropna()
-            colour = plot_style.AROUSAL if "arousal" in spec["y"] else plot_style.VALENCE
-            x = pair[spec["x"]] + RNG_JITTER.uniform(-0.25, 0.25, len(pair))
-            cx.scatter(x, pair[spec["y"]], s=14, color=colour, alpha=0.55, edgecolor="white", linewidth=0.5)
-            # Trend line: least-squares fit with 95% band (a visual guide; the test is Spearman's rho).
-            line_x = np.linspace(pair[spec["x"]].min(), pair[spec["x"]].max(), 100)
-            fit, low, high = stats_tools.linear_fit_band(pair[spec["x"]], pair[spec["y"]], line_x)
-            cx.fill_between(line_x, low, high, color=plot_style.TEXT, alpha=0.2, lw=0, zorder=2)
-            cx.plot(line_x, fit, color=plot_style.TEXT, lw=1.4, zorder=3)
-            cx.set_ylim(-3, 103)
-            cx.set_xlabel(LABELS[spec["x"]])
-            cx.set_ylabel(LABELS[spec["y"]])
-            cx.set_title(f"{letter}  {row['hypothesis']}: ρ = {row['estimate']:.2f}, 95% CI [{row['ci_low']:.2f}, "
-                         f"{row['ci_high']:.2f}], Holm {p_text(row['p_holm'])}", loc="left", fontsize=9)
-            cx.text(0.98, 0.02, "line and band: least-squares fit with 95% CI", transform=cx.transAxes,
-                    ha="right", va="bottom", fontsize=6.5, color=plot_style.TEXT_SOFT)
+            scatter_with_fit(cx, measures, spec, jitter=0.25)
+            plot_style.panel_letter(cx, letter, x=-0.22)
     sample_note(fig, sample)
-    plot_style.save(fig, out / "fig2_sticsa")
+    if path is None:
+        plot_style.save(fig, out / "fig2_sticsa")
+    else:
+        plot_style.save_print(fig, path)
+
+
+def scatter_with_fit(ax, measures, spec, jitter):
+    """Participants as points (jittered sideways) and a least-squares line with its 95% band. The band is a visual
+    guide; the registered test is Spearman's rho."""
+    pair = measures[[spec["x"], spec["y"]]].dropna()
+    colour = plot_style.VALENCE if "valence" in spec["y"] else plot_style.AROUSAL
+    x = pair[spec["x"]] + RNG_JITTER.uniform(-jitter, jitter, len(pair))
+    ax.scatter(x, pair[spec["y"]], s=12, color=colour, alpha=0.55, edgecolor="white", linewidth=0.5)
+    line_x = np.linspace(pair[spec["x"]].min(), pair[spec["x"]].max(), 100)
+    fit, low, high = stats_tools.linear_fit_band(pair[spec["x"]], pair[spec["y"]], line_x)
+    ax.fill_between(line_x, low, high, color=plot_style.TEXT, alpha=0.2, lw=0, zorder=2)
+    ax.plot(line_x, fit, color=plot_style.TEXT, lw=1.4, zorder=3)
+    if spec["x"] in ("height_fear", "anxiety_overall"):
+        ax.set_xticks(range(1, 8))
+        ax.set_xlim(0.5, 7.5)
+    if spec["y"] != "sticsa_change":
+        ax.set_ylim(-3, 103)
+    ax.set_xlabel(LABELS[spec["x"]])
+    ax.set_ylabel(LABELS[spec["y"]])
 
 
 def segment_means(measures, h2_rows, sample, out):
+    """a: arousal, b: valence; segment means per participant and group mean with 95% CI (H2). The H2 statistics are
+    in the tables of the Online Resource, not in the figure."""
     segments = list(study_data.SEGMENTS)
-    fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.6), sharey=True)
-    for ax, rating in zip(axes, ("arousal", "valence")):
+    fig, axes = plt.subplots(1, 2, figsize=(plot_style.FULL_WIDTH, 3.0), sharey=True, layout="constrained")
+    for ax, rating, letter in zip(axes, ("arousal", "valence"), "ab"):
         colour = plot_style.RATING_COLOURS[rating]
         values = measures[[f"{rating}_{segment}" for segment in segments]].to_numpy()
         for i, segment in enumerate(segments):
@@ -200,20 +207,17 @@ def segment_means(measures, h2_rows, sample, out):
         ax.set_xticks(range(4), segments)
         ax.set_xlim(-0.5, 3.5)
         ax.set_ylim(0, 100)
-        ax.set_ylabel("Participant mean in segment (0–100)" if rating == "arousal" else "")
-        lines = [f"{row['hypothesis']} {row['predicted']}: dz = {row['estimate']:.2f}, Holm {p_text(row['p_holm'])}"
-                 for row in h2_rows if row["description"].startswith(rating)]
-        ax.set_title(rating.capitalize() + "\n" + "\n".join(lines), loc="left", fontsize=8)
+        ax.set_ylabel(f"{rating.capitalize()}, segment mean (0–100)")
+        ax.yaxis.set_tick_params(labelleft=True)
+        plot_style.panel_letter(ax, letter, x=-0.16)
     axes[1].axhline(50, color=plot_style.GRID, lw=0.8, zorder=0)
-    fig.suptitle(f"Segment means (n = {len(measures)}): participants (thin lines), mean ± 95% CI",
-                 x=0.01, ha="left", fontsize=9.5)
-    fig.tight_layout()
     sample_note(fig, sample)
     plot_style.save(fig, out / "fig3_segment_means")
 
 
 def replication(valence, arousal, tested, reference, h3_rows, sample, out):
-    fig, axes = plt.subplots(2, 1, figsize=(7.2, 5.0), sharex=True)
+    """Development figure (not in the paper): group curves of the two samples overlaid, r with its CI."""
+    fig, axes = plt.subplots(2, 1, figsize=(plot_style.FULL_WIDTH, 4.6), sharex=True, layout="constrained")
     seconds = np.arange(study_data.FILM_SECONDS)
     if sample == "confirmatory":
         names = (f"Confirmatory (n = {len(tested)})", f"Exploratory (n = {len(reference)})")
@@ -226,47 +230,31 @@ def replication(valence, arousal, tested, reference, h3_rows, sample, out):
         ax.plot(seconds, ratings[reference.index].mean(axis=0), color=colour, lw=1.4, ls="--", label=names[1])
         ax.set_ylim(0, 100)
         ax.set_ylabel(plot_style.RATING_LABELS[rating])
-        ax.legend(loc="lower left", fontsize=8)
-        ax.text(0.99, 0.96, f"r = {row['estimate']:.2f} [{row['ci_low']:.2f}, {row['ci_high']:.2f}]",
-                transform=ax.transAxes, ha="right", va="top", fontsize=8.5,
+        ax.legend(loc="lower left")
+        ax.text(0.99, 0.96, f"r = {no_zero(row['estimate'])} [{no_zero(row['ci_low'])}, {no_zero(row['ci_high'])}]",
+                transform=ax.transAxes, ha="right", va="top",
                 bbox={"facecolor": "white", "edgecolor": "none", "alpha": 0.85, "pad": 2})
     plot_style.minutes_axis(axes[1])
-    title = "H3: group-mean curves of the two samples (95% CI of r: circular block bootstrap)"
-    if sample != "confirmatory":
-        title = "STAND-IN for H3 (not a test): cohort 1 vs pilot group-mean curves"
-    axes[0].set_title(title, loc="left", pad=14)
     sample_note(fig, sample)
     plot_style.save(fig, out / "fig4_replication")
 
 
+def no_zero(value):
+    """Two decimals without the leading zero, for statistics that cannot exceed 1 (journal style): 0.97 -> .97."""
+    return f"{value:.2f}".replace("0.", ".", 1)
+
+
 def correlations(measures, rows, sample, out):
-    fig, axes = plt.subplots(2, 4, figsize=(9.6, 5.0))
-    axes = axes.ravel()
-    for ax, spec, row in zip(axes, hypotheses.CORRELATIONS, rows):
-        pair = measures[[spec["x"], spec["y"]]].dropna()
-        colour = plot_style.AROUSAL if "arousal" in spec["y"] or "sticsa" in spec["y"] else plot_style.VALENCE
-        if "valence" in spec["y"]:
-            colour = plot_style.VALENCE
-        x = pair[spec["x"]] + RNG_JITTER.uniform(-0.15, 0.15, len(pair))
-        ax.scatter(x, pair[spec["y"]], s=14, color=colour, alpha=0.55, edgecolor="white", linewidth=0.5)
-        # Trend line: least-squares fit with 95% confidence band (a visual guide; the test is Spearman's rho).
-        grid = np.linspace(pair[spec["x"]].min(), pair[spec["x"]].max(), 100)
-        fit, low, high = stats_tools.linear_fit_band(pair[spec["x"]], pair[spec["y"]], grid)
-        ax.fill_between(grid, low, high, color=plot_style.TEXT, alpha=0.12, lw=0, zorder=2)
-        ax.plot(grid, fit, color=plot_style.TEXT, lw=1.4, zorder=3)
-        if spec["x"] in ("height_fear", "anxiety_overall"):
-            ax.set_xticks(range(1, 8))
-            ax.set_xlim(0.5, 7.5)
-        ax.set_xlabel(LABELS[spec["x"]], fontsize=7.5)
-        ax.set_ylabel(LABELS[spec["y"]], fontsize=7.5)
-        ax.set_title(f"{row['hypothesis']} ({row['predicted']}): ρ = {row['estimate']:.2f} "
-                     f"[{row['ci_low']:.2f}, {row['ci_high']:.2f}]\nHolm {p_text(row['p_holm'])}, n = {row['n']}",
-                     loc="left", fontsize=7.5)
-    axes[-1].axis("off")
-    axes[-1].text(0, 0.5, "Points: participants (jittered sideways).\nLine and band: least-squares fit\n"
-                  "with 95% CI (visual guide).\nTest: Spearman ρ; 95% CI: bootstrap\n(5000 resamples of participants).",
-                  fontsize=7.5, va="center", color=plot_style.TEXT_SOFT)
-    fig.tight_layout()
+    """H4-H6, one row per hypothesis family: a-c H4a-c, d-e H5a-b, f-g H6a-b. Statistics are in the caption/table."""
+    fig, axes = plt.subplots(3, 3, figsize=(plot_style.FULL_WIDTH, 6.6), layout="constrained")
+    positions = {"H4a": (0, 0), "H4b": (0, 1), "H4c": (0, 2), "H5a": (1, 0), "H5b": (1, 1), "H6a": (2, 0),
+                 "H6b": (2, 1)}
+    for letter, spec in zip("abcdefg", hypotheses.CORRELATIONS):
+        ax = axes[positions[spec["hypothesis"]]]
+        scatter_with_fit(ax, measures, spec, jitter=0.15)
+        plot_style.panel_letter(ax, letter, x=-0.3)
+    axes[1, 2].axis("off")
+    axes[2, 2].axis("off")
     sample_note(fig, sample)
     plot_style.save(fig, out / "fig5_correlations")
 

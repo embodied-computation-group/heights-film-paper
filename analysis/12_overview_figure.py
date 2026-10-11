@@ -1,17 +1,18 @@
 """Step 12: Figure 1 of the Methodology article - the rating screen and the time course in one overview figure.
 
-  (A) the rating screen at 10:36, the scene in which a member of the group is held by one hand over the edge
+  (a) the rating screen at 10:36, the scene in which a member of the group is held by one hand over the edge
       (made by 11_task_illustration.py; the dot is the confirmatory group's mean rating at that second)
-  (B) arousal and (C) valence over the film: confirmatory participants (faint), confirmatory group mean with 95% CI,
-      exploratory group mean (dashed), the four registered segments, and a marker at 10:36 linking back to (A)
+  (b) arousal and (c) valence over the film: confirmatory participants (faint), confirmatory group mean with 95% CI,
+      exploratory group mean (dashed), the four registered segments, and a marker at 10:36 linking back to (a)
 
-Panels B and C are drawn with the same function as the Brief Article's Figure 1 (07_manuscript_figure.py).
-Two versions are written: with the film still (figure1_overview) and without it (figure1_overview_nostill), because
+Panels b and c are drawn with time_course_panel() from 07_manuscript_figure.py.
+Two versions are written: with the film still (Fig1) and without it (Fig1_nostill), because
 showing the still needs the film creator's permission.
 
 Confirmatory sample, primary analysis sample. Run 11_task_illustration.py first, then:
       uv run python analysis/12_overview_figure.py
-Writes manuscript/figures/figure1_overview(.pdf/.png), figure1_overview_nostill(.pdf/.png) and a run record.
+Writes manuscript/figures/Fig1(.pdf/.png), Fig1_nostill(.pdf/.png) at print size (165 mm wide, 600 dpi) and a run
+record.
 """
 import importlib.util
 import sys
@@ -25,7 +26,6 @@ sys.path.insert(0, str(ANALYSIS.parent))  # so `analysis` can be imported
 from analysis import plot_style, run_record, study_data  # noqa: E402
 
 OUT = ANALYSIS.parent / "manuscript" / "figures"
-DPI = 600
 
 
 def load_script(filename):
@@ -41,12 +41,12 @@ def mark_moment(ax, second, label):
     ax.axvline(second, color=plot_style.TEXT_SOFT, lw=0.8, ls=":", zorder=5)
     if label:
         ax.text(second, 1.01, plot_style.film_time_label(second), transform=ax.get_xaxis_transform(),
-                ha="center", va="bottom", fontsize=7, color=plot_style.TEXT, fontweight="bold")
+                ha="center", va="bottom", color=plot_style.TEXT, fontweight="bold")
 
 
 def overview_figure(screen, valence, arousal, confirmatory, exploratory, second, figure_07):
-    fig = plt.figure(figsize=(6.9, 8.6))
-    grid = fig.add_gridspec(3, 1, height_ratios=[4.2, 2.0, 2.0], hspace=0.28)
+    fig = plt.figure(figsize=(plot_style.FULL_WIDTH, 7.4), layout="constrained")
+    grid = fig.add_gridspec(3, 1, height_ratios=[3.6, 1.9, 1.9])
     ax_screen = fig.add_subplot(grid[0])
     ax_arousal = fig.add_subplot(grid[1])
     ax_valence = fig.add_subplot(grid[2], sharex=ax_arousal)
@@ -61,21 +61,20 @@ def overview_figure(screen, valence, arousal, confirmatory, exploratory, second,
     plot_style.minutes_axis(ax_valence)
     # The segment names sit on top of the arousal panel; put the 10:36 label just below the top edge instead.
     mark_moment(ax_arousal, second, label=False)
-    ax_arousal.text(second + 8, 4, plot_style.film_time_label(second), fontsize=7, color=plot_style.TEXT,
+    ax_arousal.text(second + 8, 4, plot_style.film_time_label(second), color=plot_style.TEXT,
                     fontweight="bold", va="bottom", ha="left")
     mark_moment(ax_valence, second, label=False)
-    ax_arousal.legend(loc="lower left", fontsize=7, handlelength=2.2, bbox_to_anchor=(0.0, 0.0))
+    ax_arousal.legend(loc="lower left", handlelength=2.2, bbox_to_anchor=(0.0, 0.0))
 
-    for ax, letter, x in ((ax_screen, "A", -0.02), (ax_arousal, "B", -0.08), (ax_valence, "C", -0.08)):
-        ax.text(x, 1.02, letter, transform=ax.transAxes, fontsize=11, fontweight="bold", va="bottom")
+    for ax, letter, x in ((ax_screen, "a", -0.02), (ax_arousal, "b", -0.1), (ax_valence, "c", -0.1)):
+        plot_style.panel_letter(ax, letter, x=x)
     return fig
 
 
 def main():
     figure_07 = load_script("07_manuscript_figure.py")
     task = load_script("11_task_illustration.py")
-    screens = {"figure1_overview": OUT / "task_illustration.png",
-               "figure1_overview_nostill": OUT / "task_illustration_nostill.png"}
+    screens = {"Fig1": OUT / "task_illustration.png", "Fig1_nostill": OUT / "task_illustration_nostill.png"}
     missing = [str(path) for path in screens.values() if not path.exists()]
     if missing:
         sys.exit(f"Missing {missing}: run analysis/11_task_illustration.py first.")
@@ -90,10 +89,7 @@ def main():
 
     for name, screen_path in screens.items():
         fig = overview_figure(Image.open(screen_path), valence, arousal, primary, exploratory, task.SECOND, figure_07)
-        for suffix in (".pdf", ".png"):
-            fig.savefig(OUT / f"{name}{suffix}", dpi=DPI, bbox_inches="tight")
-        plt.close(fig)
-        print("wrote", OUT / f"{name}.pdf")
+        plot_style.save_print(fig, OUT / name)
     run_record.save_record(record, OUT)
 
 
