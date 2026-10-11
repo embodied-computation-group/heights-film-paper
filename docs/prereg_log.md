@@ -136,3 +136,10 @@ Entries are appended in time order; copy them into the OSF "foreknowledge" text 
   data files were always pseudonymised (P001, ...). The public repository will be created without the earlier git
   history, and the pseudonym key in vmp_film_rating will be deleted after release so the published data are
   anonymous. No analysis, data value or result changed.
+
+- **2026-10-11 - exploratory: STICSA change against segment-mean ratings (Micah).** Not registered; added after the
+  confirmatory results were known. Spearman correlations of STICSA change with arousal and valence in each of the four
+  registered segments (bootstrap 95% CIs, seed 20261004; uncorrected, Holm over the eight given in the CSV as a check). Being
+  exploratory, it pools everyone passing the registered exclusions in both samples (Micah).
+  `analysis/15_sticsa_change_ratings.py`; reported as a post hoc exploratory analysis in the Results and Figure 3. The
+  registered H5a/H5b results are unchanged and now also shown in Figure 2C-D.

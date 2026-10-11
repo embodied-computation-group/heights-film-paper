@@ -89,15 +89,22 @@ STICSA_ITEM_LABELS = {"01": "Heartbeat", "02": "Tense", "06": "Dizzy", "07": "We
 STICSA_ANSWERS = {1: "Not at all", 2: "A little", 3: "Moderately", 4: "Very much so"}
 
 
-def sticsa(measures, items, h1, sample, out):
+def sticsa(measures, items, h1, sample, out, h5_rows=None):
     """A: STICSA somatic totals before and after the film; B: answers to each item before and after.
+    With `h5_rows` (the H5a and H5b result rows; manuscript figure), a second row adds C and D: STICSA change against
+    whole-film mean arousal and valence.
 
     Layout from the exploratory STICSA figure in vmp_film_rating (qc/plot_sticsa.py, sticsa_items_stacked.png).
     `items` holds the item columns (sticsa_pre_itemNN, sticsa_post_itemNN) of the same participants.
     """
     complete = measures[["sticsa_pre", "sticsa_post"]].dropna()
-    fig = plt.figure(figsize=(9.6, 4.6))
-    grid = fig.add_gridspec(2, 3, width_ratios=[0.85, 0.35, 2.2], hspace=0.12, wspace=0.05)
+    if h5_rows is None:
+        fig = plt.figure(figsize=(9.6, 4.6))
+        grid = fig.add_gridspec(2, 3, width_ratios=[0.85, 0.35, 2.2], hspace=0.12, wspace=0.05)
+    else:
+        fig = plt.figure(figsize=(9.6, 8.4))
+        outer = fig.add_gridspec(2, 1, height_ratios=[4.6, 3.4], hspace=0.32)
+        grid = outer[0].subgridspec(2, 3, width_ratios=[0.85, 0.35, 2.2], hspace=0.12, wspace=0.05)
 
     # A: boxplots at the sides, paired lines and mean +/- 95% CI in the middle
     ax = fig.add_subplot(grid[:, 0])
@@ -149,6 +156,29 @@ def sticsa(measures, items, h1, sample, out):
         else:
             bx.set_xticks([0, 0.25, 0.5, 0.75, 1], ["0%", "25%", "50%", "75%", "100%"])
             bx.set_xlabel("Share of participants")
+
+    # C, D: STICSA change against whole-film mean ratings (registered H5a, H5b)
+    if h5_rows is not None:
+        lower = outer[1].subgridspec(1, 2, wspace=0.28)
+        for i, (row, letter) in enumerate(zip(h5_rows, "CD")):
+            spec = next(s for s in hypotheses.CORRELATIONS if s["hypothesis"] == row["hypothesis"])
+            cx = fig.add_subplot(lower[0, i])
+            pair = measures[[spec["x"], spec["y"]]].dropna()
+            colour = plot_style.AROUSAL if "arousal" in spec["y"] else plot_style.VALENCE
+            x = pair[spec["x"]] + RNG_JITTER.uniform(-0.25, 0.25, len(pair))
+            cx.scatter(x, pair[spec["y"]], s=14, color=colour, alpha=0.55, edgecolor="white", linewidth=0.5)
+            # Trend line: least-squares fit with 95% band (a visual guide; the test is Spearman's rho).
+            line_x = np.linspace(pair[spec["x"]].min(), pair[spec["x"]].max(), 100)
+            fit, low, high = stats_tools.linear_fit_band(pair[spec["x"]], pair[spec["y"]], line_x)
+            cx.fill_between(line_x, low, high, color=plot_style.TEXT, alpha=0.2, lw=0, zorder=2)
+            cx.plot(line_x, fit, color=plot_style.TEXT, lw=1.4, zorder=3)
+            cx.set_ylim(-3, 103)
+            cx.set_xlabel(LABELS[spec["x"]])
+            cx.set_ylabel(LABELS[spec["y"]])
+            cx.set_title(f"{letter}  {row['hypothesis']}: ρ = {row['estimate']:.2f}, 95% CI [{row['ci_low']:.2f}, "
+                         f"{row['ci_high']:.2f}], Holm {p_text(row['p_holm'])}", loc="left", fontsize=9)
+            cx.text(0.98, 0.02, "line and band: least-squares fit with 95% CI", transform=cx.transAxes,
+                    ha="right", va="bottom", fontsize=6.5, color=plot_style.TEXT_SOFT)
     sample_note(fig, sample)
     plot_style.save(fig, out / "fig2_sticsa")
 

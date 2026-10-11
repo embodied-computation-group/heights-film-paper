@@ -1,7 +1,8 @@
 """Step 7: the two figures of the Brief Article (Cognition and Emotion allows two tables/figures in total).
 
   Figure 2  somatic anxiety: (A) STICSA somatic totals before and after the film, (B) item-level responses
-            (the same figure as fig2_sticsa from 03_figures.py, without the sample note)
+            (as fig2_sticsa from 03_figures.py, without the sample note), (C, D) STICSA change against whole-film
+            mean arousal and valence (registered H5a, H5b)
   Figure 1  continuous ratings: group-mean arousal and valence over the film (confirmatory sample, 95% CI;
             participants as faint lines), with the exploratory sample's group mean overlaid (dashed)
 
@@ -82,9 +83,12 @@ def main():
 
     # Figure 2: STICSA (reuses the figure function from 03_figures.py)
     figures_03 = load_figure_script()
-    h1 = pd.read_csv(RESULTS / "hypothesis_tests.csv").query("analysis_sample == 'primary' and hypothesis == 'H1'")
+    tests = pd.read_csv(RESULTS / "hypothesis_tests.csv").query("analysis_sample == 'primary'")
+    tests = tests.set_index("hypothesis", drop=False)
+    h1 = tests.loc[["H1"]]
+    h5_rows = [tests.loc["H5a"], tests.loc["H5b"]]
     items = participants.loc[primary.index, [c for c in participants.columns if c.startswith("sticsa_") and "_item" in c]]
-    figures_03.sticsa(measures.loc[primary.index], items, h1.iloc[0], "manuscript", OUT)
+    figures_03.sticsa(measures.loc[primary.index], items, h1.iloc[0], "manuscript", OUT, h5_rows=h5_rows)
     for suffix in (".pdf", ".png"):
         (OUT / f"fig2_sticsa{suffix}").replace(OUT / f"figure2{suffix}")
 
