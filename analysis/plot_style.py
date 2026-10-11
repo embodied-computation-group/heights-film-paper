@@ -33,6 +33,13 @@ TEXT_SOFT = "#5f636d"
 GRID = "#d9dbe0"
 PARTICIPANT_ALPHA = 0.18  # thin, faint lines/points for single participants
 
+# Journal artwork rules (Affective Science): at most 174 mm wide and 234 mm high, lettering 8-12 pt with little
+# variation, lowercase panel letters, no titles inside figures. Figures are drawn at their printed size.
+MAX_WIDTH_MM, MAX_HEIGHT_MM = 174, 234
+FULL_WIDTH = MAX_WIDTH_MM / 25.4  # inches
+LETTER_SIZE = 10                  # panel letters (a, b, c), bold
+PRINT_DPI = 600                   # combination art (colour, lettering) needs at least 600 dpi
+
 RATING_LABELS = {
     "valence": "Valence (0 unpleasant – 100 pleasant)",
     "arousal": "Arousal (0 low – 100 high)",
@@ -44,9 +51,13 @@ def use():
     plt.rcParams.update({
         "font.family": "sans-serif",
         "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
-        "font.size": 9,
-        "axes.titlesize": 10,
+        "font.size": 8,
+        "axes.titlesize": 9,
         "axes.labelsize": 9,
+        "xtick.labelsize": 8,
+        "ytick.labelsize": 8,
+        "legend.fontsize": 8,
+        "pdf.fonttype": 42,  # embed the fonts as TrueType, so text stays text in the PDF
         "axes.edgecolor": TEXT_SOFT,
         "axes.labelcolor": TEXT,
         "axes.titlecolor": TEXT,
@@ -86,6 +97,28 @@ def film_time_label(seconds):
     """Film time as minutes:seconds, like a video player (636 -> "10:36")."""
     whole = int(seconds)
     return f"{whole // 60}:{whole % 60:02d}"
+
+
+def panel_letter(ax, letter, x=-0.1, y=1.02):
+    """Bold lowercase panel letter at the top left of a panel (the journal asks for a, b, c)."""
+    if letter != letter.lower():
+        raise ValueError(f"panel letters must be lowercase, got {letter!r}")
+    ax.text(x, y, letter, transform=ax.transAxes, fontsize=LETTER_SIZE, fontweight="bold", va="bottom",
+            ha="left")
+
+
+def save_print(fig, path):
+    """Save a journal figure at exactly its drawn size: PDF (vector, fonts embedded) and a 600-dpi PNG.
+    Refuses figures larger than the journal allows. No tight cropping, so the size stays as drawn."""
+    width, height = (size * 25.4 for size in fig.get_size_inches())
+    if width > MAX_WIDTH_MM + 0.01 or height > MAX_HEIGHT_MM + 0.01:
+        raise ValueError(f"figure is {width:.0f} x {height:.0f} mm; the journal allows at most "
+                         f"{MAX_WIDTH_MM} x {MAX_HEIGHT_MM} mm")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(path.with_suffix(".pdf"))
+    fig.savefig(path.with_suffix(".png"), dpi=PRINT_DPI)
+    plt.close(fig)
+    print("wrote", path.with_suffix(".pdf"), f"({width:.0f} x {height:.0f} mm)")
 
 
 def save(fig, path):
