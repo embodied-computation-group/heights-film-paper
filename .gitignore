@@ -47,3 +47,6 @@ manuscript/*.toc
 
 # Built submission package (rebuild with analysis/09_package_submission.py)
 submission/
+
+# Numbered draft builds (manuscript/build.sh)
+manuscript/builds/

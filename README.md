@@ -88,7 +88,7 @@ eleven somatic items, before (top) and after (bottom).
 
 ![Somatic anxiety before and after the film](manuscript/figures/figure2.png)
 
-**Affect-grid occupancy by segment (Supplementary Figure S4, exploratory).** Blue shading shows the share of viewing
+**Affect-grid occupancy by segment (Supplementary Figure S5, exploratory).** Blue shading shows the share of viewing
 time in each region of the grid; dots are participants' mean ratings; the open circle is the group mean with 95%
 confidence intervals.
 
