@@ -145,7 +145,6 @@ results/           # tables and figures written by the scripts
 tests/             # tests, run with `uv run pytest`
 TASKS.md           # what is being worked on next
 VERIFICATION.md    # the checks behind each result
-AI_ASSISTANCE.md   # how AI coding tools were used (for the paper's disclosure)
 ```
 
 ## Licence and history
