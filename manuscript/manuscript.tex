@@ -25,7 +25,7 @@
 \input{generated/sticsa_segment_numbers.tex}
 \newcommand{\confirm}[1]{\textcolor{red}{[AUTHOR TO CONFIRM: #1]}}
 \newcommand{\todo}[1]{\textcolor{blue}{[#1]}}
-% Funding statement: on the title page (journal rule) and again under Statements and Declarations. The ERC wording,
+% Funding statement: on the title page only (journal rule; also entered in the submission system). The ERC wording,
 % project acronym, programme and disclaimer follow the funder's requirements as given in Springer Nature's Snapp
 % guidance (pasted by Micah 2026-10-11); project acronym from the CV-based notes in ~/vibes/Synthia.
 \newcommand{\funding}{This work was supported by a Lundbeck Foundation Fellowship (R272-2017-4345) and by the
@@ -136,10 +136,7 @@ characterising affective dynamics online.
 \subsection{Preregistration and Transparency}
 
 The hypotheses and analysis plan were preregistered on OSF (\url{https://osf.io/s2yvb}). All confirmatory tests
-followed the registered analysis plan; exploratory analyses are identified as such. Large language model tools
-(ChatGPT and Codex, OpenAI; Claude Code, Anthropic) assisted with writing and testing the analysis code and with
-preparing the manuscript. The analysis code was checked with tests on small simulated datasets with known answers,
-and the author verified the analyses, results and references and takes full responsibility for the work.
+followed the registered analysis plan; exploratory analyses are identified as such.
 
 \subsection{Rating Platform and Data Integrity}
 
@@ -217,7 +214,10 @@ anxiety with STICSA change and plateau arousal (H6). Two registered sensitivity 
 participants rejected on Prolific removed) repeated all tests. Exploratory analyses examined the change in each STICSA
 item (Wilcoxon signed-rank tests, Holm-corrected across items) and the effects of age and sex (mixed models of segment
 means). Analyses were run in Python \val{python_version} with NumPy,
-SciPy, pandas and statsmodels.
+SciPy, pandas and statsmodels. Large language model tools (ChatGPT and Codex, OpenAI; Claude Code, Anthropic) assisted
+with writing and testing the analysis code and with preparing the manuscript. The analysis code was checked with tests
+on small simulated datasets with known answers, and the author verified the analyses, results and references and takes
+full responsibility for the work.
 
 \section{Results}
 
@@ -378,23 +378,11 @@ neural processes underlying emotional experience.
 \section*{Statements and Declarations}
 % Journal rule: all statements under this heading; missing declarations are returned as incomplete.
 
-\subsection*{Funding}
-\funding
+% Funding is on the title page (journal rule) and LLM use in the Method (journal rule); ethics and consent are in
+% Participants. They are not repeated here (Micah, 2026-10-11).
 
 \subsection*{Competing Interests}
 The author has no relevant financial or non-financial interests to disclose.
-
-\subsection*{Ethics Approval}
-The study was not a health research project under the Danish Act on Research Ethics Review of Health Research Projects
-and Health Data Research Projects, and ethical approval was therefore not required (see Method).
-
-\subsection*{Consent to Participate}
-All participants gave informed consent online before taking part.
-
-\subsection*{Use of Generative AI}
-Generative AI tools (ChatGPT and Codex, OpenAI; Claude Code, Anthropic) assisted with coding and manuscript
-preparation, as described in the Method. The author reviewed and edited the AI-assisted materials, verified the
-analyses and references, and takes full responsibility for the accuracy and integrity of the work.
 
 \subsection*{Data Availability}
 The preregistration is available at \url{https://osf.io/s2yvb}.
