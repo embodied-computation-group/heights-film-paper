@@ -82,6 +82,12 @@ def minutes_axis(ax):
     ax.set_xlabel("Film time (min)")
 
 
+def film_time_label(seconds):
+    """Film time as minutes:seconds, like a video player (636 -> "10:36")."""
+    whole = int(seconds)
+    return f"{whole // 60}:{whole % 60:02d}"
+
+
 def save(fig, path):
     """Save as PNG (for viewing) and PDF (for the paper)."""
     path.parent.mkdir(parents=True, exist_ok=True)
