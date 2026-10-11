@@ -5,9 +5,12 @@ rating grid redrawn to match the layout of the task (see vmp_film_rating docs/im
 screenshot). The dot is placed at the confirmatory group's mean rating at that second, so it shows data, not an
 invented position. The film frame is third-party material (Tikhomirov, 2017): permission is needed before publication.
 
+A second version without the film frame (task_illustration_nostill.png: the same screen with a plain dark frame and
+a short description) is written as well, as a fallback in case permission to show the still is not granted.
+
 The film is not in this repository; the frame is read from the tooling repository's copy. Run with OpenCV available:
       uv run --with opencv-python-headless python analysis/11_task_illustration.py
-Writes manuscript/figures/task_illustration.png and a run record.
+Writes manuscript/figures/task_illustration.png, task_illustration_nostill.png and a run record.
 """
 import sys
 from pathlib import Path
@@ -23,6 +26,7 @@ FILM = ROOT.parent / "vmp_film_rating" / "media" / "towerClimb.mp4"
 OUT = ROOT / "manuscript" / "figures"
 SECOND = 636  # 10:36, during the scene in which the woman is held over the edge
 INSTRUCTION = "How do you feel right now? Left–right: unpleasant–pleasant. Down–up: low–high activation."
+NO_STILL_TEXT = "Film frame not shown (first-person view from the top of a skyscraper)"
 
 
 def film_frame(second):
@@ -54,16 +58,20 @@ def label(draw, centre, text, size=15):
     draw.text((x + 6, y + 4 - box[1]), text, font=font(size), fill=(255, 255, 255, 255))
 
 
-def main():
-    record = run_record.make_record("11_task_illustration.py", "confirmatory", seed=None,
-                                    inputs=sorted(study_data.DATA.glob("*.csv")), settings={"second": SECOND})
-    participants, valence, arousal = study_data.load()
-    primary = study_data.analysis_samples(participants[participants["sample"] == "confirmatory"])["primary"].index
-    mean_valence, mean_arousal = valence[primary, SECOND].mean(), arousal[primary, SECOND].mean()
+def plain_frame():
+    """A dark grey stand-in for the film frame, with a one-line description (fallback version)."""
+    frame = Image.new("RGB", (1280, 718), (58, 60, 66))
+    draw = ImageDraw.Draw(frame)
+    box = draw.textbbox((0, 0), NO_STILL_TEXT, font=font(24))
+    draw.text(((1280 - (box[2] - box[0])) / 2, 330), NO_STILL_TEXT, font=font(24), fill=(200, 200, 205))
+    return frame
 
+
+def rating_screen(frame, mean_valence, mean_arousal):
+    """The task screen: instruction line, film frame and rating grid with the dot at the group mean."""
     # Layout copied from the real screenshot: 1400 x 860 canvas, film at (60, 90), 1280 x 718.
     canvas = Image.new("RGBA", (1400, 860), (17, 17, 17, 255))
-    canvas.paste(film_frame(SECOND).convert("RGBA").resize((1280, 718)), (60, 90))
+    canvas.paste(frame.convert("RGBA").resize((1280, 718)), (60, 90))
     overlay = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
 
@@ -84,9 +92,20 @@ def main():
     dot_x = left + mean_valence / 100 * size
     dot_y = top + (1 - mean_arousal / 100) * size
     draw.ellipse([dot_x - 8, dot_y - 8, dot_x + 8, dot_y + 8], fill=(255, 255, 255, 255))
+    return Image.alpha_composite(canvas, overlay).convert("RGB")
+
+
+def main():
+    record = run_record.make_record("11_task_illustration.py", "confirmatory", seed=None,
+                                    inputs=sorted(study_data.DATA.glob("*.csv")), settings={"second": SECOND})
+    participants, valence, arousal = study_data.load()
+    primary = study_data.analysis_samples(participants[participants["sample"] == "confirmatory"])["primary"].index
+    mean_valence, mean_arousal = valence[primary, SECOND].mean(), arousal[primary, SECOND].mean()
 
     OUT.mkdir(parents=True, exist_ok=True)
-    Image.alpha_composite(canvas, overlay).convert("RGB").save(OUT / "task_illustration.png", dpi=(300, 300))
+    rating_screen(film_frame(SECOND), mean_valence, mean_arousal).save(OUT / "task_illustration.png", dpi=(300, 300))
+    rating_screen(plain_frame(), mean_valence, mean_arousal).save(OUT / "task_illustration_nostill.png",
+                                                                   dpi=(300, 300))
     run_record.save_record(record, OUT)
     print(f"wrote {OUT / 'task_illustration.png'} (dot at valence {mean_valence:.1f}, arousal {mean_arousal:.1f})")
 
