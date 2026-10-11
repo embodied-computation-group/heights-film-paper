@@ -3,9 +3,9 @@
   "sample": "confirmatory",
   "seed": null,
   "settings": {},
-  "started": "2026-10-11T06:35:44+02:00",
+  "started": "2026-10-11T07:09:19+02:00",
   "command": "analysis/03_figures.py --sample confirmatory",
-  "git_commit": "2360634630cb8ab32dbb178846cd48966947cf05",
+  "git_commit": "e020d36272865ae2d2c76edd9ef743c3e169bed5",
   "uncommitted_changes": true,
   "inputs": {
     "C:\\Users\\Micah\\vibes\\heights-film-paper-public\\data\\processed\\participants.csv": "6420576e5a9bdc3ed0de36ce48bf6d2e103dc55f10059c8dd6fd7ec9443e0e6d",

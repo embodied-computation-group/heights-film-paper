@@ -115,7 +115,7 @@ def save_print(fig, path):
         raise ValueError(f"figure is {width:.0f} x {height:.0f} mm; the journal allows at most "
                          f"{MAX_WIDTH_MM} x {MAX_HEIGHT_MM} mm")
     path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path.with_suffix(".pdf"))
+    fig.savefig(path.with_suffix(".pdf"), dpi=PRINT_DPI)  # rasterised layers (many faint lines) at 600 dpi
     fig.savefig(path.with_suffix(".png"), dpi=PRINT_DPI)
     plt.close(fig)
     print("wrote", path.with_suffix(".pdf"), f"({width:.0f} x {height:.0f} mm)")

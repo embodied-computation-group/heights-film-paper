@@ -46,7 +46,7 @@ def time_course_panel(ax, ratings, confirmatory, exploratory, rating, show_segme
     plot_style.shade_segments(ax, label=show_segment_names)
     faintness = min(plot_style.PARTICIPANT_ALPHA, 6 / len(confirmatory))
     for person in ratings[confirmatory]:
-        ax.plot(seconds, person, color=colour, lw=0.25, alpha=faintness, zorder=1)
+        ax.plot(seconds, person, color=colour, lw=0.25, alpha=faintness, zorder=1, rasterized=True)  # keeps PDFs light
     mean, half_width = mean_and_ci(ratings[confirmatory])
     ax.fill_between(seconds, mean - half_width, mean + half_width, color=colour, alpha=0.3, lw=0, zorder=2)
     ax.plot(seconds, mean, color=colour, lw=1.6, zorder=3, label=f"Confirmatory (n = {len(confirmatory)})")

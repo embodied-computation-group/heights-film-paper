@@ -66,7 +66,7 @@ def time_course(valence, arousal, rows, sample, out):
         plot_style.shade_segments(ax, label=ax is axes[0])
         faintness = min(plot_style.PARTICIPANT_ALPHA, 6 / len(rows))  # fainter lines when there are many people
         for person in ratings[rows]:
-            ax.plot(seconds, person, color=colour, lw=0.3, alpha=faintness, zorder=1)
+            ax.plot(seconds, person, color=colour, lw=0.3, alpha=faintness, zorder=1, rasterized=True)
         mean, half_width = mean_and_ci(ratings[rows])
         ax.fill_between(seconds, mean - half_width, mean + half_width, color=colour, alpha=0.3, lw=0, zorder=2)
         ax.plot(seconds, mean, color=colour, lw=1.8, zorder=3)
@@ -82,8 +82,6 @@ STICSA_ITEM_LABELS = {"01": "Heartbeat", "02": "Tense", "06": "Dizzy", "07": "We
                       "12": "Face hot", "14": "Stiff limbs", "15": "Dry throat", "18": "Breathing",
                       "20": "Butterflies", "21": "Clammy palms"}
 STICSA_ANSWERS = {1: "Not at all", 2: "A little", 3: "Moderately", 4: "Very much so"}
-# Hatching tells the answers apart without colour (greyscale print): 1 dark, 2 light, 3 light hatched, 4 dark hatched.
-STICSA_HATCHES = {1: "", 2: "", 3: "////", 4: "////"}
 
 
 def sticsa(measures, items, h1, sample, out, h5_rows=None, path=None):
@@ -96,14 +94,16 @@ def sticsa(measures, items, h1, sample, out, h5_rows=None, path=None):
     `path`: where to save as a journal figure (plot_style.save_print); by default results/<sample>/figures.
     """
     complete = measures[["sticsa_pre", "sticsa_post"]].dropna()
-    plt.rcParams["hatch.linewidth"] = 0.6
+    # The layout of the original figure (narrow spacer column between a and b), drawn at the printed width.
     if h5_rows is None:
-        fig = plt.figure(figsize=(plot_style.FULL_WIDTH, 3.6), layout="constrained")
-        grid = fig.add_gridspec(2, 2, width_ratios=[0.9, 2.2])
+        fig = plt.figure(figsize=(plot_style.FULL_WIDTH, 3.4))
+        grid = fig.add_gridspec(2, 3, width_ratios=[0.85, 0.62, 2.2], hspace=0.12, wspace=0.05,
+                                left=0.09, right=0.95, top=0.88, bottom=0.14)
     else:
-        fig = plt.figure(figsize=(plot_style.FULL_WIDTH, 6.6), layout="constrained")
-        outer = fig.add_gridspec(2, 1, height_ratios=[3.6, 3.0])
-        grid = outer[0].subgridspec(2, 2, width_ratios=[0.9, 2.2])
+        fig = plt.figure(figsize=(plot_style.FULL_WIDTH, 6.0))
+        outer = fig.add_gridspec(2, 1, height_ratios=[4.6, 3.4], hspace=0.32, left=0.09, right=0.95, top=0.93,
+                                 bottom=0.08)
+        grid = outer[0].subgridspec(2, 3, width_ratios=[0.85, 0.62, 2.2], hspace=0.12, wspace=0.05)
 
     # a: boxplots at the sides, paired lines and mean +/- 95% CI in the middle
     ax = fig.add_subplot(grid[:, 0])
@@ -124,19 +124,19 @@ def sticsa(measures, items, h1, sample, out, h5_rows=None, path=None):
     ax.set_xlim(-0.4, 1.4)
     ax.set_ylim(10, 45)  # a little room around the scale limits (11-44)
     ax.set_ylabel("STICSA somatic total (11–44)")
-    plot_style.panel_letter(ax, "a", x=-0.38)
+    plot_style.panel_letter(ax, "a", x=-0.4, y=1.03)
 
     # b: share of each answer per item, before (top) and after (bottom) the film
     order = list(STICSA_ITEM_LABELS)
     for row, when in enumerate(("pre", "post")):
-        bx = fig.add_subplot(grid[row, 1])
+        bx = fig.add_subplot(grid[row, 2])
         answers = items[[f"sticsa_{when}_item{item}" for item in order]]
         shares = pd.DataFrame({k: (answers == k).mean().to_numpy() for k in STICSA_ANSWERS}, index=order)
         y = np.arange(len(order))[::-1]
         left = np.zeros(len(order))
         for answer, label in STICSA_ANSWERS.items():
             bx.barh(y, shares[answer], left=left, height=0.85, color=plot_style.STICSA_RESPONSE_COLOURS[answer],
-                    edgecolor="white", linewidth=0.8, hatch=STICSA_HATCHES[answer], label=f"{answer} {label}")
+                    edgecolor="white", linewidth=1, label=f"{answer} {label}")
             left += shares[answer].to_numpy()
         bx.set_yticks(y, [STICSA_ITEM_LABELS[item] for item in order])
         bx.set_xlim(0, 1)
@@ -146,16 +146,17 @@ def sticsa(measures, items, h1, sample, out, h5_rows=None, path=None):
         if row == 0:
             bx.set_xticks([])
             bx.spines["bottom"].set_visible(False)
-            bx.legend(ncol=4, loc="lower left", bbox_to_anchor=(0, 1.0), handlelength=1.6, columnspacing=1.0,
-                      borderaxespad=0.2)
-            plot_style.panel_letter(bx, "b", x=-0.3, y=1.04)
+            # Legend across the width of panel b, as in the original figure (kept within the panel's x limits).
+            bx.legend(ncol=4, loc="lower left", bbox_to_anchor=(0, 1.0, 1, 0.1), mode="expand", handlelength=1.0,
+                      handletextpad=0.4, columnspacing=0.6, borderaxespad=0.2)
+            plot_style.panel_letter(bx, "b", x=-0.3, y=1.06)  # level with "a" (panel b rows are half as tall)
         else:
             bx.set_xticks([0, 0.25, 0.5, 0.75, 1], ["0%", "25%", "50%", "75%", "100%"])
             bx.set_xlabel("Share of participants")
 
     # c, d: STICSA change against whole-film mean ratings (registered H5a, H5b)
     if h5_rows is not None:
-        lower = outer[1].subgridspec(1, 2)
+        lower = outer[1].subgridspec(1, 2, wspace=0.28)
         for i, (row, letter) in enumerate(zip(h5_rows, "cd")):
             spec = next(s for s in hypotheses.CORRELATIONS if s["hypothesis"] == row["hypothesis"])
             cx = fig.add_subplot(lower[0, i])
