@@ -13,6 +13,7 @@
 \usepackage{array}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{lineno} % line numbers for review; remove for the typeset version
 \usepackage{csquotes}
 \usepackage{xcolor}
 \usepackage[style=apa,backend=biber]{biblatex}
@@ -47,333 +48,296 @@ Aarhus, Denmark}
 Corresponding author: Micah G. Allen, Center of Functionally Integrative Neuroscience, Aarhus University,
 Aarhus, Denmark. E-mail: micah@cfin.au.dk.}
 
-\abstract{Watching others in danger can evoke anxiety and bodily discomfort even when viewers remain physically
-safe. We present an open-source browser-based platform for characterising how these experiences unfold over time. The
-platform collects simultaneous ratings of valence and arousal within a video, synchronised to film time, and combines
-them with participant training, automatic handling of viewing interruptions and checks of data integrity, enabling
-online characterisation of stimuli before laboratory use. We demonstrate its application to a 13.5-min first-person
-film of dangerous activities at height, presented without sound. Participants continuously rated their own affect and
-completed a measure of somatic anxiety before and after viewing. An exploratory sample ($n$~=~\val{n_exploratory})
-informed preregistered tests in an independent confirmatory sample ($N$~=~\val{n_primary}). Arousal rose, remained
-elevated for several minutes and declined towards the end, while valence was more unpleasant during the sustained
-phase than during the opening. The temporal shape of group-average responses closely reproduced across samples.
-Somatic anxiety increased substantially after viewing ($d_z$~=~\val{H1:est}), with larger increases associated with
-higher arousal and more unpleasant valence. The film provides a characterised induction of sustained unpleasant
-arousal accompanied by changes in reported bodily experience. The openly available platform, data and reference
-trajectories support its reuse and the characterisation of other stimuli for research linking subjective emotion to
-physiological and neural responses.}
+\abstract{Watching someone in danger can make a viewer feel anxious even when they know they are safe. Studying how
+this response builds, persists and subsides requires methods that capture experience as events unfold. We present an
+open-source browser platform for continuous affect rating and demonstrate its use with a 13.5-minute film of unsecured
+skyscraper climbing. Viewers rate valence and arousal simultaneously on an affect grid embedded in the video. The
+platform records ratings alongside video and displayed-frame timestamps, pauses playback during interruptions, and
+combines participant training with input logging and checks on session quality. An exploratory sample
+($n$~=~\val{n_exploratory}) informed preregistered tests in an independent confirmatory sample ($N$~=~\val{n_primary}).
+Arousal rose as the climb progressed, remained elevated for several minutes, and then declined, with the sustained
+period experienced as most unpleasant. Group-level time courses closely reproduced across samples (arousal $r$~=~.993;
+valence $r$~=~.937). Self-reported somatic anxiety increased substantially after viewing ($d_z$~=~\val{H1:est}), and
+larger increases were associated with higher arousal and more unpleasant valence during the film. The platform,
+analysis code and reference data are openly available. Together, these resources support online characterisation of
+naturalistic stimuli and provide a shared temporal reference for studying sustained emotion, bodily experience and
+their physiological and neural correlates.}
 
-\keywords{emotion induction, film, continuous ratings, valence and arousal, somatic anxiety}
+\keywords{emotion induction, continuous affect rating, affect grid, naturalistic stimuli, somatic anxiety, interoception}
 
 \begin{document}
+\linenumbers % before \maketitle so the abstract page is numbered too (apa7 typesets the abstract inside \maketitle)
 \maketitle
 
-% Micah's revision (2026-10-10) restructured in revision three: the online measurement challenge and the platform
-% now come before the film, which is introduced as the demonstration. No "Introduction" heading (journal rule; the
-% heading added earlier on 2026-10-11 was removed again when the journal checklist was applied).
+% Introduction: Micah's revised text of 2026-10-12, adopted verbatim; citations mapped to the bibliography keys,
+% sample sizes as \val macros, cross-references as \ref. No "Introduction" heading (journal rule).
 
 Watching someone hang from the edge of a skyscraper can be uncomfortable even from the safety of a chair. As the
-danger unfolds, concern for the person on screen may be accompanied by tension and other bodily sensations. This
-makes vicarious danger a useful setting in which to study how emotional experience develops over time. For research
-linking emotion to behaviour, physiology or brain activity, the timing of that experience matters: a measure taken
-after an episode cannot show when arousal built or how long it persisted \parencite{saarimaki2021naturalistic}.
+danger unfolds, concern for the person on screen may be accompanied by tension and other bodily sensations. Such films
+offer a way to study emotion as it builds, persists and subsides. Capturing these changes requires measurements made
+during the episode rather than only afterwards \parencite{saarimaki2021naturalistic}. Here we present an open-source
+browser platform for continuous affect rating and use it to characterise a film of sustained vicarious danger,
+examining both the reproducibility of its affective time course and changes in viewers' reported bodily anxiety.
 
-Films allow researchers to present the same unfolding events to different viewers. Established film libraries have
-demonstrated their value for eliciting emotion, commonly using ratings collected after viewing
-\parencite{gilman2017film,gross1995emotion,schaefer2010assessing}. Continuous ratings extend this approach by tracing
-experience within a film \parencite{ruef2007continuous}. In naturalistic neuroimaging, such ratings have been related
-to neural responses and brain-state dynamics \parencite{chang2021endogenous,goldin2005neural}. Resources such as
-Emo-FilM combine moment-to-moment emotion annotations with physiological and fMRI recordings
-\parencite{morgenroth2025emofilm}, and continuous anxiety ratings have been used to follow the suspense of a Hitchcock
-thriller \parencite{kirk2024brainheart}. These measurements also make it possible to ask whether different viewers
-experience changes in emotion at similar points in the same film.
+Films are widely used for emotion induction because they present the same unfolding events to every viewer.
+Established film libraries have typically been characterised using ratings collected after viewing
+\parencite{gilman2017film,gross1995emotion,schaefer2010assessing}. These ratings describe the overall experience but
+do not show when emotion intensifies, remains elevated or begins to recede. Continuous ratings trace experience within
+the film \parencite{ruef2007continuous}, and have been related to neural responses and brain-state dynamics during
+naturalistic viewing \parencite{chang2021endogenous,goldin2005neural}. The Emo-FilM dataset combines moment-to-moment
+emotion annotations with physiological and functional magnetic resonance imaging (fMRI) recordings
+\parencite{morgenroth2025emofilm}, while continuous anxiety ratings have been used to follow the suspense of a
+Hitchcock thriller \parencite{kirk2024brainheart}. Such approaches allow researchers to examine emotional episodes
+through their changing course.
 
-Collecting such ratings online makes large and diverse samples accessible, but it raises practical demands.
-Interpreting a rating requires knowing when it was made relative to the images on screen, and whether the film played
-and the participant took part as intended. Buffering, switching to another browser tab or a lapse in rating can break
-the link between a response and the moment it describes, and remote participants are not observed. Unsupervised
-online studies must also contend with AI-assisted and automated responding
-\parencite{sehgal2026aiassisted,veselovsky2023artificial,westwood2025existential}.
+Online testing makes it possible to collect these ratings from many viewers, but introduces challenges for
+interpreting them. A rating must be linked to the images actually presented, and researchers need to know whether
+viewing and responding proceeded as intended. Buffering or switching to another browser tab can disrupt stimulus
+exposure, while periods without input may reflect either stable feelings or disengagement. Unsupervised studies must
+also contend with AI-assisted and automated responding, which complicate the assessment of participation
+\parencite{sehgal2026aiassisted,veselovsky2023artificial,westwood2025existential}. Recording the circumstances in
+which ratings were made is therefore part of establishing what those ratings can tell us.
 
-We developed an open-source browser-based platform to meet these demands. Viewers report how they feel by moving a
-point within an affect grid embedded in the video, rating valence and arousal simultaneously and in synchrony with
-film time. This two-dimensional approach captures both how pleasant an experience feels and how activating it is
-\parencite{russell1980circumplex,russell1989affectgrid}, building on established methods for continuous affect rating
-\parencite{schubert1999measuring,girard2018darma}. Beyond the rating itself, the platform contributes three things. It
-records each rating together with the video time and the time of the frame actually presented; it pauses the film
-when viewing is interrupted and saves data periodically, so that sessions survive interruptions and page reloads; and
-it trains participants before the film and records the input and text-entry events needed to assess the integrity of
-each session (Online Resource 1, Fig.~S1). Continuous rating tools exist for desktop media annotation
-\parencite{girard2014carma,girard2018darma} and immersive virtual reality \parencite{fourcade2025affecttracker}, and
-browser-based tools already support continuous annotation of video, including in online studies
-\parencite{boccignone2017amhuse,louven2022emotouch,melhart2019pagan,farrens2020continuous}. The contribution therefore lies not in
-browser-based continuous rating itself but in combining frame-referenced timing, presentation control, training and
-integrity checks in one open workflow.
+Existing tools support continuous annotation in browsers
+\parencite{boccignone2017amhuse,farrens2020continuous,louven2022emotouch,melhart2019pagan}, on desktop computers
+\parencite{girard2014carma,girard2018darma}, and in immersive virtual reality \parencite{fourcade2025affecttracker}.
+Our platform brings simultaneous affect rating, controlled presentation and records of participation together in one
+open workflow. Viewers move a point within an affect grid embedded in the video to report how pleasant and activating
+their experience feels, building on established dimensional and continuous rating methods
+\parencite{russell1980circumplex,russell1989affectgrid,schubert1999measuring}. Each rating is stored with the video
+time and, where supported by the browser, the time of the displayed frame. Viewing interruptions pause the film and are
+logged, while periodic saving allows sessions to resume after a page reload. Participants practise before viewing, and
+input and text-entry records support subsequent checks on session quality (Online Resource 1, Fig.~S1).
 
 We demonstrate the platform with a 13.5-min first-person film of people climbing and performing unsecured stunts on a
-skyscraper. Presented without sound, the film centres on visually apparent danger that can be followed without
-spoken dialogue (Figure~\ref{fig:overview}a). Its progression towards a prolonged period of danger makes it a
-promising stimulus for studying sustained unpleasant arousal. An extended episode of this kind could help researchers
-examine how emotional and bodily responses change as a threatening situation continues. To use it for this purpose,
-however, we first need to establish whether viewers show a reproducible affective time course and report an
-accompanying increase in bodily symptoms of anxiety. Before and after viewing, participants therefore also completed
-the somatic subscale of the State-Trait Inventory for Cognitive and Somatic Anxiety (STICSA), which assesses symptoms
-such as a fast heartbeat and muscle tension \parencite{gros2007psychometric,ree2008distinguishing}. These measures
-allow us to relate the unfolding affective response to changes in reported bodily experience, a central concern of
-interoception research \parencite{cristaldi2026beyond,critchley2017interoception}.
+skyscraper. Presented without sound, the film conveys danger without requiring dialogue and builds towards a prolonged
+period of exposure at height (Figure~\ref{fig:overview}a). This makes it a candidate stimulus for studying sustained
+unpleasant arousal and the transitions into and out of that state. To assess whether the experience also changes
+reported bodily anxiety, participants completed the somatic subscale of the State-Trait Inventory for Cognitive and
+Somatic Anxiety (STICSA) before and after viewing. This scale measures symptoms such as a fast heartbeat and tense
+muscles \parencite{gros2007psychometric,ree2008distinguishing}. Relating these reported bodily changes to the
+unfolding affective response connects the study of emotion dynamics with questions about interoceptive experience
+\parencite{cristaldi2026beyond,critchley2017interoception}.
 
 An exploratory sample ($n$~=~\val{n_exploratory}) informed preregistered hypotheses tested in an independent
-confirmatory sample ($N$~=~\val{n_primary}). We predicted that arousal would rise, remain elevated and then decline,
-with more unpleasant valence during the sustained period than during the opening. We also predicted an increase in
-somatic anxiety and replication of the group-level affective time course. Further hypotheses tested whether fear of
-heights was associated with a stronger response, whether increases in somatic anxiety accompanied higher arousal and
-more unpleasant valence, and whether retrospective anxiety ratings converged with plateau arousal and somatic change.
-The study therefore evaluates both the film as a sustained anxiety induction and the platform as a means of
-characterising affective dynamics online.
+confirmatory sample ($N$~=~\val{n_primary}). We predicted that arousal would rise, remain elevated and then decline;
+that the sustained period would be experienced as more unpleasant than the opening; and that somatic anxiety would
+increase after viewing. We also tested whether the group-level affective time course reproduced across samples.
+Further hypotheses examined whether everyday fear of heights was associated with a stronger response, whether
+increases in somatic anxiety accompanied higher arousal and more unpleasant valence, and whether retrospective
+anxiety ratings agreed with plateau arousal and somatic change.
 
 \section{Method}
 
 \subsection{Preregistration and Transparency}
 
-The hypotheses and analysis plan were preregistered on OSF (\url{https://osf.io/s2yvb}). All confirmatory tests
-followed the registered analysis plan; exploratory analyses are identified as such.
+The hypotheses and analysis plan were preregistered on the Open Science Framework (OSF; \url{https://osf.io/s2yvb}).
+All confirmatory tests followed the registered plan, and exploratory analyses are labelled as such.
 
 \subsection{Rating Platform and Data Integrity}
 
-The rating platform we developed for this study (open source, MIT licence) is a jsPsych task
-\parencite{deleeuw2023jspsych} hosted on a JATOS server \parencite{lange2015jatos} that runs in an ordinary desktop web
-browser; the version used here is archived as \texttt{v1.0-heights-film} (see Data Availability). Its key features
-are as follows. Ratings are given on a small affect grid \parencite{russell1989affectgrid} overlaid on the video
-(Figure~\ref{fig:overview}a; Online Resource 1, Fig.~S2): the mouse pointer is hidden and locked, so moving the mouse moves the dot without
-clicking, with horizontal position coding valence (0~=~unpleasant, 100~=~pleasant) and vertical position arousal
-(0~=~low, 100~=~high). The position is sampled at 20~Hz with video, frame and elapsed time, and every raw input event
-is stored. The film is downloaded in full before playback, controls and seeking are disabled, leaving the tab or full
-screen pauses the film, and data are saved every 30~s so that a session resumes after a page reload. Before the film,
-participants practise with the same mouse control by tracking a moving target and by placing six everyday situations
-on the grid, with feedback. The same session presents standard self-report formats (Likert-type scales,
-multiple-choice and checklist items, and free-text entry). Data integrity is supported by two instructed-response
-attention checks, blocked pasting and logged keystrokes in text fields, counts of script-generated browser events,
-and quality-control code that summarises coverage, interruptions and rating activity and flags unusual mouse movement
-and text entry for review. Participants were excluded solely by the registered rules (Online Resource 1, Table~S1).
-Section S1 of Online Resource 1 describes each feature in detail, and its Fig.~S1 shows the session workflow.
+The platform is a jsPsych task \parencite{deleeuw2023jspsych} hosted on a JATOS server \parencite{lange2015jatos}
+and runs in an ordinary desktop web browser. It is open source (MIT licence), and the version used here is archived
+as \texttt{v1.0-heights-film} (see Data Availability). Participants rate on a small affect grid
+\parencite{russell1989affectgrid} overlaid on the video (Figure~\ref{fig:overview}a; Online Resource 1, Fig.~S2).
+The mouse pointer is hidden and locked, so moving the mouse moves the dot without clicking. Horizontal position codes
+valence (0~=~unpleasant, 100~=~pleasant) and vertical position arousal (0~=~low, 100~=~high). The dot position is
+sampled at 20~Hz together with the video, frame and elapsed time, and every raw input event is stored. The film is
+downloaded in full before playback, playback controls and seeking are disabled, leaving the tab or full screen pauses
+the film, and data are saved every 30~s so that a session resumes after a page reload. Before the film, participants
+practise the mouse control by tracking a moving target and by placing six everyday situations on the grid, with
+feedback. The same session can present Likert-type scales, multiple-choice and checklist items and free-text entry.
+Several features support data integrity: two instructed-response attention checks, blocked pasting and logged
+keystrokes in text fields, counts of script-generated browser events, and quality-control code that summarises
+coverage, interruptions and rating activity and flags unusual mouse movement and text entry for review. Participants
+were excluded by the registered rules alone (Online Resource 1, Table~S1). Section S1 of Online Resource 1 describes
+each feature.
 
 \subsection{Participants}
 
-Participants were recruited on Prolific \parencite{palan2018prolific}, with filters for fluent English, normal or
+Participants were recruited on Prolific \parencite{palan2018prolific}. Filters required fluent English, normal or
 corrected-to-normal vision, an approval rate of at least 95\%, at least 20 previous submissions and a desktop
-computer with a mouse or trackpad. They
-were recruited in cohorts with a 50/50 quota on Prolific's sex screener and were paid \pounds 4.80. The information
-sheet advised people with a strong fear of heights not to take part. The pilot and the first cohort formed the
-exploratory sample, which was used to fix the segment edges, exclusion rules and sample size; later cohorts formed the
-confirmatory sample, on which all confirmatory tests were run. Recruitment stopped at the end of the first cohort after
-which at least 120 usable confirmatory participants were available, a number giving 80\% power to detect correlations
-of about .25. The study involved watching a film and answering questionnaires and was not a health research project
-under the Danish Act on Research Ethics Review of Health Research Projects and Health Data Research Projects; for such
-studies there is no legal requirement for ethical approval in Denmark, and Aarhus University does not require it. The
-Aarhus University Research Ethics Committee provides a standard statement to this effect. All participants gave informed consent online before taking part.
+computer with a mouse or trackpad. Recruitment ran in cohorts with a 50/50 quota on Prolific's sex screener, and
+participants were paid \pounds 4.80. The information sheet advised people with a strong fear of heights not to take
+part. The pilot and the first cohort formed the exploratory sample, which was used to fix the segment edges, the
+exclusion rules and the sample size. Later cohorts formed the confirmatory sample, on which all confirmatory tests
+were run. Recruitment stopped at the end of the first cohort that brought the number of usable confirmatory
+participants to at least 120, which gives 80\% power to detect correlations of about .25. The study involved watching
+a film and answering questionnaires and was not a health research project under the Danish Act on Research Ethics
+Review of Health Research Projects and Health Data Research Projects. For such studies there is no legal requirement
+for ethical approval in Denmark, and Aarhus University does not require it. The Aarhus University Research Ethics
+Committee provides a standard statement to this effect. All participants gave informed consent online before taking
+part.
 
 \subsection{Stimulus}
 
 The stimulus was a 13 min 28 s first-person video of an unsecured climb to the roof of a skyscraper
-\parencite{tikhomirov2017dubai}, presented without sound (1,280~$\times$~720 pixels, 25 frames per second) and
-downloaded in full before playback.
+\parencite{tikhomirov2017dubai}, presented without sound (1,280~$\times$~720 pixels, 25 frames per second).
 
 \subsection{Procedure and Measures}
 
 After consent and a device check, participants rated their everyday fear of heights (\enquote{In everyday life, how
 afraid are you of heights?}, 1--7) and completed the practice. They then completed the somatic subscale of the STICSA
-(11 items, 1--4, total 11--44, state instructions; \cite{ree2008distinguishing}), watched the film while rating
+with state instructions (11 items, 1--4, total 11--44; \cite{ree2008distinguishing}), watched the film while rating
 continuously, and completed the STICSA again immediately afterwards. Instructions asked participants how they felt at
-that moment. Afterwards, participants rated how tense or anxious they had felt overall while watching (1--7) and
-answered further questions on their experience and data quality. Participants also provided a written account of what
-they saw and how the film made them feel (minimum 100 words), with a separate optional field for feedback on the study
-or technical difficulties.
+that moment. Participants then rated how tense or anxious they had felt overall while watching (1--7) and answered
+further questions about their experience and about data quality. They also wrote an account of what they saw and how
+the film made them feel (at least 100 words), with a separate optional field for feedback on the study or technical
+difficulties.
 
 \subsection{Data Processing and Exclusions}
 
 Ratings were resampled to 1~Hz of film time (808 values) by linear interpolation. The film was divided into four
 preregistered segments, estimated in the exploratory sample by piecewise-linear segmentation of group-mean arousal:
 baseline (0--262~s), rise (262--470~s), plateau (470--692~s) and return (692--808~s). Participants were excluded if
-they failed both attention checks, produced script-generated input, did not type their written description (fewer
-than 0.2 keystrokes per character for descriptions of at least 200 characters), gave erratic input (more than 10\%
-of mouse movements larger than 250 pixels), had
-disrupted viewing (more than 30~s of buffering or 60~s of interruptions), had ratings during fewer than 95\% of the
-film, or had seen the film before (Online Resource 1, Table~S1).
+they failed both attention checks, produced script-generated input, did not type their written account (fewer than
+0.2 keystrokes per character for accounts of at least 200 characters), gave erratic input (more than 10\% of mouse
+movements larger than 250 pixels), had disrupted viewing (more than 30~s of buffering or 60~s of interruptions),
+rated during less than 95\% of the film, or had seen the film before (Online Resource 1, Table~S1).
 
 \subsection{Statistical Analysis}
 
-All tests were two-sided ($\alpha$~=~.05) with Holm correction within each hypothesis family; directional hypotheses
-counted as supported only if significant in the predicted direction. H1 compared STICSA totals after and before the
-film (paired $t$ test; $d_z$ with exact 95\% CI; Wilcoxon signed-rank test as a check). H2 tested four contrasts
-between participants' segment means (arousal: rise $>$ baseline, plateau $>$ baseline, return $<$ plateau; valence:
-plateau $<$ baseline) with paired $t$ tests. H3 correlated the confirmatory and exploratory group-mean series (Pearson
-$r$; 95\% CI from 5,000 circular block bootstrap resamples with 30-s blocks) and was supported if the lower bound exceeded .50.
-H4--H6 were Spearman correlations with bootstrap 95\% CIs (5,000 resamples): everyday fear of heights with plateau
-arousal, plateau valence and STICSA change (H4); STICSA change with whole-film arousal and valence (H5); and post-film
-anxiety with STICSA change and plateau arousal (H6). Two registered sensitivity samples (stricter engagement criteria;
-participants rejected on Prolific removed) repeated all tests. Exploratory analyses examined the change in each STICSA
-item (Wilcoxon signed-rank tests, Holm-corrected across items) and the effects of age and sex (mixed models of segment
-means). Analyses were run in Python \val{python_version} with NumPy,
-SciPy, pandas and statsmodels. Large language model tools (ChatGPT and Codex, OpenAI; Claude Code, Anthropic) assisted
-with writing and testing the analysis code and with preparing the manuscript. The analysis code was checked with tests
-on small simulated datasets with known answers, and the author verified the analyses, results and references and takes
-full responsibility for the work.
+All tests were two-sided ($\alpha$~=~.05) with Holm correction within each hypothesis family, and a directional
+hypothesis counted as supported only if the test was significant in the predicted direction. H1 compared STICSA
+totals after and before the film (paired $t$ test; $d_z$ with exact 95\% CI; Wilcoxon signed-rank test as a check).
+H2 tested four contrasts between participants' segment means with paired $t$ tests (arousal: rise $>$ baseline,
+plateau $>$ baseline, return $<$ plateau; valence: plateau $<$ baseline). H3 correlated the confirmatory and
+exploratory group-mean series (Pearson $r$; 95\% CI from 5,000 circular block bootstrap resamples with 30-s blocks)
+and was supported if the lower bound exceeded .50. H4--H6 were Spearman correlations with bootstrap 95\% CIs (5,000
+resamples): everyday fear of heights with plateau arousal, plateau valence and STICSA change (H4); STICSA change with
+whole-film arousal and valence (H5); and post-film anxiety with STICSA change and plateau arousal (H6). All tests were
+repeated in two registered sensitivity samples (stricter engagement criteria; participants rejected on Prolific
+removed). Exploratory analyses examined the change in each STICSA item (Wilcoxon signed-rank tests, Holm-corrected
+across items) and the effects of age and sex (mixed models of segment means). Analyses were run in Python
+\val{python_version} with NumPy, SciPy, pandas and statsmodels. Large language model tools (ChatGPT and Codex, OpenAI;
+Claude Code, Anthropic) assisted with writing and testing the analysis code and with preparing the manuscript. The
+analysis code was checked with tests on small simulated datasets with known answers, and the author verified the
+analyses, results and references and takes full responsibility for the work.
 
 \section{Results}
 
 \subsection{Online Implementation and Data Quality}
 
-Of \val{pq:conf:completed} completed
-confirmatory sessions, \val{pq:conf:usable} (\val{pq:conf:pct_usable}\% of completed sessions) met the registered
-criteria: \val{n_excl_disrupted} were excluded for disrupted viewing, \val{n_excl_freetext} for an untyped written
-account and \val{n_excl_erratic} for erratic input (exploratory sample: \val{pq:expl:usable} of
-\val{pq:expl:completed} completed sessions). No session was excluded for script-generated input, low coverage, failing
-both attention checks or having seen the film. Ratings covered a median of \val{pq:conf:coverage_median}\% of film
-seconds (minimum \val{pq:conf:coverage_min}\%). Buffering occurred in \val{pq:conf:n_any_buffering} sessions and
-interruptions in \val{pq:conf:n_any_interruption} (longest \val{pq:conf:buffering_max}~s and
-\val{pq:conf:interrupted_max}~s). \val{pq:conf:att_none} participants passed both attention checks and
-\val{pq:conf:att_one} failed one; \val{pq:conf:attentive_yes} reported watching with full attention,
-\val{pq:conf:attentive_mostly} mostly and \val{pq:conf:attentive_no} not.
-Among retained participants, ratings changed in a median of \val{pq:conf:bouts_median} bouts per minute
-(interquartile range \val{pq:conf:bouts_q1}--\val{pq:conf:bouts_q3}), and the median longest stretch without input
-was \val{pq:conf:gap_median}~s, which may reflect holding the dot still while feelings were unchanged;
-\val{pq:conf:n_sparse} met the registered definition of sparse rating and were removed in the stricter sensitivity
-sample. Split-half reliability of the group-mean series was \val{rel:arousal} for arousal and \val{rel:valence} for
-valence. Page reloads were not part of the exported data. The retained sample had a mean age of \val{age_mean} years ($SD$~=~\val{age_sd}; \val{n_female}
-female, \val{n_male} male, \val{n_sex_missing} not available). Sample characteristics, descriptive statistics and all
+Of \val{pq:conf:completed} completed confirmatory sessions, \val{pq:conf:usable} (\val{pq:conf:pct_usable}\%) met
+the registered criteria. The exclusions were for disrupted viewing (\val{n_excl_disrupted} sessions), an untyped
+written account (\val{n_excl_freetext}) and erratic input (\val{n_excl_erratic}); no session was excluded for
+script-generated input, low coverage, failing both attention checks or having seen the film. In the exploratory sample, \val{pq:expl:usable} of
+\val{pq:expl:completed} completed sessions were usable. Buffering occurred in \val{pq:conf:n_any_buffering}
+confirmatory sessions and interruptions in \val{pq:conf:n_any_interruption} (longest \val{pq:conf:buffering_max}~s
+and \val{pq:conf:interrupted_max}~s), and ratings covered a median of \val{pq:conf:coverage_median}\% of film seconds
+(minimum \val{pq:conf:coverage_min}\%). Of the completed sessions, \val{pq:conf:att_none} passed both attention
+checks and \val{pq:conf:att_one} failed one, and \val{pq:conf:attentive_yes} participants reported watching with
+full attention, \val{pq:conf:attentive_mostly} mostly and \val{pq:conf:attentive_no} not. Among retained
+participants, ratings changed in a median of \val{pq:conf:bouts_median} bouts per minute (interquartile range
+\val{pq:conf:bouts_q1}--\val{pq:conf:bouts_q3}), and the median longest stretch without input was
+\val{pq:conf:gap_median}~s, which may reflect holding the dot still while feelings were unchanged. The
+\val{pq:conf:n_sparse} participants who met the registered definition of sparse rating were removed in the stricter
+sensitivity sample. Split-half reliability of the group-mean series was \val{rel:arousal} for arousal and
+\val{rel:valence} for valence. Page reloads were not recorded in the exported data. The retained sample had a mean age of \val{age_mean} years ($SD$~=~\val{age_sd}; \val{n_female} female,
+\val{n_male} male, \val{n_sex_missing} not available). Sample characteristics, descriptive statistics and all
 confirmatory tests, including both sensitivity samples, are given in Online Resource 1 (Tables S2--S5).
 
 \subsection{Somatic Anxiety and Affective Time Course}
 
-\paragraph{Somatic anxiety (H1).} STICSA somatic scores rose by \val{H1:diff} points from before
-($M$~=~\val{sticsa_pre_mean}, $SD$~=~\val{sticsa_pre_sd}) to after the film ($M$~=~\val{sticsa_post_mean},
-$SD$~=~\val{sticsa_post_sd}), \val{H1:report} (Figure~\ref{fig:sticsa}a). Scores rose for \val{n_increase}
-participants and fell for \val{n_decrease}, and the Wilcoxon test agreed (\val{H1:wilcoxon}). In an exploratory item
-analysis, all eleven items increased ($p_\mathrm{Holm}$ \val{items:pholm_max}; Figure~\ref{fig:sticsa}b and
-Online Resource 1, Table~S6), most of all a fast heartbeat ($d_z$~=~\val{items:rank1:dz}) and least a dry throat, weak
+\paragraph{Somatic anxiety (H1).} STICSA somatic scores rose by \val{H1:diff} points, from $M$~=~\val{sticsa_pre_mean}
+($SD$~=~\val{sticsa_pre_sd}) before the film to $M$~=~\val{sticsa_post_mean} ($SD$~=~\val{sticsa_post_sd}) after it,
+\val{H1:report} (Figure~\ref{fig:sticsa}a). Scores rose for \val{n_increase} participants and fell for
+\val{n_decrease}, and the Wilcoxon test agreed (\val{H1:wilcoxon}). In the exploratory item analysis, all eleven
+items increased ($p_\mathrm{Holm}$ \val{items:pholm_max}; Figure~\ref{fig:sticsa}b; Online Resource 1, Table~S6).
+The largest change was in a fast heartbeat ($d_z$~=~\val{items:rank1:dz}) and the smallest in a dry throat, weak
 muscles and stiff limbs ($d_z$~=~\val{items:rank11:dz}--\val{items:rank9:dz}).
 
-\paragraph{Time course (H2, H3).} Arousal was higher in the rise segment than at baseline, \val{H2a:report}, and in the plateau than at baseline,
-\val{H2b:report}. It was lower in the
-final segment than on the plateau, \val{H2c:report} (Figure~\ref{fig:overview}b; Online Resource 1, Fig.~S3). Valence was lower on the plateau
-than at baseline, \val{H2d:report} (Figure~\ref{fig:overview}c). The group-mean series of the
-confirmatory sample closely followed the shape of the exploratory sample's series, for arousal, \val{H3arousal:report},
-and for valence, \val{H3valence:report}.
+\paragraph{Time course (H2, H3).} Arousal was higher than at baseline in both the rise segment, \val{H2a:report}, and
+the plateau, \val{H2b:report}, and it was lower in the return segment than on the plateau, \val{H2c:report}
+(Figure~\ref{fig:overview}b; Online Resource 1, Fig.~S3). Valence was lower on the plateau than at baseline,
+\val{H2d:report} (Figure~\ref{fig:overview}c). The confirmatory group-mean series closely followed the shape of the
+exploratory series, for arousal \val{H3arousal:report} and for valence \val{H3valence:report}.
 
 \paragraph{Individual differences (H4--H6).} Participants whose STICSA scores rose more gave higher whole-film arousal
-ratings, \val{H5a:report}, and lower valence ratings, \val{H5b:report} (Figure~\ref{fig:sticsa}c, d). Post-film anxiety correlated with STICSA
-change, \val{H6a:report}, and with plateau arousal, \val{H6b:report}. Everyday fear of heights was associated with
-more negative plateau valence, \val{H4b:report}; its associations with plateau arousal, \val{H4a:report}, and with
-STICSA change, \val{H4c:report}, were not significant after correction (Online Resource 1, Fig.~S4, shows all individual-difference tests).
+ratings, \val{H5a:report}, and lower whole-film valence ratings, \val{H5b:report} (Figure~\ref{fig:sticsa}c, d).
+Post-film anxiety correlated with STICSA change, \val{H6a:report}, and with plateau arousal, \val{H6b:report}.
+Everyday fear of heights was associated with more negative plateau valence, \val{H4b:report}. Its registered
+associations with plateau arousal, \val{H4a:report}, and with STICSA change, \val{H4c:report}, were not supported
+(all individual-difference tests: Online Resource 1, Fig.~S4).
 
 \paragraph{Somatic anxiety and ratings by segment (exploratory).} In a post hoc exploratory analysis of both samples
 ($n$~=~\val{xseg:n}), STICSA change was correlated with the mean ratings in each segment (Spearman $\rho$ with
-bootstrap 95\% confidence intervals, uncorrected; Figure~\ref{fig:sticsasegments}). There was no clear
-association at baseline (arousal \val{xseg:arousal:baseline}; valence \val{xseg:valence:baseline}).
-Valence was associated with STICSA change in the rise (\val{xseg:valence:rise}) and plateau
-(\val{xseg:valence:plateau}), and arousal in the plateau (\val{xseg:arousal:plateau}) but less clearly in the rise
-(\val{xseg:arousal:rise}). Associations were weaker in the return (arousal \val{xseg:arousal:return}; valence
-\val{xseg:valence:return}).
+bootstrap 95\% confidence intervals, uncorrected; Figure~\ref{fig:sticsasegments}). At baseline there was no clear
+association (arousal \val{xseg:arousal:baseline}; valence \val{xseg:valence:baseline}). Valence was associated with
+STICSA change in the rise (\val{xseg:valence:rise}) and plateau (\val{xseg:valence:plateau}), and arousal in the
+plateau (\val{xseg:arousal:plateau}) but less clearly in the rise (\val{xseg:arousal:rise}). In the return segment
+the associations were weaker (arousal \val{xseg:arousal:return}; valence \val{xseg:valence:return}).
 
-\paragraph{Sensitivity and additional analyses.} All registered support decisions were unchanged in both sensitivity samples
-($n$~=~\val{n_stricter} and \val{n_without_rejected}; Online Resource 1, Table~S5). In a registered descriptive analysis,
-re-estimating the segment edges in the
-confirmatory sample placed them at \val{edge1:est}, \val{edge2:est} and \val{edge3:est}~s, against the registered
-\val{edge1:reg}, \val{edge2:reg} and \val{edge3:reg}~s. Exploratory analyses described where on the affect grid ratings fell in each segment (Online Resource 1, Fig.~S5)
-and found no evidence that the time course differed by sex
-(arousal: \val{agesex:arousal:sex_x_segment}; valence: \val{agesex:valence:sex_x_segment}) or by age, or that
-STICSA change was associated with sex or age (Online Resource 1, Table~S7 and Figs.~S6--S7).
+\paragraph{Sensitivity and additional analyses.} All registered support decisions were unchanged in both sensitivity
+samples ($n$~=~\val{n_stricter} and \val{n_without_rejected}; Online Resource 1, Table~S5). In the registered
+descriptive analysis, segment edges re-estimated in the confirmatory sample fell at \val{edge1:est}, \val{edge2:est}
+and \val{edge3:est}~s, against the registered \val{edge1:reg}, \val{edge2:reg} and \val{edge3:reg}~s. Exploratory
+analyses described where on the affect grid the ratings fell in each segment (Online Resource 1, Fig.~S5) and found
+no evidence that the time course differed by sex (arousal: \val{agesex:arousal:sex_x_segment}; valence:
+\val{agesex:valence:sex_x_segment}) or by age, or that STICSA change was associated with sex or age (Online
+Resource 1, Table~S7 and Figs.~S6--S7).
 
 \section{Discussion}
-% Micah's revision (2026-10-10), reordered in revision three: platform second, then safeguards; reuse paragraph added.
+% Micah's new Discussion of 2026-10-12, adopted verbatim; citations mapped to the bibliography keys
+% (Grall & Finn 2022 and Finn & Bandettini 2021 added to references.bib, DOIs verified against Crossref).
 
-A film of other people in danger produced a sustained, reproducible affective response in viewers who remained
-physically safe. Arousal increased and stayed elevated for several minutes before declining, while the sustained
-period was experienced as more unpleasant than the opening. The temporal shape closely reproduced across independent
-samples, and somatic anxiety increased substantially after viewing ($d_z$~=~\val{H1:est}). Participants reporting
-larger increases in bodily symptoms also rated the film as more arousing and unpleasant. Exploratory analyses
-suggest that this link is phase-specific: it was absent at baseline and strongest during the rise and
-plateau, which argues against a general rating tendency and ties the bodily response to the film's danger phases.
-Together, these findings
-establish a characterised episode of vicarious danger in which affective dynamics can be studied alongside changes in
-felt bodily state.
+A film of other people in danger elicited sustained unpleasant arousal in viewers who were themselves safe. The
+affective response followed a closely reproducible course across independent samples, and viewers reported
+substantially more bodily symptoms of anxiety after watching. These findings support the film as a strong and
+consistent emotion-induction stimulus. The accompanying open platform provides a means of characterising how affect
+unfolds during naturalistic stimulation.
 
-The platform makes stimulus exposure, response timing and the quality of participation inspectable within
-one workflow. Each rating is stored with the video time and the time of the presented frame, interruptions pause the
-film and are logged, and the same logs feed the registered exclusion rules and sensitivity analyses. In the
-confirmatory sample, \val{pq:conf:pct_usable}\% of completed sessions met the registered criteria, and ratings
-covered a median of \val{pq:conf:coverage_median}\% of the film. The platform also makes this approach available for other stimuli and research settings. It collects simultaneous valence
-and arousal ratings within the video in an ordinary browser, allowing films to be characterised online before
-laboratory use. It complements established desktop annotation software \parencite{girard2014carma,girard2018darma}
-and tools for immersive virtual reality \parencite{fourcade2025affecttracker}, as well as other browser-based
-annotation tools. Applied across films, the same
-procedure could identify stimuli with different durations or patterns of unpleasant arousal and test how consistently
-these patterns reproduce. The combination of a characterised stimulus, reference trajectories and reusable software
-gives other researchers a practical starting point for such comparisons.
+The film's effectiveness is supported by convergence between continuous affect ratings, retrospective anxiety and
+reported bodily symptoms. Somatic anxiety increased in nearly nine out of ten viewers, and all confirmatory
+conclusions were unchanged under stricter screening. Established film-validation studies have characterised stimuli
+according to the intensity and nature of the emotions they evoke \parencite{gross1995emotion,schaefer2010assessing}.
+The present findings complement this approach by characterising the progression and duration of the response,
+providing a sustained induction relevant to research using suspenseful films to study anxiety and brain--body
+interactions \parencite{kirk2024brainheart}.
 
-Making participation inspectable matters because unsupervised online studies face AI-assisted and automated
-responding. Estimates of its prevalence vary widely across platforms, tasks and methods, from about 1\% of submissions
-among Prolific workers who shared their ChatGPT histories \parencite{sehgal2026aiassisted} to 33--46\% of crowd
-workers on a text summarisation task on Amazon Mechanical Turk \parencite{veselovsky2023artificial}. Where assistance
-occurs, it is rarely caught: on Prolific, assisted submissions were approved for payment 99.6\% of the time, and half
-involved bounded responses such as choices and ratings rather than free text \parencite{sehgal2026aiassisted}. Fully
-automated agents can also pass standard attention checks while simulating human reading times, mouse movements and
-keystrokes \parencite{westwood2025existential}. The platform therefore applies safeguards to both the continuous
-ratings and the written reports: copying and pasting are blocked, input events and text entry are logged, synthetic
-input, implausible mouse movement and duplicated or LLM-typical text are flagged, and viewing interruptions are
-recorded. Continuous ratings
-that must follow the film second by second are also harder to delegate than a single
-questionnaire answer. These features add friction against some forms of assisted or automated responding and support
-transparent review of questionable sessions, but agents that simulate human input could evade them, and the present
-study does not estimate their detection accuracy.
+The film was selected specifically for naturalistic neuroimaging because it contains an extended, relatively
+uneventful opening, rising tension, sustained danger and a quiet ending as the climbers leave the skyscraper.
+Continuous ratings closely followed this intended progression. This temporal structure offers a useful basis for
+studying dynamic functional connectivity, including comparisons across phases and changes within periods of
+sustained arousal. The reproducible group trajectories also provide a reference for independently collected neural
+and physiological recordings. Emo-FilM demonstrates the value of this approach by combining continuous emotion
+annotations with physiological and fMRI data from a separate sample \parencite{morgenroth2025emofilm}. Such
+reference curves can guide analyses while allowing for differences in individual experience.
 
-The reproducibility of the time course is particularly useful for research on sustained emotion. Correlations between
-the exploratory and confirmatory group trajectories were \val{H3arousal:est} for arousal and \val{H3valence:est} for
-valence, providing a common temporal reference for subsequent studies using the same stimulus. Researchers can use
-this reference to select intervals in which arousal is rising or remains elevated, and to examine responses as it
-declines. It could also inform affective regressors in independent neuroimaging samples, alongside relevant visual and
-event-related features \parencite{goldin2005neural,saarimaki2021naturalistic}. These correlations establish similarity
-in group-level temporal shape; they do not establish absolute agreement or reliability within individual viewers.
-Indeed, the confirmatory sample reported somewhat higher arousal during the opening and final minutes. The reference
-trajectory should therefore guide the study of individual experience without being assumed to describe every
-participant.
+The film also has practical advantages for neuroimaging. Its narrative is readily understood without sound, allowing
+use in scanning protocols where audio delivery is constrained. Its visually engaging events and multiple people on
+screen accord with calls to select naturalistic stimuli according to their content, presentation and experimental
+purpose \parencite{grall2022leveraging}. Social content may be particularly useful: \textcite{finn2021movie} found
+that clips with greater social content supported stronger prediction of cognitive traits from functional
+connectivity. The first-person viewpoint may further promote immersion by presenting the height and movement from
+the climber's perspective.
 
-The accompanying increase in somatic anxiety connects these shared dynamics to how viewers experienced their bodies.
-In the exploratory item analysis, all eleven symptoms increased, with the largest change in reports of a fast
-heartbeat. Larger increases in somatic anxiety were associated with higher average arousal and more unpleasant
-valence, while retrospective anxiety ratings converged with both somatic change and plateau arousal. Everyday fear of
-heights was associated with more unpleasant plateau valence, although its associations with arousal and somatic change
-were not significant after correction. Anticipation, concern for the climbers and discomfort at the views of height
-may all contribute to the experience.
+Larger increases in somatic anxiety accompanied higher arousal and more unpleasant valence, with exploratory
+associations most evident during the rise and plateau. This links the film's affective progression to reported
+bodily experience and provides a setting for studying how bodily sensations are interpreted within changing
+emotional contexts \parencite{cristaldi2026beyond}. Given the modest correspondence between subjective experience
+and physiology reported in previous film studies \parencite{mauss2005tie}, combining the task with physiological
+recordings could examine how felt and measured bodily responses relate during rising, sustained and declining
+arousal.
 
-These findings offer a basis for examining how bodily responses and their perception contribute to sustained emotion.
-Interoception research requires ways to study bodily experience during ongoing emotional experiences
-\parencite{cristaldi2026beyond,critchley2017interoception}. The present film provides an extended period of unpleasant
-arousal together with an increase in reported bodily symptoms. A next step is to record cardiac, respiratory and
-electrodermal activity during viewing \parencite{kreibig2010autonomic}, allowing researchers to test whether
-physiological responses follow the shared affective course and whether their relationship to subjective experience
-changes over the film. Combined with fMRI, these measures could help explain how neural representations of bodily
-signals relate to felt emotion during a sustained episode. The current data establish the subjective response; they
-leave its physiological basis and temporal relationship to bodily change open.
+The platform supports this work within a browser-based workflow. Tools such as DARMA and PAGAN have already made
+continuous annotation more accessible \parencite{girard2018darma,melhart2019pagan}. The present platform combines
+simultaneous valence and arousal ratings within the video with participant training, video and displayed-frame
+timestamps, interruption handling and input records. These features allow films to be characterised online before
+laboratory use and support explicit quality-control decisions. Input logs also permit review of potentially assisted
+or automated responding, although their detection accuracy has not been established. The task, quality-control code
+and deployment scripts are openly available for adaptation to other stimuli.
 
-Other laboratories can reuse the task, the quality-control code and the deployment scripts, and the exact
-version used here is preserved (\texttt{v1.0-heights-film}). In the current release (\texttt{v1.1.0}), a new study is set up by
-replacing the video and editing a single study file, which holds the participant-facing texts, questionnaires,
-recruitment settings and quality-control thresholds, and a tutorial describes the steps.
+Several questions remain for subsequent validation. Comparisons with other films could clarify the contribution of
+height-related danger to the observed response. Continuous rating preserved subjective emotional engagement during
+amusing and sad films but altered activity in regions associated with introspection
+\parencite{hutcherson2005attention}, so transfer to passive viewing warrants testing. Somatic symptoms were assessed
+only before and after the film, leaving their time course unresolved. Online recruitment and advice that people with
+a strong fear of heights should not participate also limit generalisation to those with severe height-related fear.
 
-The findings also define the scope of this approach. Without a control film, we cannot isolate the contribution
-of heights or establish specificity relative to other intense films. Continuous rating may influence the experience,
-so the trajectories should be evaluated before they are transferred to passive viewing
-\parencite{hutcherson2005attention}. Somatic symptoms were assessed only before and after the film, leaving their time
-course unresolved, and \val{pct_floor_pre}\% of participants began at the scale minimum and could not report a
-decrease. The final reduction in arousal does not establish a return to a pre-film baseline. The platform's integrity checks were not validated against known assisted or automated sessions, and the frame timestamp depends on browser support. Online recruitment and
-the advice that people with a strong fear of heights should not participate also limit generalisation, particularly
-to people with severe height-related fear.
-
-The film and platform provide a reusable way to study an emotional episode with a reproducible group-level time
-course and a substantial change in reported somatic anxiety. This common reference makes it possible to ask how
-people differ in their responses to the same unfolding danger, and how those differences relate to the physiology and
-neural processes underlying emotional experience.
+The platform and reference data provide a reusable basis for studying sustained emotion. The film's reproducible
+progression offers a common sequence through which individual affective and bodily experiences can be related to
+physiological and neural responses.
 
 \section*{Statements and Declarations}
 % Journal rule: all statements under this heading; missing declarations are returned as incomplete.
@@ -410,14 +374,14 @@ administration, Funding acquisition.
 \includegraphics[width=\textwidth,height=0.53\textheight,keepaspectratio]{Fig1.pdf}
 \figurenote{(a) The rating screen at 10:36, during the scene in which a member of the group is held by one hand over
 the edge (composite illustration: film frame from \textcite{tikhomirov2017dubai} with the rating grid redrawn as it
-appears in the task). Participants moved the dot within the affect grid with the mouse: left to right for unpleasant
-to pleasant, down to up for low to high activation (arousal). The dot marks the confirmatory sample's mean rating at
-that moment (valence \val{task:valence}, arousal \val{task:arousal}). (b) Arousal (0~=~low, 100~=~high) and (c)
+appears in the task). Participants moved the dot within the affect grid with the mouse, left to right for unpleasant
+to pleasant and down to up for low to high activation (arousal). The dot marks the confirmatory sample's mean rating
+at that moment (valence \val{task:valence}, arousal \val{task:arousal}). (b) Arousal (0~=~low, 100~=~high) and (c)
 valence (0~=~unpleasant, 50~=~neutral, 100~=~pleasant), rated continuously and resampled to 1~Hz. Thin lines are
-individual participants of the confirmatory sample; the thick line is the group mean with its 95\% confidence
-interval ($N$~=~\val{n_primary}); the dashed line is the group mean of the exploratory sample
+individual participants of the confirmatory sample, the thick line is their group mean with its 95\% confidence
+interval ($N$~=~\val{n_primary}), and the dashed line is the group mean of the exploratory sample
 ($n$~=~\val{n_exploratory}). Shading marks the four preregistered segments, estimated from group-mean arousal in the
-exploratory sample; the dotted line marks 10:36.}
+exploratory sample, and the dotted line marks 10:36.}
 \end{figure}
 
 \begin{figure}[tbp]
@@ -425,13 +389,13 @@ exploratory sample; the dotted line marks 10:36.}
 \label{fig:sticsa}
 \includegraphics[width=\textwidth,height=0.56\textheight,keepaspectratio]{Fig2.pdf}
 \figurenote{(a) STICSA somatic totals (11--44) before and after the film in the confirmatory sample
-($N$~=~\val{n_primary}). Grey lines connect each participant's scores; boxes show medians and interquartile ranges;
-the black line shows means with 95\% confidence intervals; H1: \val{H1:report}. (b) Share of participants giving each answer (1~=~not at all
-to 4~=~very much so) to the eleven somatic items before (top) and after (bottom) the film; items are ordered as in the
-questionnaire. (c, d) STICSA change (after minus before) against each participant's whole-film mean arousal
-and valence (registered H5a and H5b). Points are participants (jittered sideways); the black line is a least-squares
-fit and the grey band its 95\% confidence interval, shown as a visual guide. Spearman correlations with bootstrap
-95\% confidence intervals: (c) H5a, \val{H5a:report}; (d) H5b, \val{H5b:report}.}
+($N$~=~\val{n_primary}). Grey lines connect each participant's two scores, boxes show medians and interquartile
+ranges, and the black line shows means with 95\% confidence intervals; H1: \val{H1:report}. (b) Share of participants
+giving each answer (1~=~not at all to 4~=~very much so) to the eleven somatic items before (top) and after (bottom)
+the film, with items in questionnaire order. (c, d) STICSA change (after minus before) against each participant's
+whole-film mean arousal and valence (registered H5a and H5b). Points are participants (jittered sideways); the black
+line is a least-squares fit and the grey band its 95\% confidence interval, shown as a visual guide. Spearman
+correlations with bootstrap 95\% confidence intervals: (c) H5a, \val{H5a:report}; (d) H5b, \val{H5b:report}.}
 \end{figure}
 
 \begin{figure}[tbp]

@@ -3,9 +3,9 @@
   "sample": "confirmatory and exploratory",
   "seed": null,
   "settings": {},
-  "started": "2026-10-10T20:30:00+02:00",
+  "started": "2026-10-11T07:58:27+02:00",
   "command": "analysis/13_platform_quality.py",
-  "git_commit": "3ff22fa4093d8eb511bd860e04e177ce9c8aa0b4",
+  "git_commit": "008e0f3e3d8b080af68c569351e52b33ae68900e",
   "uncommitted_changes": true,
   "inputs": {
     "C:\\Users\\Micah\\vibes\\heights-film-paper-public\\data\\processed\\participants.csv": "6420576e5a9bdc3ed0de36ce48bf6d2e103dc55f10059c8dd6fd7ec9443e0e6d",
