@@ -24,7 +24,7 @@ Thumbs.db
 secrets.env
 
 
-# LaTeX build files (manuscript/results.pdf is committed)
+# LaTeX build files
 manuscript/*.aux
 manuscript/*.log
 manuscript/*.fls
@@ -45,9 +45,8 @@ manuscript/*.lof
 manuscript/*.lot
 manuscript/*.toc
 
-# Built submission package (rebuild with analysis/09_package_submission.py)
+# Submission packages
 submission/
 
 # Numbered draft builds (manuscript/build.sh)
 manuscript/builds/
-

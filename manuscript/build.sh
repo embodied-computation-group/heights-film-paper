@@ -2,8 +2,7 @@
 # Build the manuscript and supplement and keep a numbered copy of each draft:
 #   builds/manuscript_r01.pdf, builds/supplement_r01.pdf, then r02, r03, ...
 # Builds happen in builds/tmp/, so a PDF open in a viewer never blocks the build.
-# builds/ is not committed. The committed manuscript.pdf and supplement.pdf are rebuilt separately
-# (latexmk -pdf manuscript.tex supplement.tex) when a version is final.
+# builds/ is not committed.
 #
 # Run from anywhere:  bash manuscript/build.sh
 set -e

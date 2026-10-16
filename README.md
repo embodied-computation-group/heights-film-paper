@@ -28,26 +28,29 @@ To cite the data and code themselves, use the Zenodo archive
 (from [CITATION.cff](CITATION.cff)) gives both.
 
 Micah G. Allen, Center of Functionally Integrative Neuroscience, Aarhus University
-([ORCID 0000-0001-9399-4179](https://orcid.org/0000-0001-9399-4179)). Submitted to *Cognition and Emotion*
-(Brief Article), October 2026.
+([ORCID 0000-0001-9399-4179](https://orcid.org/0000-0001-9399-4179)).
 
 This repository holds the data, analysis code, study materials and manuscript.
 
 ## Abstract
 
-Studying sustained anxiety requires tracing how unpleasant arousal develops, persists and subsides over an unfolding
-experience. We characterised a 13.5-min first-person film of people undertaking dangerous activities at height as an
-induction for this purpose. Using an open-source browser-based platform developed for this study, online participants
-continuously rated their own valence and arousal and completed the somatic subscale of the State-Trait Inventory for
-Cognitive and Somatic Anxiety before and after viewing. In the confirmatory sample (*N* = 124), arousal was elevated
-during the film's rising and sustained phases and declined towards the end, while valence was more unpleasant during
-the sustained phase than during the opening. Group-mean trajectories closely reproduced the temporal shape observed in
-an exploratory sample (*n* = 21; arousal *r* = .99; valence *r* = .94). Somatic anxiety increased after viewing
-(*d*<sub>z</sub> = 1.03). Participants reporting larger increases rated the film as more arousing (*ρ* = .24) and more
-unpleasant (*ρ* = −.38). The open-source platform and reference trajectories provide a reusable resource for studying
-the temporal course of affect during a sustained anxiety induction.
+Watching someone in danger can make a viewer feel anxious even when they know they are safe. Studying how this
+response builds, persists and subsides requires methods that capture experience as events unfold. We present an
+open-source browser platform for continuous affect rating and demonstrate its use with a 13.5-minute film of
+unsecured skyscraper climbing. Viewers rate valence and arousal simultaneously on an affect grid embedded in the
+video. The platform records ratings alongside video and displayed-frame timestamps, pauses playback during
+interruptions, and combines participant training with input logging and checks on session quality. An exploratory
+sample (*n* = 21) informed preregistered tests in an independent confirmatory sample (*N* = 124). Arousal rose as the
+climb progressed, remained elevated for several minutes, and then declined, with the sustained period experienced as
+most unpleasant. Group-level time courses closely reproduced across samples (arousal *r* = .993; valence
+*r* = .937). Self-reported somatic anxiety increased substantially after viewing (*d*<sub>z</sub> = 1.03), and larger
+increases were associated with higher arousal and more unpleasant valence during the film. The platform, analysis
+code and reference data are openly available. Together, these resources support online characterisation of
+naturalistic stimuli and provide a shared temporal reference for studying sustained emotion, bodily experience and
+their physiological and neural correlates.
 
-*Keywords:* emotion induction, film, continuous ratings, valence and arousal, somatic anxiety
+*Keywords:* emotion induction, continuous affect rating, affect grid, naturalistic stimuli, somatic anxiety,
+interoception
 
 ## Links
 
@@ -63,17 +66,16 @@ the temporal course of affect during a sustained anxiety induction.
   (tag `v1.0-heights-film` = the version used here).
 - **Data preparation:** the scripts that turned the raw results into `data/processed/` are in
   [data_preparation/](data_preparation/) (a record; the raw data contain Prolific IDs and are not shared).
-- **Paper:** [manuscript/manuscript.pdf](manuscript/manuscript.pdf) and
-  [manuscript/supplement.pdf](manuscript/supplement.pdf) (download them to see every page; GitHub's preview can skip
-  pages).
+- **Paper:** the preprint above; LaTeX sources of the manuscript and supplement in [manuscript/](manuscript/)
+  (build with `latexmk -pdf manuscript.tex supplement.tex`).
 
 ## Figures
 
 **The rating task (Online Resource 1, Fig. S2).** Participants moved a dot within the affect grid in the corner of the
-video: left to right for unpleasant to pleasant, down to up for low to high activation. Film frame at 10:36 with the
-grid redrawn as in the task; the dot is the confirmatory sample's mean rating at that moment.
+video: left to right for unpleasant to pleasant, down to up for low to high activation. The film frame is not shown;
+the grid is redrawn as in the task, and the dot is the confirmatory sample's mean rating at 10:36.
 
-![The rating screen during the film](manuscript/figures/task_illustration.png)
+![The rating screen during the film](manuscript/figures/task_illustration_nostill.png)
 
 **Figure 1. The rating screen (a) and continuous arousal (b) and valence (c) over the film.** Thin lines are individual participants of the
 confirmatory sample; the thick line is the group mean with its 95% confidence interval (N = 124); the dashed line is
@@ -129,9 +131,30 @@ a second run. Figures and descriptive tables can be redrawn at any time.
 
 ```bash
 uv run python analysis/04_affect_grid.py    # exploratory figure: affect grid by film phase
-uv run python analysis/05_report_numbers.py # numbers and tables for the results report
-cd manuscript && latexmk -pdf results.tex   # APA results report (manuscript/results.pdf)
+uv run python analysis/05_report_numbers.py # numbers and tables for the manuscript and supplement
 ```
+
+## Checks
+
+- **Tests.** The statistical helpers, the registered hypothesis tests, the segmentation and the data loading are
+  tested on small made-up datasets with known answers (`uv run pytest`). The tests were checked by deliberately
+  introducing plausible errors, for example plain Bonferroni instead of Holm correction, Holm applied
+  across all correlations instead of within each hypothesis family, a reversed predicted sign, a STICSA change
+  computed as pre minus post, and a segment edge shifted by 10 s. Tests that first missed such an error were
+  strengthened. The tests also found a real bug: the exact confidence interval for *d*<sub>z</sub> failed for very
+  large effects, which the segment contrasts reach.
+- **Independent agreement.** On the exploratory sample, H1 (*d*<sub>z</sub> = 0.89) and H2 (*d*<sub>z</sub> =
+  1.64-2.44) match the values computed by different code for the preregistration's power analysis, and the
+  segmentation reproduces the registered edges (262, 470 and 692 s) exactly on the original 22 participants.
+- **Confirmatory run.** The registered tests were run once on the confirmatory sample (2026-10-04) from a clean commit;
+  the run records in `results/confirmatory/` give the commit, input checksums, seed (20261004), package versions and
+  command. `02_confirmatory.py` refuses a second confirmatory run and a confirmatory run from uncommitted code.
+- **Recomputation.** The main results were recomputed with plain pandas and SciPy directly from `data/processed/`,
+  without the project's helper functions (H1 *t*(123) = 11.46; H2b *t* = 19.77, *d*<sub>z</sub> = 1.78; H4b
+  *ρ* = −.32; H3 *r* = .993 for arousal and .937 for valence), identical to `results/confirmatory/hypothesis_tests.csv`.
+- **Reported numbers.** Every number in the manuscript and supplement is written by `analysis/05_report_numbers.py`
+  from the results files; an unknown value stops the LaTeX build. STICSA totals are recomputed from the items and
+  checked against the export on every run.
 
 ## Repository layout
 
@@ -141,10 +164,9 @@ data/processed/    # participant data (pseudonyms, no Prolific IDs or free text)
 data_preparation/  # the scripts that made data/processed/ from the raw results (a record)
 materials/         # the rating task and study settings exactly as used
 docs/              # preregistration and its log
+manuscript/        # LaTeX sources, figures and generated numbers of the paper
 results/           # tables and figures written by the scripts
 tests/             # tests, run with `uv run pytest`
-TASKS.md           # what is being worked on next
-VERIFICATION.md    # the checks behind each result
 ```
 
 ## Licence and history

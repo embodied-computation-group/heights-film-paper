@@ -1,4 +1,4 @@
-"""Step 5: numbers and tables for the results report (manuscript/results.tex), straight from the data and results.
+"""Step 5: numbers and tables for the manuscript and supplement, straight from the data and results.
 
 Run after 01-04 on the confirmatory sample:
       uv run python analysis/05_report_numbers.py
