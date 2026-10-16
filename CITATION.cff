@@ -12,8 +12,8 @@ repository-code: "https://github.com/embodied-computation-group/heights-film-pap
 license:
   - MIT
   - CC-BY-4.0
-version: 1.0.1
-date-released: 2026-10-05
+version: 1.0.2
+date-released: 2026-10-16
 keywords:
   - emotion induction
   - film

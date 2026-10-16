@@ -55,7 +55,7 @@ interoception
 ## Links
 
 - **Archive:** [doi:10.5281/zenodo.23151387](https://doi.org/10.5281/zenodo.23151387) (Zenodo; this DOI always
-  points to the latest version; the submission version is release v1.0.1).
+  points to the latest version; the current version is release v1.0.2).
 - **Preprint:** [doi:10.31234/osf.io/szv9e_v1](https://doi.org/10.31234/osf.io/szv9e_v1) (PsyArXiv; manuscript
   and supplement, posted 2026-10-05).
 - **Preregistration:** [osf.io/s2yvb](https://osf.io/s2yvb), registered 2026-10-04 (public).
