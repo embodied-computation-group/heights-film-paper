@@ -2,10 +2,10 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23151387.svg)](https://doi.org/10.5281/zenodo.23151387)
 [![Preregistered](https://img.shields.io/badge/preregistered-osf.io%2Fs2yvb-blue?logo=osf)](https://osf.io/s2yvb)
-[![Preprint](https://img.shields.io/badge/preprint-PsyArXiv-blue?logo=osf)](https://doi.org/10.31234/osf.io/szv9e_v1)
+[![Preprint](https://img.shields.io/badge/preprint-PsyArXiv-blue?logo=osf)](https://doi.org/10.31234/osf.io/szv9e_v3)
 
 > **Please cite:** Allen, M. G. (2026). *Moment-to-moment affect during film-induced somatic anxiety* [Preprint].
-> PsyArXiv. https://doi.org/10.31234/osf.io/szv9e_v1
+> PsyArXiv. https://doi.org/10.31234/osf.io/szv9e_v3
 
 <details>
 <summary>BibTeX</summary>
@@ -16,8 +16,8 @@
   author  = {Allen, Micah G.},
   journal = {PsyArXiv},
   year    = {2026},
-  doi     = {10.31234/osf.io/szv9e_v1},
-  url     = {https://osf.io/preprints/psyarxiv/szv9e_v1}
+  doi     = {10.31234/osf.io/szv9e_v3},
+  url     = {https://osf.io/preprints/psyarxiv/szv9e_v3}
 }
 ```
 
@@ -56,8 +56,8 @@ interoception
 
 - **Archive:** [doi:10.5281/zenodo.23151387](https://doi.org/10.5281/zenodo.23151387) (Zenodo; this DOI always
   points to the latest version; the current version is release v1.0.2).
-- **Preprint:** [doi:10.31234/osf.io/szv9e_v1](https://doi.org/10.31234/osf.io/szv9e_v1) (PsyArXiv; manuscript
-  and supplement, posted 2026-10-05).
+- **Preprint:** [doi:10.31234/osf.io/szv9e_v3](https://doi.org/10.31234/osf.io/szv9e_v3) (PsyArXiv; manuscript
+  and supplement, version 3, posted 2026-10-16).
 - **Preregistration:** [osf.io/s2yvb](https://osf.io/s2yvb), registered 2026-10-04 (public).
   Text in [docs/preregistration.md](docs/preregistration.md); decisions and deviations in
   [docs/prereg_log.md](docs/prereg_log.md).
